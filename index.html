@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>С 8 марта — секретный уровень Айзена</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(150deg, #fef3f8 0%, #ffeef4 100%);
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px 20px;
+            position: relative;
+            overflow-x: hidden;
+            transition: background 0.8s ease;
+        }
+
+        /* затемнение фона (обычный режим) */
+        body.darker-50 { background: linear-gradient(150deg, #fae6ed 0%, #f5d8e3 100%); }
+        body.darker-100 { background: linear-gradient(150deg, #f0d8e3 0%, #ecccdb 100%); }
+        body.darker-150 { background: linear-gradient(150deg, #e6cad9 0%, #e3c0d3 100%); }
+        body.darker-200 { background: linear-gradient(150deg, #dcbccf 0%, #dab4cb 100%); }
+        body.darker-250 { background: linear-gradient(150deg, #d2aec5 0%, #d1a8c3 100%); }
+        body.darker-300 { background: linear-gradient(150deg, #c8a0bb 0%, #c89cb9 100%); }
+        body.darker-350 { background: linear-gradient(150deg, #be92b1 0%, #bf90b3 100%); }
+        body.darker-400 { background: linear-gradient(150deg, #b484a7 0%, #b684ab 100%); }
+        body.darker-450 { background: linear-gradient(150deg, #aa769d 0%, #ad78a3 100%); }
+        body.darker-500 { background: linear-gradient(150deg, #a06893 0%, #a46c9b 100%); }
+
+        /* ТЁМНЫЙ РЕЖИМ (секретный уровень) */
+        body.dark-mode {
+            background: #0a0f1e !important;
+            background: radial-gradient(circle at 30% 30%, #1a1f35, #030514) !important;
+        }
+
+        body.dark-mode .main-card,
+        body.dark-mode .petals-front {
+            display: none;
+        }
+
+        .dark-level {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0f1e;
+            background: radial-gradient(circle at 30% 30%, #1e2442, #020614);
+            z-index: 1000;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #b7c9e2;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            text-shadow: 0 0 15px #3f5e9c;
+        }
+
+        body.dark-mode .dark-level {
+            display: flex;
+        }
+
+        .aizen-title {
+            font-size: clamp(3rem, 12vw, 6rem);
+            font-weight: 800;
+            letter-spacing: 8px;
+            color: #c6daff;
+            text-shadow: 0 0 30px #3f6ac0, 0 0 60px #1f3f8a;
+            margin-bottom: 20px;
+            line-height: 1.3;
+            text-align: center;
+        }
+
+        .aizen-sub {
+            font-size: 1.8rem;
+            color: #8fa4cc;
+            margin-bottom: 40px;
+            font-style: italic;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        .dark-clicker-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .dark-counter {
+            font-size: 4rem;
+            color: #d0e0ff;
+            background: rgba(10, 20, 40, 0.7);
+            padding: 15px 40px;
+            border-radius: 80px;
+            border: 2px solid #3f5e9c;
+            box-shadow: 0 0 30px #1f3f8a;
+            font-weight: 500;
+            backdrop-filter: blur(4px);
+        }
+
+        .dark-flower {
+            background: #1a2442;
+            border: 4px solid #9b7ed9; /* фиолетовый оттенок */
+            border-radius: 50% 20% 50% 20%;
+            width: 200px;
+            height: 200px;
+            font-size: 8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+            box-shadow: 0 0 60px #7f5fc0;
+            color: #d9c3ff;
+        }
+
+        .dark-flower:active {
+            transform: scale(0.95);
+            box-shadow: 0 0 80px #a185e0;
+        }
+
+        .dark-progress-container {
+            width: 100%;
+            height: 16px;
+            background: rgba(10, 20, 40, 0.8);
+            border-radius: 30px;
+            border: 1px solid #7f5fc0;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .dark-progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #7f5fc0, #b59eff);
+            transition: width 0.3s ease;
+        }
+
+        .dark-hint {
+            color: #8fa4cc;
+            font-size: 1.4rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .dark-exit-note {
+            margin-top: 40px;
+            color: #4f6a9e;
+            font-size: 1rem;
+        }
+
+        /* летающие лепестки */
+        .petals-front {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            overflow: hidden;
+        }
+
+        .petal {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.4;
+            animation: fall linear infinite;
+            color: #ffb7c5;
+            filter: drop-shadow(0 5px 5px rgba(255, 200, 220, 0.3));
+            pointer-events: none;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(100vh) rotate(360deg); }
+        }
+
+        .main-card {
+            max-width: 1000px;
+            width: 100%;
+            background: rgba(255, 245, 250, 0.8);
+            backdrop-filter: blur(8px);
+            border-radius: 60px 60px 50px 50px;
+            box-shadow: 0 25px 40px rgba(255, 150, 180, 0.3),
+                        0 0 0 2px rgba(255, 255, 255, 0.8) inset,
+                        0 8px 20px rgba(250, 200, 210, 0.5);
+            padding: 30px 30px 30px 30px;
+            border: 1px solid rgba(255, 220, 230, 0.9);
+            position: relative;
+            z-index: 10;
+        }
+
+        .main-title {
+            text-align: center;
+            font-size: clamp(2.8rem, 11vw, 5rem);
+            font-weight: 350;
+            color: #a55e71;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            text-shadow: 4px 4px 12px rgba(255, 200, 220, 0.7), 0 2px 0 white;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.2;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .main-title:hover {
+            transform: scale(1.02);
+            text-shadow: 0 0 20px #ff9bb6;
+        }
+
+        .soft-sub {
+            text-align: center;
+            font-size: 1.6rem;
+            color: #bc7f90;
+            background: rgba(255, 235, 240, 0.7);
+            padding: 0.6rem 2.2rem;
+            border-radius: 60px;
+            width: fit-content;
+            margin: 0 auto 40px auto;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(2px);
+            font-style: italic;
+            box-shadow: 0 5px 14px #ffdbe4;
+        }
+
+        /* имена кликабельные */
+        .names-wishes {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 15px 0 30px 0;
+        }
+
+        .personal-block {
+            background: rgba(255, 250, 250, 0.9);
+            backdrop-filter: blur(2px);
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            border-radius: 50px 20px 50px 20px;
+            padding: 15px 25px;
+            transition: all 0.25s ease;
+            box-shadow: 0 8px 16px rgba(240, 170, 190, 0.15);
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .personal-block:hover {
+            transform: scale(1.02) translateY(-2px);
+            background: #fff0f7;
+            border-color: #ffc0d0;
+            box-shadow: 0 15px 25px rgba(255, 150, 180, 0.3);
+        }
+
+        .personal-block:active {
+            transform: scale(0.98);
+        }
+
+        .personal-block.special {
+            background: linear-gradient(145deg, #fff8f0, #fff0e6);
+            border: 3px solid #ffb7c5;
+            box-shadow: 0 0 25px rgba(255, 183, 197, 0.7);
+        }
+
+        .name-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .name-icon {
+            font-size: 2.2rem;
+            line-height: 1;
+            filter: drop-shadow(0 4px 4px #ffc0cb);
+        }
+
+        .name-label {
+            font-size: clamp(1.8rem, 5vw, 2.3rem);
+            font-weight: 450;
+            color: #774c5a;
+            letter-spacing: 1px;
+        }
+
+        .special .name-label {
+            color: #b35f7a;
+            font-weight: 600;
+            text-shadow: 0 0 8px #ffb6c1;
+        }
+
+        /* игра */
+        .game-section {
+            margin: 40px 0 20px 0;
+            text-align: center;
+            background: rgba(255, 240, 245, 0.6);
+            border-radius: 70px 30px 70px 30px;
+            padding: 30px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(4px);
+        }
+
+        .game-title {
+            font-size: 2rem;
+            color: #b16d80;
+            margin-bottom: 25px;
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .clicker-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .counter-display {
+            font-size: 3.5rem;
+            color: #a15168;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 15px 35px;
+            border-radius: 60px;
+            border: 2px solid white;
+            box-shadow: 0 10px 20px #ffd0da;
+            font-weight: 500;
+            letter-spacing: 2px;
+        }
+
+        .big-flower {
+            background: #ffdbe7;
+            border: 4px solid white;
+            border-radius: 50% 20% 50% 20%;
+            width: 180px;
+            height: 180px;
+            font-size: 7rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+            box-shadow: 0 20px 30px #feb6c9;
+            margin: 10px auto;
+            outline: none;
+        }
+
+        .big-flower:active {
+            transform: scale(0.95);
+        }
+
+        .game-hint {
+            font-size: 1.2rem;
+            color: #ac6f80;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 8px 20px;
+            border-radius: 40px;
+            border: 1px solid white;
+        }
+
+        .progress-container {
+            width: 80%;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
+            margin: 5px auto;
+            border: 1px solid white;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ffb7c5, #ff8da1);
+            border-radius: 20px;
+            transition: width 0.3s ease;
+        }
+
+        /* модальные окна */
+        .custom-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 210, 225, 0.5);
+            backdrop-filter: blur(8px);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .custom-modal-content {
+            background: rgba(255, 245, 250, 0.95);
+            backdrop-filter: blur(10px);
+            border: 4px solid white;
+            border-radius: 80px 30px 80px 30px;
+            padding: 45px 35px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 40px 50px #feb0c2;
+            animation: popIn 0.4s;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-flower {
+            font-size: 5rem;
+            margin-bottom: 20px;
+        }
+
+        .modal-message {
+            font-size: 2.2rem;
+            color: #a15168;
+            margin: 25px 0;
+            line-height: 1.5;
+            white-space: pre-line;
+        }
+
+        .wish-lines .wish-line {
+            font-size: 1.4rem;
+            padding: 12px 20px;
+            margin: 8px 0;
+        }
+
+        .modal-btn {
+            background: #ffc1d2;
+            border: 3px solid white;
+            border-radius: 60px;
+            padding: 15px 40px;
+            font-size: 1.5rem;
+            color: #7a4452;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 2px solid white;
+            margin-top: 20px;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        .modal-btn:hover {
+            background: #ffd5e2;
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px #ffb0c0;
+        }
+
+        .signature {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 1.5rem;
+            color: #c58396;
+            font-style: italic;
+            letter-spacing: 1px;
+            border-top: 2px dashed #ffc9d6;
+            padding-top: 20px;
+            font-family: 'Georgia', serif;
+            cursor: pointer;
+            transition: 0.2s;
+            position: relative;
+            -webkit-touch-callout: none;
+        }
+
+        .signature.pulsing {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); text-shadow: 0 0 15px #ff9bb6; }
+            100% { transform: scale(1); }
+        }
+
+        .signature:active {
+            transform: scale(0.98);
+        }
+
+        .signature span {
+            font-size: 1.8rem;
+            margin: 0 5px;
+        }
+
+        @media (max-width: 550px) {
+            .main-card {
+                padding: 20px 18px 20px;
+                border-radius: 40px;
+            }
+            .big-flower {
+                width: 140px;
+                height: 140px;
+                font-size: 5rem;
+            }
+            .counter-display {
+                font-size: 2.8rem;
+                padding: 10px 25px;
+            }
+            .dark-flower {
+                width: 150px;
+                height: 150px;
+                font-size: 6rem;
+            }
+        }
+    </style>
+</head>
+<body id="mainBody">
+
+    <div class="petals-front" id="petalsFront"></div>
+
+    <!-- СЕКРЕТНЫЙ ТЁМНЫЙ УРОВЕНЬ -->
+    <div class="dark-level" id="darkLevel">
+        <div class="aizen-title">
+            Господин<br>Айзен<br>Соло
+        </div>
+        <div class="aizen-sub">Освобождение</div>
+        
+        <div class="dark-clicker-area">
+            <div class="dark-counter" id="darkCounter">0</div>
+            
+            <div class="dark-progress-container">
+                <div class="dark-progress-bar" id="darkProgress"></div>
+            </div>
+            
+            <!-- Вместо луны — фиолетовый цветок -->
+            <div class="dark-flower" id="darkFlower">🌸</div>
+            <div class="dark-hint" id="darkHint">500 нажатий для возврата</div>
+            <div class="dark-exit-note">зажми подпись снова для выхода</div>
+        </div>
+    </div>
+
+    <div class="main-card">
+        <h1 class="main-title" id="titleClick">С 8 марта</h1>
+        <div class="soft-sub">самые прекрасные и нежные</div>
+
+        <div class="names-wishes" id="namesContainer"></div>
+
+        <div class="game-section">
+            <div class="game-title">
+                <span>🌸</span> Собери букет <span>🌷</span>
+            </div>
+            <div class="clicker-area">
+                <div class="counter-display" id="flowerCounter">🌺 0</div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <div class="big-flower" id="clickFlower">🌸</div>
+                <div class="game-hint" id="gameHint">Кликай на цветок ✨</div>
+            </div>
+        </div>
+
+        <div class="signature" id="easterEgg">
+            <span>💗</span> by Aizen with love <span>💗</span>
+        </div>
+    </div>
+
+    <!-- МОДАЛКИ -->
+    <div id="nameModal" class="custom-modal">
+        <div class="custom-modal-content">
+            <div class="modal-flower" id="modalNameIcon">🌸</div>
+            <div class="modal-message" id="modalNameTitle">Анна</div>
+            <div id="modalWishes" class="wish-lines" style="margin:20px 0;"></div>
+            <div class="modal-btn" onclick="closeNameModal()">Спасибо ✨</div>
+        </div>
+    </div>
+
+    <div id="victoryModal" class="custom-modal">
+        <div class="custom-modal-content">
+            <div class="modal-flower">🌸🌷🌸</div>
+            <div class="modal-message" id="victoryMessage">🎉 100 цветов!<br>Ты невероятна! 🎉</div>
+            <div class="modal-btn" onclick="closeVictoryModal()">Спасибо ✨</div>
+        </div>
+    </div>
+
+    <div id="easterModal" class="custom-modal">
+        <div class="custom-modal-content">
+            <div class="modal-flower">🦋💗🦋</div>
+            <div class="modal-message">Надеюсь,<br>вы меня не ненавидите)</div>
+            <div class="modal-btn" onclick="closeEasterModal()">💗</div>
+        </div>
+    </div>
+
+    <div id="special500Modal" class="custom-modal">
+        <div class="custom-modal-content">
+            <div class="modal-flower">🌸💐🌸</div>
+            <div class="modal-message">✨ 500 цветов! ✨<br>Ты — настоящая королева весны!</div>
+            <div class="modal-btn" onclick="closeSpecialModal()">👑</div>
+        </div>
+    </div>
+
+    <!-- МОДАЛКИ ДЛЯ ТЁМНОГО УРОВНЯ -->
+    <div id="darkProgressModal" class="custom-modal">
+        <div class="custom-modal-content">
+            <div class="modal-flower">🌸✨🌸</div>
+            <div class="modal-message" id="darkProgressMessage">Ты близка к цели ✨</div>
+            <div class="modal-btn" onclick="closeDarkProgressModal()">Продолжить</div>
+        </div>
+    </div>
+
+    <div id="darkVictoryModal" class="custom-modal">
+        <div class="custom-modal-content">
+            <div class="modal-flower">💜🌸💜</div>
+            <div class="modal-message">Ты освободилась!<br>Добро пожаловать обратно 💜</div>
+            <div class="modal-btn" onclick="exitDarkMode()">Вернуться</div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== ДАННЫЕ ИМЁН ====================
+        const namesData = [
+            { icon: '🌸', name: 'Ольга Николаевна', special: true, wishes: [
+                'С 8 марта, Ольга Николаевна!',
+                'Вы — самый лучший классный руководитель!',
+                'Здоровья, счастья и вдохновения!',
+                'Пусть ученики радуют каждый день! 💐'
+            ]},
+            { icon: '🌷', name: 'Лукерья', wishes: [
+                'Нежная Лукерья, с праздником!',
+                'Пусть весна подарит много цветов!',
+                'Счастья, любви и красоты! ✨'
+            ]},
+            { icon: '🌸', name: 'Карина', wishes: [
+                'Карина, сияй ярко!',
+                'Пусть мечты сбываются!',
+                'С 8 марта! 🌸'
+            ]},
+            { icon: '🌼', name: 'Юля', wishes: [
+                'Юленька, с праздником!',
+                'Оставайся такой же чудесной!',
+                'Море улыбок и цветов! 🌺'
+            ]},
+            { icon: '🌺', name: 'Маша', wishes: [
+                'Машенька, с 8 марта!',
+                'Нежности, тепла и вдохновения!',
+                'Будь счастлива каждый день! 💖'
+            ]},
+            { icon: '✨', name: 'Настя', wishes: [
+                'Настюша, с праздником весны!',
+                'Пусть всё задуманное сбудется!',
+                'Сияй и радуй мир! 🌷'
+            ]}
+        ];
+
+        // ==================== ЗАПОЛНЕНИЕ ИМЁН ====================
+        const container = document.getElementById('namesContainer');
+        namesData.forEach((item, index) => {
+            const block = document.createElement('div');
+            block.className = 'personal-block' + (item.special ? ' special' : '');
+            block.onclick = () => openNameModal(index);
+            block.innerHTML = `
+                <div class="name-row">
+                    <span class="name-icon">${item.icon}</span>
+                    <span class="name-label">${item.name}</span>
+                </div>
+            `;
+            container.appendChild(block);
+        });
+
+        // ==================== МОДАЛКА ИМЁН ====================
+        const nameModal = document.getElementById('nameModal');
+        const modalNameIcon = document.getElementById('modalNameIcon');
+        const modalNameTitle = document.getElementById('modalNameTitle');
+        const modalWishes = document.getElementById('modalWishes');
+
+        function openNameModal(index) {
+            const data = namesData[index];
+            modalNameIcon.textContent = data.icon;
+            modalNameTitle.textContent = data.name;
+            modalWishes.innerHTML = '';
+            data.wishes.forEach(wish => {
+                const div = document.createElement('div');
+                div.className = 'wish-line';
+                div.textContent = wish;
+                modalWishes.appendChild(div);
+            });
+            nameModal.style.display = 'flex';
+        }
+
+        function closeNameModal() { nameModal.style.display = 'none'; }
+
+        // ==================== ЛЕПЕСТКИ ====================
+        function createPetals() {
+            const frontContainer = document.getElementById('petalsFront');
+            const petalsList = ['🌸', '🌷', '🌼', '🌺'];
+            for (let i = 0; i < 15; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                petal.textContent = petalsList[Math.floor(Math.random() * petalsList.length)];
+                petal.style.left = Math.random() * 100 + '%';
+                petal.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                petal.style.animationDelay = Math.random() * -20 + 's';
+                petal.style.fontSize = (Math.random() * 1.5 + 1) + 'rem';
+                frontContainer.appendChild(petal);
+            }
+        }
+
+        // дождь из цветов
+        function flowerRain(count = 30) {
+            for (let i = 0; i < count; i++) {
+                setTimeout(() => {
+                    const flower = document.createElement('div');
+                    flower.textContent = ['🌸','🌷','🌼','🌺','🌹'][Math.floor(Math.random()*5)];
+                    flower.style.position = 'fixed';
+                    flower.style.left = Math.random() * 100 + '%';
+                    flower.style.top = '-10%';
+                    flower.style.fontSize = (Math.random() * 2.5 + 1.5) + 'rem';
+                    flower.style.zIndex = '1000';
+                    flower.style.pointerEvents = 'none';
+                    flower.style.animation = `fall ${Math.random()*2+2}s linear forwards`;
+                    document.body.appendChild(flower);
+                    setTimeout(() => flower.remove(), 4000);
+                }, i * 70);
+            }
+        }
+
+        // ==================== ОСНОВНАЯ ИГРА ====================
+        let flowerCount = 0;
+        const counterElement = document.getElementById('flowerCounter');
+        const clickFlower = document.getElementById('clickFlower');
+        const gameHint = document.getElementById('gameHint');
+        const progressBar = document.getElementById('progressBar');
+        const victoryModal = document.getElementById('victoryModal');
+        const victoryMessage = document.getElementById('victoryMessage');
+        const special500Modal = document.getElementById('special500Modal');
+        const body = document.getElementById('mainBody');
+        const easterModal = document.getElementById('easterModal');
+
+        function updateDisplay() {
+            counterElement.textContent = `🌺 ${flowerCount}`;
+            const progress = (flowerCount % 100) / 100 * 100;
+            progressBar.style.width = progress + '%';
+            
+            const nextTarget = (Math.floor(flowerCount / 100) + 1) * 100;
+            const toGo = nextTarget - flowerCount;
+            gameHint.textContent = flowerCount > 0 ? `До ${nextTarget} цветов: ${toGo} ✨` : `Кликай на цветок!`;
+
+            const darkLevel = Math.min(500, Math.floor(flowerCount / 50) * 50);
+            body.className = darkLevel ? `darker-${darkLevel}` : '';
+        }
+
+        function checkVictory() {
+            if (flowerCount % 100 === 0 && flowerCount > 0) {
+                if (flowerCount === 500) {
+                    special500Modal.style.display = 'flex';
+                } else {
+                    victoryMessage.innerHTML = `🎉 ${flowerCount} цветов!<br>Ты невероятна! 🎉`;
+                    victoryModal.style.display = 'flex';
+                }
+                flowerRain(35);
+            }
+        }
+
+        // бабочки
+        function spawnButterfly() {
+            if (Math.random() < 0.15) {
+                const butterfly = document.createElement('div');
+                butterfly.className = 'butterfly';
+                butterfly.textContent = '🦋';
+                butterfly.style.left = Math.random() * 80 + 10 + '%';
+                butterfly.style.top = Math.random() * 60 + 20 + '%';
+                
+                const flyX = (Math.random() - 0.5) * 400;
+                const flyY = (Math.random() - 0.5) * 300;
+                butterfly.style.setProperty('--fly-x', flyX + 'px');
+                butterfly.style.setProperty('--fly-y', flyY + 'px');
+                
+                butterfly.onclick = function(e) {
+                    e.stopPropagation();
+                    const bonus = Math.random() < 0.2 ? 8 : 5;
+                    flowerCount += bonus;
+                    updateDisplay();
+                    checkVictory();
+                    this.remove();
+                    
+                    const flash = document.createElement('div');
+                    flash.textContent = `+${bonus}`;
+                    flash.style.position = 'fixed';
+                    flash.style.left = e.clientX + 'px';
+                    flash.style.top = e.clientY + 'px';
+                    flash.style.color = '#a15168';
+                    flash.style.fontSize = '2rem';
+                    flash.style.fontWeight = 'bold';
+                    flash.style.zIndex = '1000';
+                    flash.style.animation = 'fall 1s forwards';
+                    document.body.appendChild(flash);
+                    setTimeout(() => flash.remove(), 1000);
+                };
+                
+                document.body.appendChild(butterfly);
+                setTimeout(() => {
+                    if (butterfly.parentNode) butterfly.remove();
+                }, 4000);
+            }
+        }
+
+        clickFlower.addEventListener('click', function(e) {
+            e.preventDefault();
+            flowerCount++;
+            updateDisplay();
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => this.style.transform = 'scale(1)', 100);
+            checkVictory();
+            spawnButterfly();
+        });
+
+        document.getElementById('titleClick').addEventListener('click', function() {
+            flowerRain(50);
+        });
+
+        // ==================== ТЁМНЫЙ УРОВЕНЬ (АЙЗЕН) ====================
+        const darkLevel = document.getElementById('darkLevel');
+        const darkCounter = document.getElementById('darkCounter');
+        const darkFlower = document.getElementById('darkFlower');
+        const darkProgress = document.getElementById('darkProgress');
+        const darkHint = document.getElementById('darkHint');
+        const darkProgressModal = document.getElementById('darkProgressModal');
+        const darkProgressMessage = document.getElementById('darkProgressMessage');
+        const darkVictoryModal = document.getElementById('darkVictoryModal');
+        
+        let darkClicks = 0;
+        let pressTimer = null;
+        let isDarkMode = false;
+
+        const signature = document.getElementById('easterEgg');
+
+        function startPress() {
+            if (isDarkMode) {
+                // в тёмном режиме зажатие = выход
+                pressTimer = setTimeout(() => {
+                    exitDarkMode();
+                }, 800);
+            } else {
+                // в обычном режиме зажатие = вход в тёмный уровень
+                signature.classList.add('pulsing');
+                pressTimer = setTimeout(() => {
+                    enterDarkMode();
+                    signature.classList.remove('pulsing');
+                }, 1500);
+            }
+        }
+
+        function cancelPress() {
+            if (pressTimer) {
+                clearTimeout(pressTimer);
+                pressTimer = null;
+            }
+            signature.classList.remove('pulsing');
+        }
+
+        function handleShortPress() {
+            // если зажатие было коротким и не перешло в тёмный режим
+            if (!isDarkMode) {
+                easterModal.style.display = 'flex'; // показываем обычную пасхалку
+            }
+        }
+
+        signature.addEventListener('mousedown', startPress);
+        signature.addEventListener('touchstart', startPress, { passive: true });
+        signature.addEventListener('mouseup', function() {
+            if (!isDarkMode && !pressTimer) {
+                // если таймер уже сброшен, значит это было короткое нажатие
+                handleShortPress();
+            } else {
+                cancelPress();
+            }
+        });
+        signature.addEventListener('mouseleave', cancelPress);
+        signature.addEventListener('touchend', function() {
+            if (!isDarkMode && !pressTimer) {
+                handleShortPress();
+            } else {
+                cancelPress();
+            }
+        });
+        signature.addEventListener('touchcancel', cancelPress);
+
+        function enterDarkMode() {
+            isDarkMode = true;
+            body.classList.add('dark-mode');
+            darkClicks = 0;
+            updateDarkDisplay();
+        }
+
+        function exitDarkMode() {
+            isDarkMode = false;
+            body.classList.remove('dark-mode');
+            darkVictoryModal.style.display = 'none';
+            darkProgressModal.style.display = 'none';
+            darkClicks = 0;
+            updateDarkDisplay();
+            flowerRain(40);
+        }
+
+        function updateDarkDisplay() {
+            darkCounter.textContent = darkClicks;
+            const progress = (darkClicks / 500) * 100;
+            darkProgress.style.width = progress + '%';
+            darkHint.textContent = `Осталось: ${500 - darkClicks}`;
+        }
+
+        function checkDarkProgress() {
+            if (darkClicks % 100 === 0 && darkClicks > 0 && darkClicks < 500) {
+                darkProgressMessage.textContent = `✨ ${darkClicks} нажатий! Ты близка к цели ✨`;
+                darkProgressModal.style.display = 'flex';
+            }
+            if (darkClicks >= 500) {
+                darkVictoryModal.style.display = 'flex';
+            }
+        }
+
+        darkFlower.addEventListener('click', function(e) {
+            if (!isDarkMode) return;
+            e.preventDefault();
+            darkClicks++;
+            updateDarkDisplay();
+            
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => this.style.transform = 'scale(1)', 100);
+            
+            checkDarkProgress();
+        });
+
+        function closeDarkProgressModal() {
+            darkProgressModal.style.display = 'none';
+        }
+
+        // ==================== ОБЩИЕ ЗАКРЫТИЯ ====================
+        function closeVictoryModal() { victoryModal.style.display = 'none'; }
+        function closeEasterModal() { easterModal.style.display = 'none'; }
+        function closeSpecialModal() { special500Modal.style.display = 'none'; }
+
+        window.onclick = function(event) {
+            if (event.target === nameModal) closeNameModal();
+            if (event.target === victoryModal) closeVictoryModal();
+            if (event.target === easterModal) closeEasterModal();
+            if (event.target === special500Modal) closeSpecialModal();
+            if (event.target === darkProgressModal) darkProgressModal.style.display = 'none';
+            if (event.target === darkVictoryModal) darkVictoryModal.style.display = 'none';
+        };
+
+        createPetals();
+        updateDisplay();
+    </script>
+</body>
+</html>
