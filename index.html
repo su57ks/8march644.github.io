@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>С 8 марта — секретный уровень Айзена</title>
+    <title>С 8 марта — именные открытки</title>
     <style>
         * {
             margin: 0;
@@ -23,144 +23,6 @@
             padding: 25px 20px;
             position: relative;
             overflow-x: hidden;
-            transition: background 0.8s ease;
-        }
-
-        /* затемнение фона (обычный режим) */
-        body.darker-50 { background: linear-gradient(150deg, #fae6ed 0%, #f5d8e3 100%); }
-        body.darker-100 { background: linear-gradient(150deg, #f0d8e3 0%, #ecccdb 100%); }
-        body.darker-150 { background: linear-gradient(150deg, #e6cad9 0%, #e3c0d3 100%); }
-        body.darker-200 { background: linear-gradient(150deg, #dcbccf 0%, #dab4cb 100%); }
-        body.darker-250 { background: linear-gradient(150deg, #d2aec5 0%, #d1a8c3 100%); }
-        body.darker-300 { background: linear-gradient(150deg, #c8a0bb 0%, #c89cb9 100%); }
-        body.darker-350 { background: linear-gradient(150deg, #be92b1 0%, #bf90b3 100%); }
-        body.darker-400 { background: linear-gradient(150deg, #b484a7 0%, #b684ab 100%); }
-        body.darker-450 { background: linear-gradient(150deg, #aa769d 0%, #ad78a3 100%); }
-        body.darker-500 { background: linear-gradient(150deg, #a06893 0%, #a46c9b 100%); }
-
-        /* ТЁМНЫЙ РЕЖИМ (секретный уровень) */
-        body.dark-mode {
-            background: #0a0f1e !important;
-            background: radial-gradient(circle at 30% 30%, #1a1f35, #030514) !important;
-        }
-
-        body.dark-mode .main-card,
-        body.dark-mode .petals-front {
-            display: none;
-        }
-
-        .dark-level {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #0a0f1e;
-            background: radial-gradient(circle at 30% 30%, #1e2442, #020614);
-            z-index: 1000;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #b7c9e2;
-            font-family: 'Georgia', 'Times New Roman', serif;
-            text-shadow: 0 0 15px #3f5e9c;
-        }
-
-        body.dark-mode .dark-level {
-            display: flex;
-        }
-
-        .aizen-title {
-            font-size: clamp(3rem, 12vw, 6rem);
-            font-weight: 800;
-            letter-spacing: 8px;
-            color: #c6daff;
-            text-shadow: 0 0 30px #3f6ac0, 0 0 60px #1f3f8a;
-            margin-bottom: 20px;
-            line-height: 1.3;
-            text-align: center;
-        }
-
-        .aizen-sub {
-            font-size: 1.8rem;
-            color: #8fa4cc;
-            margin-bottom: 40px;
-            font-style: italic;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-        }
-
-        .dark-clicker-area {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 25px;
-            width: 90%;
-            max-width: 500px;
-        }
-
-        .dark-counter {
-            font-size: 4rem;
-            color: #d0e0ff;
-            background: rgba(10, 20, 40, 0.7);
-            padding: 15px 40px;
-            border-radius: 80px;
-            border: 2px solid #3f5e9c;
-            box-shadow: 0 0 30px #1f3f8a;
-            font-weight: 500;
-            backdrop-filter: blur(4px);
-        }
-
-        .dark-flower {
-            background: #1a2442;
-            border: 4px solid #9b7ed9; /* фиолетовый оттенок */
-            border-radius: 50% 20% 50% 20%;
-            width: 200px;
-            height: 200px;
-            font-size: 8rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.2s;
-            box-shadow: 0 0 60px #7f5fc0;
-            color: #d9c3ff;
-        }
-
-        .dark-flower:active {
-            transform: scale(0.95);
-            box-shadow: 0 0 80px #a185e0;
-        }
-
-        .dark-progress-container {
-            width: 100%;
-            height: 16px;
-            background: rgba(10, 20, 40, 0.8);
-            border-radius: 30px;
-            border: 1px solid #7f5fc0;
-            overflow: hidden;
-            margin: 10px 0;
-        }
-
-        .dark-progress-bar {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #7f5fc0, #b59eff);
-            transition: width 0.3s ease;
-        }
-
-        .dark-hint {
-            color: #8fa4cc;
-            font-size: 1.4rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-        }
-
-        .dark-exit-note {
-            margin-top: 40px;
-            color: #4f6a9e;
-            font-size: 1rem;
         }
 
         /* летающие лепестки */
@@ -189,6 +51,7 @@
             to { transform: translateY(100vh) rotate(360deg); }
         }
 
+        /* главная карточка */
         .main-card {
             max-width: 1000px;
             width: 100%;
@@ -202,6 +65,31 @@
             border: 1px solid rgba(255, 220, 230, 0.9);
             position: relative;
             z-index: 10;
+        }
+
+        /* кнопка настроек */
+        .settings-button {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 2rem;
+            cursor: pointer;
+            background: rgba(255,255,255,0.5);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+            border: 2px solid white;
+            box-shadow: 0 4px 10px #ffc0cb;
+            transition: 0.2s;
+            z-index: 50;
+        }
+        .settings-button:hover {
+            transform: rotate(30deg) scale(1.1);
+            background: #ffe2ed;
         }
 
         .main-title {
@@ -237,7 +125,7 @@
             box-shadow: 0 5px 14px #ffdbe4;
         }
 
-        /* имена кликабельные */
+        /* имена */
         .names-wishes {
             display: flex;
             flex-direction: column;
@@ -264,10 +152,6 @@
             background: #fff0f7;
             border-color: #ffc0d0;
             box-shadow: 0 15px 25px rgba(255, 150, 180, 0.3);
-        }
-
-        .personal-block:active {
-            transform: scale(0.98);
         }
 
         .personal-block.special {
@@ -464,6 +348,7 @@
             box-shadow: 0 10px 20px #ffb0c0;
         }
 
+        /* подпись (больше не открывает промо, а открывает модалку с промо) */
         .signature {
             text-align: center;
             margin-top: 25px;
@@ -476,27 +361,80 @@
             font-family: 'Georgia', serif;
             cursor: pointer;
             transition: 0.2s;
-            position: relative;
-            -webkit-touch-callout: none;
         }
 
-        .signature.pulsing {
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); text-shadow: 0 0 15px #ff9bb6; }
-            100% { transform: scale(1); }
-        }
-
-        .signature:active {
-            transform: scale(0.98);
+        .signature:hover {
+            color: #a55e71;
+            transform: scale(1.02);
         }
 
         .signature span {
             font-size: 1.8rem;
             margin: 0 5px;
+        }
+
+        /* стили для полей ввода внутри модалок */
+        .promo-input {
+            padding: 15px 20px;
+            font-size: 1.8rem;
+            border-radius: 50px;
+            border: 3px solid white;
+            background: rgba(255, 240, 245, 0.9);
+            text-align: center;
+            color: #774c5a;
+            outline: none;
+            width: 80%;
+            margin: 15px auto;
+            display: block;
+            backdrop-filter: blur(4px);
+        }
+
+        /* модалка настроек */
+        .settings-modal .custom-modal-content {
+            max-width: 450px;
+        }
+        .slider-row {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 30px 0;
+            font-size: 1.5rem;
+            color: #a55e71;
+        }
+        .slider-row input {
+            width: 100%;
+            accent-color: #ff8da1;
+        }
+        .about-dev {
+            margin: 20px 0 10px;
+            font-size: 1.6rem;
+            color: #a15168;
+            border-top: 2px dashed #ffc9d6;
+            padding-top: 25px;
+        }
+        .dev-links {
+            font-size: 1.5rem;
+            background: rgba(255,255,240,0.5);
+            padding: 20px;
+            border-radius: 30px;
+            border: 2px dashed #ffb7c5;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .dev-links a {
+            color: #a15168;
+            text-decoration: none;
+            border-bottom: 2px dotted #ffb0c0;
+            font-weight: 500;
+        }
+        .dev-links a:hover {
+            color: #d46f8a;
+        }
+        .thanks {
+            margin-top: 10px;
+            font-size: 1.3rem;
+            color: #ac6f80;
         }
 
         @media (max-width: 550px) {
@@ -513,10 +451,18 @@
                 font-size: 2.8rem;
                 padding: 10px 25px;
             }
-            .dark-flower {
-                width: 150px;
-                height: 150px;
-                font-size: 6rem;
+            .modal-message {
+                font-size: 1.8rem;
+            }
+            .wish-lines .wish-line {
+                font-size: 1.2rem;
+            }
+            .settings-button {
+                top: 12px;
+                right: 15px;
+                width: 40px;
+                height: 40px;
+                font-size: 1.8rem;
             }
         }
     </style>
@@ -525,28 +471,9 @@
 
     <div class="petals-front" id="petalsFront"></div>
 
-    <!-- СЕКРЕТНЫЙ ТЁМНЫЙ УРОВЕНЬ -->
-    <div class="dark-level" id="darkLevel">
-        <div class="aizen-title">
-            Господин<br>Айзен<br>Соло
-        </div>
-        <div class="aizen-sub">Освобождение</div>
-        
-        <div class="dark-clicker-area">
-            <div class="dark-counter" id="darkCounter">0</div>
-            
-            <div class="dark-progress-container">
-                <div class="dark-progress-bar" id="darkProgress"></div>
-            </div>
-            
-            <!-- Вместо луны — фиолетовый цветок -->
-            <div class="dark-flower" id="darkFlower">🌸</div>
-            <div class="dark-hint" id="darkHint">500 нажатий для возврата</div>
-            <div class="dark-exit-note">зажми подпись снова для выхода</div>
-        </div>
-    </div>
-
     <div class="main-card">
+        <div class="settings-button" id="settingsButton">⚙️</div>
+
         <h1 class="main-title" id="titleClick">С 8 марта</h1>
         <div class="soft-sub">самые прекрасные и нежные</div>
 
@@ -576,11 +503,12 @@
         <div class="custom-modal-content">
             <div class="modal-flower" id="modalNameIcon">🌸</div>
             <div class="modal-message" id="modalNameTitle">Анна</div>
-            <div id="modalWishes" class="wish-lines" style="margin:20px 0;"></div>
+            <div id="modalWishes" class="wish-lines"></div>
             <div class="modal-btn" onclick="closeNameModal()">Спасибо ✨</div>
         </div>
     </div>
 
+    <!-- модалка победы (100,200...) -->
     <div id="victoryModal" class="custom-modal">
         <div class="custom-modal-content">
             <div class="modal-flower">🌸🌷🌸</div>
@@ -589,36 +517,44 @@
         </div>
     </div>
 
-    <div id="easterModal" class="custom-modal">
+    <!-- Новая модалка на 50 цветов с комплиментами -->
+    <div id="complimentModal" class="custom-modal">
         <div class="custom-modal-content">
-            <div class="modal-flower">🦋💗🦋</div>
-            <div class="modal-message">Надеюсь,<br>вы меня не ненавидите)</div>
-            <div class="modal-btn" onclick="closeEasterModal()">💗</div>
+            <div class="modal-flower">💐✨💐</div>
+            <div class="modal-message" id="complimentMessage">Ты супер!</div>
+            <div class="modal-btn" onclick="closeComplimentModal()">🌸 Спасибо</div>
         </div>
     </div>
 
-    <div id="special500Modal" class="custom-modal">
+    <!-- Модалка с промокодом (по клику на подпись) -->
+    <div id="promoModal" class="custom-modal">
         <div class="custom-modal-content">
-            <div class="modal-flower">🌸💐🌸</div>
-            <div class="modal-message">✨ 500 цветов! ✨<br>Ты — настоящая королева весны!</div>
-            <div class="modal-btn" onclick="closeSpecialModal()">👑</div>
+            <div class="modal-flower">🎁💗🎁</div>
+            <div class="modal-message">Надеюсь, вы меня не ненавидите)<br>Вот вам подарок - введите промокод<br><span style="font-size:1.6rem;">(Подсказка: это мемное число)</span></div>
+            <input type="text" id="promoCodeInput" class="promo-input" placeholder="Например 1488" maxlength="10">
+            <div class="modal-btn" id="applyPromoCodeBtn">Активировать</div>
+            <div class="modal-btn" onclick="closePromoModal()" style="margin-top:10px; background:#ffe2ed;">Закрыть</div>
         </div>
     </div>
 
-    <!-- МОДАЛКИ ДЛЯ ТЁМНОГО УРОВНЯ -->
-    <div id="darkProgressModal" class="custom-modal">
+    <!-- Модалка настроек -->
+    <div id="settingsModal" class="custom-modal settings-modal">
         <div class="custom-modal-content">
-            <div class="modal-flower">🌸✨🌸</div>
-            <div class="modal-message" id="darkProgressMessage">Ты близка к цели ✨</div>
-            <div class="modal-btn" onclick="closeDarkProgressModal()">Продолжить</div>
-        </div>
-    </div>
-
-    <div id="darkVictoryModal" class="custom-modal">
-        <div class="custom-modal-content">
-            <div class="modal-flower">💜🌸💜</div>
-            <div class="modal-message">Ты освободилась!<br>Добро пожаловать обратно 💜</div>
-            <div class="modal-btn" onclick="exitDarkMode()">Вернуться</div>
+            <div class="modal-flower">⚙️🌸⚙️</div>
+            <div class="modal-message">Настройки</div>
+            <div class="slider-row">
+                <label for="petalCountSlider">Количество лепестков: <span id="petalCountValue">25</span></label>
+                <input type="range" id="petalCountSlider" min="0" max="1000" value="25" step="1">
+            </div>
+            <div class="about-dev">
+                💻 О разработчиках
+            </div>
+            <div class="dev-links">
+                <div>✏️ Автор & разработчик: <a href="https://t.me/su57ks" target="_blank">@su57ks</a></div>
+                <div>💡 Идеи: <a href="https://t.me/selyswag" target="_blank">@selyswag</a></div>
+                <div class="thanks">🙏 Спасибо Егору Е. и Денису С. за помощь</div>
+            </div>
+            <div class="modal-btn" onclick="closeSettingsModal()">Закрыть</div>
         </div>
     </div>
 
@@ -692,14 +628,15 @@
             });
             nameModal.style.display = 'flex';
         }
-
         function closeNameModal() { nameModal.style.display = 'none'; }
 
-        // ==================== ЛЕПЕСТКИ ====================
-        function createPetals() {
+        // ==================== ЛЕПЕСТКИ (0..1000) ====================
+        let currentPetalCount = 25;
+        function createPetals(count) {
             const frontContainer = document.getElementById('petalsFront');
+            frontContainer.innerHTML = '';
             const petalsList = ['🌸', '🌷', '🌼', '🌺'];
-            for (let i = 0; i < 15; i++) {
+            for (let i = 0; i < count; i++) {
                 const petal = document.createElement('div');
                 petal.className = 'petal';
                 petal.textContent = petalsList[Math.floor(Math.random() * petalsList.length)];
@@ -711,7 +648,6 @@
             }
         }
 
-        // дождь из цветов
         function flowerRain(count = 30) {
             for (let i = 0; i < count; i++) {
                 setTimeout(() => {
@@ -730,7 +666,7 @@
             }
         }
 
-        // ==================== ОСНОВНАЯ ИГРА ====================
+        // ==================== ИГРА СЧЕТЧИК ====================
         let flowerCount = 0;
         const counterElement = document.getElementById('flowerCounter');
         const clickFlower = document.getElementById('clickFlower');
@@ -738,75 +674,44 @@
         const progressBar = document.getElementById('progressBar');
         const victoryModal = document.getElementById('victoryModal');
         const victoryMessage = document.getElementById('victoryMessage');
-        const special500Modal = document.getElementById('special500Modal');
-        const body = document.getElementById('mainBody');
-        const easterModal = document.getElementById('easterModal');
 
         function updateDisplay() {
             counterElement.textContent = `🌺 ${flowerCount}`;
             const progress = (flowerCount % 100) / 100 * 100;
             progressBar.style.width = progress + '%';
-            
             const nextTarget = (Math.floor(flowerCount / 100) + 1) * 100;
             const toGo = nextTarget - flowerCount;
             gameHint.textContent = flowerCount > 0 ? `До ${nextTarget} цветов: ${toGo} ✨` : `Кликай на цветок!`;
-
-            const darkLevel = Math.min(500, Math.floor(flowerCount / 50) * 50);
-            body.className = darkLevel ? `darker-${darkLevel}` : '';
         }
 
-        function checkVictory() {
-            if (flowerCount % 100 === 0 && flowerCount > 0) {
-                if (flowerCount === 500) {
-                    special500Modal.style.display = 'flex';
-                } else {
-                    victoryMessage.innerHTML = `🎉 ${flowerCount} цветов!<br>Ты невероятна! 🎉`;
-                    victoryModal.style.display = 'flex';
-                }
-                flowerRain(35);
+        // комплименты на 50
+        const compliments = [
+            "Ты сегодня ослепительна! ✨",
+            "У тебя потрясающая улыбка! 😊",
+            "Ты — весеннее вдохновение! 🌼",
+            "С тобой тепло, как в мае! ☀️",
+            "Твоя энергия заряжает! ⚡",
+            "Ты чудо! 💖",
+            "Нежность и красота — это ты! 🌸"
+        ];
+        const complimentModal = document.getElementById('complimentModal');
+        const complimentMessage = document.getElementById('complimentMessage');
+
+        function check50() {
+            if (flowerCount > 0 && flowerCount % 50 === 0) {
+                const randomIndex = Math.floor(Math.random() * compliments.length);
+                complimentMessage.textContent = compliments[randomIndex];
+                complimentModal.style.display = 'flex';
             }
         }
 
-        // бабочки
-        function spawnButterfly() {
-            if (Math.random() < 0.15) {
-                const butterfly = document.createElement('div');
-                butterfly.className = 'butterfly';
-                butterfly.textContent = '🦋';
-                butterfly.style.left = Math.random() * 80 + 10 + '%';
-                butterfly.style.top = Math.random() * 60 + 20 + '%';
-                
-                const flyX = (Math.random() - 0.5) * 400;
-                const flyY = (Math.random() - 0.5) * 300;
-                butterfly.style.setProperty('--fly-x', flyX + 'px');
-                butterfly.style.setProperty('--fly-y', flyY + 'px');
-                
-                butterfly.onclick = function(e) {
-                    e.stopPropagation();
-                    const bonus = Math.random() < 0.2 ? 8 : 5;
-                    flowerCount += bonus;
-                    updateDisplay();
-                    checkVictory();
-                    this.remove();
-                    
-                    const flash = document.createElement('div');
-                    flash.textContent = `+${bonus}`;
-                    flash.style.position = 'fixed';
-                    flash.style.left = e.clientX + 'px';
-                    flash.style.top = e.clientY + 'px';
-                    flash.style.color = '#a15168';
-                    flash.style.fontSize = '2rem';
-                    flash.style.fontWeight = 'bold';
-                    flash.style.zIndex = '1000';
-                    flash.style.animation = 'fall 1s forwards';
-                    document.body.appendChild(flash);
-                    setTimeout(() => flash.remove(), 1000);
-                };
-                
-                document.body.appendChild(butterfly);
-                setTimeout(() => {
-                    if (butterfly.parentNode) butterfly.remove();
-                }, 4000);
+        function closeComplimentModal() { complimentModal.style.display = 'none'; }
+
+        function checkVictory() {
+            if (flowerCount % 100 === 0 && flowerCount > 0) {
+                victoryMessage.innerHTML = `🎉 ${flowerCount} цветов!<br>Ты невероятна! 🎉`;
+                victoryModal.style.display = 'flex';
+                flowerRain(35);
             }
         }
 
@@ -817,145 +722,96 @@
             this.style.transform = 'scale(0.95)';
             setTimeout(() => this.style.transform = 'scale(1)', 100);
             checkVictory();
-            spawnButterfly();
+            check50(); // проверка на 50
         });
 
         document.getElementById('titleClick').addEventListener('click', function() {
             flowerRain(50);
         });
 
-        // ==================== ТЁМНЫЙ УРОВЕНЬ (АЙЗЕН) ====================
-        const darkLevel = document.getElementById('darkLevel');
-        const darkCounter = document.getElementById('darkCounter');
-        const darkFlower = document.getElementById('darkFlower');
-        const darkProgress = document.getElementById('darkProgress');
-        const darkHint = document.getElementById('darkHint');
-        const darkProgressModal = document.getElementById('darkProgressModal');
-        const darkProgressMessage = document.getElementById('darkProgressMessage');
-        const darkVictoryModal = document.getElementById('darkVictoryModal');
-        
-        let darkClicks = 0;
-        let pressTimer = null;
-        let isDarkMode = false;
-
-        const signature = document.getElementById('easterEgg');
-
-        function startPress() {
-            if (isDarkMode) {
-                // в тёмном режиме зажатие = выход
-                pressTimer = setTimeout(() => {
-                    exitDarkMode();
-                }, 800);
-            } else {
-                // в обычном режиме зажатие = вход в тёмный уровень
-                signature.classList.add('pulsing');
-                pressTimer = setTimeout(() => {
-                    enterDarkMode();
-                    signature.classList.remove('pulsing');
-                }, 1500);
-            }
-        }
-
-        function cancelPress() {
-            if (pressTimer) {
-                clearTimeout(pressTimer);
-                pressTimer = null;
-            }
-            signature.classList.remove('pulsing');
-        }
-
-        function handleShortPress() {
-            // если зажатие было коротким и не перешло в тёмный режим
-            if (!isDarkMode) {
-                easterModal.style.display = 'flex'; // показываем обычную пасхалку
-            }
-        }
-
-        signature.addEventListener('mousedown', startPress);
-        signature.addEventListener('touchstart', startPress, { passive: true });
-        signature.addEventListener('mouseup', function() {
-            if (!isDarkMode && !pressTimer) {
-                // если таймер уже сброшен, значит это было короткое нажатие
-                handleShortPress();
-            } else {
-                cancelPress();
-            }
-        });
-        signature.addEventListener('mouseleave', cancelPress);
-        signature.addEventListener('touchend', function() {
-            if (!isDarkMode && !pressTimer) {
-                handleShortPress();
-            } else {
-                cancelPress();
-            }
-        });
-        signature.addEventListener('touchcancel', cancelPress);
-
-        function enterDarkMode() {
-            isDarkMode = true;
-            body.classList.add('dark-mode');
-            darkClicks = 0;
-            updateDarkDisplay();
-        }
-
-        function exitDarkMode() {
-            isDarkMode = false;
-            body.classList.remove('dark-mode');
-            darkVictoryModal.style.display = 'none';
-            darkProgressModal.style.display = 'none';
-            darkClicks = 0;
-            updateDarkDisplay();
-            flowerRain(40);
-        }
-
-        function updateDarkDisplay() {
-            darkCounter.textContent = darkClicks;
-            const progress = (darkClicks / 500) * 100;
-            darkProgress.style.width = progress + '%';
-            darkHint.textContent = `Осталось: ${500 - darkClicks}`;
-        }
-
-        function checkDarkProgress() {
-            if (darkClicks % 100 === 0 && darkClicks > 0 && darkClicks < 500) {
-                darkProgressMessage.textContent = `✨ ${darkClicks} нажатий! Ты близка к цели ✨`;
-                darkProgressModal.style.display = 'flex';
-            }
-            if (darkClicks >= 500) {
-                darkVictoryModal.style.display = 'flex';
-            }
-        }
-
-        darkFlower.addEventListener('click', function(e) {
-            if (!isDarkMode) return;
-            e.preventDefault();
-            darkClicks++;
-            updateDarkDisplay();
-            
-            this.style.transform = 'scale(0.95)';
-            setTimeout(() => this.style.transform = 'scale(1)', 100);
-            
-            checkDarkProgress();
-        });
-
-        function closeDarkProgressModal() {
-            darkProgressModal.style.display = 'none';
-        }
-
-        // ==================== ОБЩИЕ ЗАКРЫТИЯ ====================
         function closeVictoryModal() { victoryModal.style.display = 'none'; }
-        function closeEasterModal() { easterModal.style.display = 'none'; }
-        function closeSpecialModal() { special500Modal.style.display = 'none'; }
+
+        // ==================== ПРОМО МОДАЛКА (ВМЕСТО ПОЛЯ ПОД ПОДПИСЬЮ) ====================
+        const promoModal = document.getElementById('promoModal');
+        const easterEgg = document.getElementById('easterEgg');
+        easterEgg.addEventListener('click', function() {
+            promoModal.style.display = 'flex';
+            document.getElementById('promoCodeInput').value = ''; // очищаем
+        });
+
+        function closePromoModal() { promoModal.style.display = 'none'; }
+
+        // обработка промокодов
+        document.getElementById('applyPromoCodeBtn').addEventListener('click', function() {
+            const input = document.getElementById('promoCodeInput');
+            const code = input.value.trim();
+            let message = '';
+            let action = null;
+
+            if (code === '1488') {
+                flowerCount = 0;
+                updateDisplay();
+                message = '🚫 Осуждаю расизм! Счет обнулен.';
+            } else if (code === '52') {
+                flowerCount += 5200;
+                updateDisplay();
+                message = 'Санкт-Петербург! ✨ +5200 цветов';
+            } else if (code === '67') {
+                flowerCount += 1;
+                updateDisplay();
+                message = 'не смешно 😕 +1 цветок';
+            } else if (code === '1337') {
+                flowerCount += 133700;
+                updateDisplay();
+                message = 'elite 👾 +133700 цветов';
+            } else if (code === '69') {
+                flowerCount += 690;
+                updateDisplay();
+                message = '... 😏 +690 цветов';
+            } else {
+                message = 'Неверный промокод';
+            }
+
+            alert(message); // просто показываем результат
+            if (code === '1488' || code === '52' || code === '67' || code === '1337' || code === '69') {
+                // дополнительно проверяем кратные 50 и 100 после добавления
+                checkVictory();
+                check50();
+            }
+            closePromoModal();
+        });
+
+        // ==================== НАСТРОЙКИ ====================
+        const settingsModal = document.getElementById('settingsModal');
+        const settingsButton = document.getElementById('settingsButton');
+        const petalSlider = document.getElementById('petalCountSlider');
+        const petalCountValue = document.getElementById('petalCountValue');
+
+        settingsButton.addEventListener('click', () => {
+            settingsModal.style.display = 'flex';
+        });
+
+        function closeSettingsModal() {
+            settingsModal.style.display = 'none';
+        }
+
+        petalSlider.addEventListener('input', (e) => {
+            const val = e.target.value;
+            petalCountValue.textContent = val;
+            currentPetalCount = Number(val);
+            createPetals(currentPetalCount);
+        });
 
         window.onclick = function(event) {
             if (event.target === nameModal) closeNameModal();
             if (event.target === victoryModal) closeVictoryModal();
-            if (event.target === easterModal) closeEasterModal();
-            if (event.target === special500Modal) closeSpecialModal();
-            if (event.target === darkProgressModal) darkProgressModal.style.display = 'none';
-            if (event.target === darkVictoryModal) darkVictoryModal.style.display = 'none';
+            if (event.target === complimentModal) closeComplimentModal();
+            if (event.target === promoModal) closePromoModal();
+            if (event.target === settingsModal) closeSettingsModal();
         };
 
-        createPetals();
+        // инициализация
+        createPetals(currentPetalCount);
         updateDisplay();
     </script>
 </body>
