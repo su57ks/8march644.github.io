@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>С 8 марта — именные открытки</title>
     <style>
         * {
@@ -11,18 +11,25 @@
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
             user-select: none;
+            -webkit-touch-callout: none;
         }
 
         body {
             min-height: 100vh;
+            min-height: -webkit-fill-available;
             background: linear-gradient(150deg, #fef3f8 0%, #ffeef4 100%);
-            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            font-family: -apple-system, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 25px 20px;
+            padding: 12px 10px;
             position: relative;
             overflow-x: hidden;
+            touch-action: pan-y pinch-zoom;
+        }
+
+        html {
+            height: -webkit-fill-available;
         }
 
         /* летающие лепестки */
@@ -39,12 +46,13 @@
 
         .petal {
             position: absolute;
-            font-size: 1.5rem;
-            opacity: 0.4;
+            font-size: 1.3rem;
+            opacity: 0.3;
             animation: fall linear infinite;
             color: #ffb7c5;
-            filter: drop-shadow(0 5px 5px rgba(255, 200, 220, 0.3));
+            filter: drop-shadow(0 3px 3px rgba(255, 200, 220, 0.2));
             pointer-events: none;
+            will-change: transform;
         }
 
         @keyframes fall {
@@ -53,15 +61,15 @@
 
         /* главная карточка */
         .main-card {
-            max-width: 1000px;
+            max-width: 500px;
             width: 100%;
-            background: rgba(255, 245, 250, 0.8);
-            backdrop-filter: blur(8px);
-            border-radius: 60px 60px 50px 50px;
-            box-shadow: 0 25px 40px rgba(255, 150, 180, 0.3),
-                        0 0 0 2px rgba(255, 255, 255, 0.8) inset,
-                        0 8px 20px rgba(250, 200, 210, 0.5);
-            padding: 30px 30px 30px 30px;
+            background: rgba(255, 245, 250, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 40px 40px 35px 35px;
+            box-shadow: 0 15px 30px rgba(255, 150, 180, 0.25),
+                        0 0 0 2px rgba(255, 255, 255, 0.8) inset;
+            padding: 20px 16px 18px;
             border: 1px solid rgba(255, 220, 230, 0.9);
             position: relative;
             z-index: 10;
@@ -70,199 +78,219 @@
         /* кнопка настроек */
         .settings-button {
             position: absolute;
-            top: 20px;
-            right: 25px;
-            font-size: 2rem;
+            top: 12px;
+            right: 15px;
+            font-size: 1.8rem;
             cursor: pointer;
-            background: rgba(255,255,255,0.5);
-            width: 50px;
-            height: 50px;
+            background: rgba(255,255,255,0.6);
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
             border: 2px solid white;
-            box-shadow: 0 4px 10px #ffc0cb;
+            box-shadow: 0 2px 8px #ffc0cb;
             transition: 0.2s;
             z-index: 50;
+            -webkit-tap-highlight-color: transparent;
         }
-        .settings-button:hover {
+
+        .settings-button:active {
             transform: rotate(30deg) scale(1.1);
             background: #ffe2ed;
         }
 
         .main-title {
             text-align: center;
-            font-size: clamp(2.8rem, 11vw, 5rem);
+            font-size: clamp(2.4rem, 10vw, 3.8rem);
             font-weight: 350;
             color: #a55e71;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-            text-shadow: 4px 4px 12px rgba(255, 200, 220, 0.7), 0 2px 0 white;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            text-shadow: 3px 3px 10px rgba(255, 200, 220, 0.6), 0 1px 0 white;
             font-family: 'Georgia', 'Times New Roman', serif;
-            line-height: 1.2;
+            line-height: 1.1;
             cursor: pointer;
             transition: 0.2s;
+            padding: 8px 0;
         }
-        .main-title:hover {
+
+        .main-title:active {
             transform: scale(1.02);
-            text-shadow: 0 0 20px #ff9bb6;
+            text-shadow: 0 0 15px #ff9bb6;
         }
 
         .soft-sub {
             text-align: center;
-            font-size: 1.6rem;
+            font-size: 1.3rem;
             color: #bc7f90;
-            background: rgba(255, 235, 240, 0.7);
-            padding: 0.6rem 2.2rem;
-            border-radius: 60px;
+            background: rgba(255, 235, 240, 0.8);
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
             width: fit-content;
-            margin: 0 auto 40px auto;
+            margin: 0 auto 25px auto;
             border: 1px solid rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
             font-style: italic;
-            box-shadow: 0 5px 14px #ffdbe4;
+            box-shadow: 0 3px 10px #ffdbe4;
         }
 
         /* имена */
         .names-wishes {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            margin: 15px 0 30px 0;
+            gap: 10px;
+            margin: 10px 0 20px 0;
         }
 
         .personal-block {
-            background: rgba(255, 250, 250, 0.9);
+            background: rgba(255, 250, 250, 0.95);
             backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
             border: 2px solid rgba(255, 255, 255, 0.9);
-            border-radius: 50px 20px 50px 20px;
-            padding: 15px 25px;
-            transition: all 0.25s ease;
-            box-shadow: 0 8px 16px rgba(240, 170, 190, 0.15);
+            border-radius: 40px 15px 40px 15px;
+            padding: 12px 18px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(240, 170, 190, 0.2);
             display: flex;
             align-items: center;
             cursor: pointer;
             outline: none;
+            min-height: 65px;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .personal-block:hover {
-            transform: scale(1.02) translateY(-2px);
+        .personal-block:active {
+            transform: scale(1.01) translateY(-1px);
             background: #fff0f7;
             border-color: #ffc0d0;
-            box-shadow: 0 15px 25px rgba(255, 150, 180, 0.3);
+            box-shadow: 0 8px 18px rgba(255, 150, 180, 0.25);
         }
 
         .personal-block.special {
             background: linear-gradient(145deg, #fff8f0, #fff0e6);
-            border: 3px solid #ffb7c5;
-            box-shadow: 0 0 25px rgba(255, 183, 197, 0.7);
+            border: 2.5px solid #ffb7c5;
+            box-shadow: 0 0 15px rgba(255, 183, 197, 0.5);
         }
 
         .name-row {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             width: 100%;
         }
 
         .name-icon {
-            font-size: 2.2rem;
+            font-size: 1.9rem;
             line-height: 1;
-            filter: drop-shadow(0 4px 4px #ffc0cb);
+            filter: drop-shadow(0 2px 3px #ffc0cb);
+            min-width: 38px;
+            text-align: center;
         }
 
         .name-label {
-            font-size: clamp(1.8rem, 5vw, 2.3rem);
+            font-size: clamp(1.5rem, 4.5vw, 1.9rem);
             font-weight: 450;
             color: #774c5a;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
+            word-break: break-word;
+            line-height: 1.2;
         }
 
         .special .name-label {
             color: #b35f7a;
             font-weight: 600;
-            text-shadow: 0 0 8px #ffb6c1;
+            text-shadow: 0 0 5px #ffb6c1;
         }
 
         /* игра */
         .game-section {
-            margin: 40px 0 20px 0;
+            margin: 25px 0 15px 0;
             text-align: center;
-            background: rgba(255, 240, 245, 0.6);
-            border-radius: 70px 30px 70px 30px;
-            padding: 30px 20px;
+            background: rgba(255, 240, 245, 0.7);
+            border-radius: 50px 20px 50px 20px;
+            padding: 20px 12px;
             border: 2px solid rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
         }
 
         .game-title {
-            font-size: 2rem;
+            font-size: 1.5rem;
             color: #b16d80;
-            margin-bottom: 25px;
+            margin-bottom: 18px;
             font-style: italic;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
+            flex-wrap: wrap;
         }
 
         .clicker-area {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
         }
 
         .counter-display {
-            font-size: 3.5rem;
+            font-size: 2.5rem;
             color: #a15168;
-            background: rgba(255, 255, 255, 0.7);
-            padding: 15px 35px;
-            border-radius: 60px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 12px 25px;
+            border-radius: 50px;
             border: 2px solid white;
-            box-shadow: 0 10px 20px #ffd0da;
+            box-shadow: 0 5px 15px #ffd0da;
             font-weight: 500;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
+            width: fit-content;
+            margin: 0 auto;
         }
 
         .big-flower {
             background: #ffdbe7;
             border: 4px solid white;
             border-radius: 50% 20% 50% 20%;
-            width: 180px;
-            height: 180px;
-            font-size: 7rem;
+            width: 150px;
+            height: 150px;
+            font-size: 6rem;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.2s ease;
-            box-shadow: 0 20px 30px #feb6c9;
-            margin: 10px auto;
+            transition: transform 0.1s ease;
+            box-shadow: 0 15px 25px #feb6c9;
+            margin: 5px auto;
             outline: none;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
 
         .big-flower:active {
-            transform: scale(0.95);
+            transform: scale(0.92);
         }
 
         .game-hint {
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: #ac6f80;
-            background: rgba(255, 255, 255, 0.6);
-            padding: 8px 20px;
-            border-radius: 40px;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 6px 16px;
+            border-radius: 30px;
             border: 1px solid white;
         }
 
         .progress-container {
-            width: 80%;
-            height: 12px;
-            background: rgba(255, 255, 255, 0.5);
+            width: 90%;
+            max-width: 280px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.6);
             border-radius: 20px;
-            margin: 5px auto;
+            margin: 0 auto;
             border: 1px solid white;
             overflow: hidden;
         }
@@ -283,186 +311,250 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(255, 210, 225, 0.5);
+            background-color: rgba(255, 210, 225, 0.6);
             backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             z-index: 200;
             align-items: center;
             justify-content: center;
+            padding: 15px;
         }
 
         .custom-modal-content {
-            background: rgba(255, 245, 250, 0.95);
+            background: rgba(255, 245, 250, 0.98);
             backdrop-filter: blur(10px);
-            border: 4px solid white;
-            border-radius: 80px 30px 80px 30px;
-            padding: 45px 35px;
-            max-width: 500px;
-            width: 90%;
+            -webkit-backdrop-filter: blur(10px);
+            border: 3px solid white;
+            border-radius: 60px 20px 60px 20px;
+            padding: 30px 20px;
+            max-width: 450px;
+            width: 100%;
             text-align: center;
-            box-shadow: 0 40px 50px #feb0c2;
-            animation: popIn 0.4s;
+            box-shadow: 0 25px 35px #feb0c2;
+            animation: popIn 0.3s ease-out;
+            max-height: 85vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         @keyframes popIn {
-            0% { transform: scale(0.8); opacity: 0; }
+            0% { transform: scale(0.9); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
 
         .modal-flower {
-            font-size: 5rem;
-            margin-bottom: 20px;
+            font-size: 4rem;
+            margin-bottom: 15px;
         }
 
         .modal-message {
-            font-size: 2.2rem;
+            font-size: 1.7rem;
             color: #a15168;
-            margin: 25px 0;
-            line-height: 1.5;
+            margin: 15px 0;
+            line-height: 1.4;
             white-space: pre-line;
+            word-break: break-word;
         }
 
         .wish-lines .wish-line {
-            font-size: 1.4rem;
-            padding: 12px 20px;
-            margin: 8px 0;
+            font-size: 1.2rem;
+            padding: 10px 12px;
+            margin: 6px 0;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 40px;
+            border: 1px solid white;
+            word-break: break-word;
         }
 
         .modal-btn {
             background: #ffc1d2;
-            border: 3px solid white;
-            border-radius: 60px;
-            padding: 15px 40px;
-            font-size: 1.5rem;
+            border: 2px solid white;
+            border-radius: 50px;
+            padding: 14px 25px;
+            font-size: 1.3rem;
             color: #7a4452;
             cursor: pointer;
             transition: 0.2s;
-            border: 2px solid white;
-            margin-top: 20px;
+            margin-top: 15px;
             display: inline-block;
             font-weight: 600;
+            min-width: 160px;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
 
-        .modal-btn:hover {
+        .modal-btn:active {
             background: #ffd5e2;
-            transform: scale(1.05);
-            box-shadow: 0 10px 20px #ffb0c0;
+            transform: scale(0.97);
+            box-shadow: 0 5px 12px #ffb0c0;
         }
 
-        /* подпись (больше не открывает промо, а открывает модалку с промо) */
+        /* подпись */
         .signature {
             text-align: center;
-            margin-top: 25px;
-            font-size: 1.5rem;
+            margin-top: 18px;
+            font-size: 1.2rem;
             color: #c58396;
             font-style: italic;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             border-top: 2px dashed #ffc9d6;
-            padding-top: 20px;
+            padding-top: 15px;
             font-family: 'Georgia', serif;
             cursor: pointer;
             transition: 0.2s;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .signature:hover {
+        .signature:active {
             color: #a55e71;
-            transform: scale(1.02);
+            transform: scale(1.01);
         }
 
         .signature span {
-            font-size: 1.8rem;
-            margin: 0 5px;
+            font-size: 1.4rem;
+            margin: 0 3px;
         }
 
-        /* стили для полей ввода внутри модалок */
+        /* стили для полей ввода */
         .promo-input {
-            padding: 15px 20px;
-            font-size: 1.8rem;
+            padding: 14px 18px;
+            font-size: 1.5rem;
             border-radius: 50px;
-            border: 3px solid white;
-            background: rgba(255, 240, 245, 0.9);
+            border: 2px solid white;
+            background: rgba(255, 240, 245, 0.95);
             text-align: center;
             color: #774c5a;
             outline: none;
-            width: 80%;
+            width: 90%;
             margin: 15px auto;
             display: block;
             backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            -webkit-appearance: none;
         }
 
         /* модалка настроек */
-        .settings-modal .custom-modal-content {
-            max-width: 450px;
-        }
         .slider-row {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            margin: 30px 0;
-            font-size: 1.5rem;
+            gap: 12px;
+            margin: 20px 0;
+            font-size: 1.3rem;
             color: #a55e71;
         }
+
         .slider-row input {
             width: 100%;
             accent-color: #ff8da1;
+            height: 40px;
+            -webkit-appearance: none;
+            background: transparent;
         }
+
+        .slider-row input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 25px;
+            height: 25px;
+            background: #ff8da1;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 6px #ffb0c0;
+            cursor: pointer;
+            margin-top: -10px;
+        }
+
+        .slider-row input::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 6px;
+            background: #ffe2ed;
+            border-radius: 10px;
+            border: 1px solid white;
+        }
+
         .about-dev {
-            margin: 20px 0 10px;
-            font-size: 1.6rem;
+            margin: 15px 0 8px;
+            font-size: 1.4rem;
             color: #a15168;
             border-top: 2px dashed #ffc9d6;
-            padding-top: 25px;
+            padding-top: 18px;
         }
+
         .dev-links {
-            font-size: 1.5rem;
-            background: rgba(255,255,240,0.5);
-            padding: 20px;
-            border-radius: 30px;
+            font-size: 1.2rem;
+            background: rgba(255,255,240,0.6);
+            padding: 15px;
+            border-radius: 25px;
             border: 2px dashed #ffb7c5;
             display: flex;
             flex-direction: column;
             gap: 10px;
+            word-break: break-word;
         }
+
         .dev-links a {
             color: #a15168;
             text-decoration: none;
             border-bottom: 2px dotted #ffb0c0;
             font-weight: 500;
+            display: inline-block;
+            padding: 2px 0;
         }
-        .dev-links a:hover {
-            color: #d46f8a;
-        }
+
         .thanks {
-            margin-top: 10px;
-            font-size: 1.3rem;
+            margin-top: 8px;
+            font-size: 1.1rem;
             color: #ac6f80;
         }
 
-        @media (max-width: 550px) {
+        /* адаптация для очень маленьких экранов */
+        @media (max-width: 380px) {
             .main-card {
-                padding: 20px 18px 20px;
-                border-radius: 40px;
+                padding: 16px 12px;
             }
+            
             .big-flower {
-                width: 140px;
-                height: 140px;
+                width: 130px;
+                height: 130px;
                 font-size: 5rem;
             }
+            
             .counter-display {
-                font-size: 2.8rem;
-                padding: 10px 25px;
+                font-size: 2.2rem;
+                padding: 10px 20px;
             }
+            
+            .name-label {
+                font-size: 1.4rem;
+            }
+            
+            .name-icon {
+                font-size: 1.7rem;
+                min-width: 32px;
+            }
+            
             .modal-message {
-                font-size: 1.8rem;
+                font-size: 1.5rem;
             }
+            
             .wish-lines .wish-line {
-                font-size: 1.2rem;
+                font-size: 1.1rem;
+                padding: 8px 10px;
             }
-            .settings-button {
-                top: 12px;
-                right: 15px;
-                width: 40px;
-                height: 40px;
-                font-size: 1.8rem;
+            
+            .modal-btn {
+                padding: 12px 20px;
+                font-size: 1.2rem;
+                min-width: 140px;
+            }
+        }
+
+        /* для телефонов с челкой/динамиком */
+        @supports (padding: max(0px)) {
+            body {
+                padding-left: max(10px, env(safe-area-inset-left));
+                padding-right: max(10px, env(safe-area-inset-right));
+                padding-top: max(12px, env(safe-area-inset-top));
+                padding-bottom: max(12px, env(safe-area-inset-bottom));
             }
         }
     </style>
@@ -472,9 +564,9 @@
     <div class="petals-front" id="petalsFront"></div>
 
     <div class="main-card">
-        <div class="settings-button" id="settingsButton">⚙️</div>
+        <div class="settings-button" id="settingsButton" aria-label="Настройки">⚙️</div>
 
-        <h1 class="main-title" id="titleClick">С 8 марта</h1>
+        <h1 class="main-title" id="titleClick" role="button" tabindex="0">С 8 марта</h1>
         <div class="soft-sub">самые прекрасные и нежные</div>
 
         <div class="names-wishes" id="namesContainer"></div>
@@ -488,12 +580,12 @@
                 <div class="progress-container">
                     <div class="progress-bar" id="progressBar"></div>
                 </div>
-                <div class="big-flower" id="clickFlower">🌸</div>
+                <div class="big-flower" id="clickFlower" role="button" tabindex="0" aria-label="Кликни цветок">🌸</div>
                 <div class="game-hint" id="gameHint">Кликай на цветок ✨</div>
             </div>
         </div>
 
-        <div class="signature" id="easterEgg">
+        <div class="signature" id="easterEgg" role="button" tabindex="0">
             <span>💗</span> by Aizen with love <span>💗</span>
         </div>
     </div>
@@ -508,7 +600,6 @@
         </div>
     </div>
 
-    <!-- модалка победы (100,200...) -->
     <div id="victoryModal" class="custom-modal">
         <div class="custom-modal-content">
             <div class="modal-flower">🌸🌷🌸</div>
@@ -517,7 +608,6 @@
         </div>
     </div>
 
-    <!-- Новая модалка на 50 цветов с комплиментами -->
     <div id="complimentModal" class="custom-modal">
         <div class="custom-modal-content">
             <div class="modal-flower">💐✨💐</div>
@@ -526,33 +616,31 @@
         </div>
     </div>
 
-    <!-- Модалка с промокодом (по клику на подпись) -->
     <div id="promoModal" class="custom-modal">
         <div class="custom-modal-content">
             <div class="modal-flower">🎁💗🎁</div>
-            <div class="modal-message">Надеюсь, вы меня не ненавидите)<br>Вот вам подарок - введите промокод<br><span style="font-size:1.6rem;">(Подсказка: это мемное число)</span></div>
-            <input type="text" id="promoCodeInput" class="promo-input" placeholder="Например 1488" maxlength="10">
+            <div class="modal-message">Надеюсь, вы меня не ненавидите)<br>Вот вам подарок - введите промокод<br><span style="font-size:1.3rem;">(Подсказка: это мемное число)</span></div>
+            <input type="text" id="promoCodeInput" class="promo-input" placeholder="Например 1488" maxlength="10" inputmode="numeric">
             <div class="modal-btn" id="applyPromoCodeBtn">Активировать</div>
-            <div class="modal-btn" onclick="closePromoModal()" style="margin-top:10px; background:#ffe2ed;">Закрыть</div>
+            <div class="modal-btn" onclick="closePromoModal()" style="margin-top:8px; background:#ffe2ed;">Закрыть</div>
         </div>
     </div>
 
-    <!-- Модалка настроек -->
     <div id="settingsModal" class="custom-modal settings-modal">
         <div class="custom-modal-content">
             <div class="modal-flower">⚙️🌸⚙️</div>
             <div class="modal-message">Настройки</div>
             <div class="slider-row">
                 <label for="petalCountSlider">Количество лепестков: <span id="petalCountValue">25</span></label>
-                <input type="range" id="petalCountSlider" min="0" max="1000" value="25" step="1">
+                <input type="range" id="petalCountSlider" min="0" max="200" value="25" step="1">
             </div>
             <div class="about-dev">
                 💻 О разработчиках
             </div>
             <div class="dev-links">
-                <div>✏️ Автор & разработчик: <a href="https://t.me/su57ks" target="_blank">@su57ks</a></div>
-                <div>💡 Идеи: <a href="https://t.me/selyswag" target="_blank">@selyswag</a></div>
-                <div class="thanks">🙏 Спасибо Егору Е. и Денису С. за помощь</div>
+                <div>✏️ Автор: <a href="https://t.me/su57ks" target="_blank" rel="noopener">@su57ks</a></div>
+                <div>💡 Идеи: <a href="https://t.me/selyswag" target="_blank" rel="noopener">@selyswag</a></div>
+                <div class="thanks">🙏 Спасибо Егору Е. и Денису С.</div>
             </div>
             <div class="modal-btn" onclick="closeSettingsModal()">Закрыть</div>
         </div>
@@ -600,6 +688,8 @@
             const block = document.createElement('div');
             block.className = 'personal-block' + (item.special ? ' special' : '');
             block.onclick = () => openNameModal(index);
+            block.setAttribute('role', 'button');
+            block.setAttribute('tabindex', '0');
             block.innerHTML = `
                 <div class="name-row">
                     <span class="name-icon">${item.icon}</span>
@@ -628,9 +718,10 @@
             });
             nameModal.style.display = 'flex';
         }
+        
         function closeNameModal() { nameModal.style.display = 'none'; }
 
-        // ==================== ЛЕПЕСТКИ (0..1000) ====================
+        // ==================== ЛЕПЕСТКИ ====================
         let currentPetalCount = 25;
         function createPetals(count) {
             const frontContainer = document.getElementById('petalsFront');
@@ -641,14 +732,14 @@
                 petal.className = 'petal';
                 petal.textContent = petalsList[Math.floor(Math.random() * petalsList.length)];
                 petal.style.left = Math.random() * 100 + '%';
-                petal.style.animationDuration = (Math.random() * 10 + 10) + 's';
-                petal.style.animationDelay = Math.random() * -20 + 's';
-                petal.style.fontSize = (Math.random() * 1.5 + 1) + 'rem';
+                petal.style.animationDuration = (Math.random() * 8 + 8) + 's';
+                petal.style.animationDelay = Math.random() * -15 + 's';
+                petal.style.fontSize = (Math.random() * 1.2 + 0.9) + 'rem';
                 frontContainer.appendChild(petal);
             }
         }
 
-        function flowerRain(count = 30) {
+        function flowerRain(count = 25) {
             for (let i = 0; i < count; i++) {
                 setTimeout(() => {
                     const flower = document.createElement('div');
@@ -656,13 +747,13 @@
                     flower.style.position = 'fixed';
                     flower.style.left = Math.random() * 100 + '%';
                     flower.style.top = '-10%';
-                    flower.style.fontSize = (Math.random() * 2.5 + 1.5) + 'rem';
+                    flower.style.fontSize = (Math.random() * 2 + 1.5) + 'rem';
                     flower.style.zIndex = '1000';
                     flower.style.pointerEvents = 'none';
                     flower.style.animation = `fall ${Math.random()*2+2}s linear forwards`;
                     document.body.appendChild(flower);
-                    setTimeout(() => flower.remove(), 4000);
-                }, i * 70);
+                    setTimeout(() => flower.remove(), 3500);
+                }, i * 50);
             }
         }
 
@@ -684,7 +775,6 @@
             gameHint.textContent = flowerCount > 0 ? `До ${nextTarget} цветов: ${toGo} ✨` : `Кликай на цветок!`;
         }
 
-        // комплименты на 50
         const compliments = [
             "Ты сегодня ослепительна! ✨",
             "У тебя потрясающая улыбка! 😊",
@@ -694,6 +784,7 @@
             "Ты чудо! 💖",
             "Нежность и красота — это ты! 🌸"
         ];
+        
         const complimentModal = document.getElementById('complimentModal');
         const complimentMessage = document.getElementById('complimentMessage');
 
@@ -711,7 +802,7 @@
             if (flowerCount % 100 === 0 && flowerCount > 0) {
                 victoryMessage.innerHTML = `🎉 ${flowerCount} цветов!<br>Ты невероятна! 🎉`;
                 victoryModal.style.display = 'flex';
-                flowerRain(35);
+                flowerRain(25);
             }
         }
 
@@ -719,34 +810,58 @@
             e.preventDefault();
             flowerCount++;
             updateDisplay();
-            this.style.transform = 'scale(0.95)';
+            this.style.transform = 'scale(0.92)';
             setTimeout(() => this.style.transform = 'scale(1)', 100);
             checkVictory();
-            check50(); // проверка на 50
+            check50();
+        });
+
+        clickFlower.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            this.style.transform = 'scale(0.92)';
+        });
+
+        clickFlower.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            this.style.transform = 'scale(1)';
+            flowerCount++;
+            updateDisplay();
+            checkVictory();
+            check50();
         });
 
         document.getElementById('titleClick').addEventListener('click', function() {
-            flowerRain(50);
+            flowerRain(30);
+        });
+
+        document.getElementById('titleClick').addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            flowerRain(30);
         });
 
         function closeVictoryModal() { victoryModal.style.display = 'none'; }
 
-        // ==================== ПРОМО МОДАЛКА (ВМЕСТО ПОЛЯ ПОД ПОДПИСЬЮ) ====================
+        // ==================== ПРОМО МОДАЛКА ====================
         const promoModal = document.getElementById('promoModal');
         const easterEgg = document.getElementById('easterEgg');
+        
         easterEgg.addEventListener('click', function() {
             promoModal.style.display = 'flex';
-            document.getElementById('promoCodeInput').value = ''; // очищаем
+            document.getElementById('promoCodeInput').value = '';
+        });
+
+        easterEgg.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            promoModal.style.display = 'flex';
+            document.getElementById('promoCodeInput').value = '';
         });
 
         function closePromoModal() { promoModal.style.display = 'none'; }
 
-        // обработка промокодов
         document.getElementById('applyPromoCodeBtn').addEventListener('click', function() {
             const input = document.getElementById('promoCodeInput');
             const code = input.value.trim();
             let message = '';
-            let action = null;
 
             if (code === '1488') {
                 flowerCount = 0;
@@ -772,9 +887,8 @@
                 message = 'Неверный промокод';
             }
 
-            alert(message); // просто показываем результат
+            alert(message);
             if (code === '1488' || code === '52' || code === '67' || code === '1337' || code === '69') {
-                // дополнительно проверяем кратные 50 и 100 после добавления
                 checkVictory();
                 check50();
             }
@@ -791,6 +905,11 @@
             settingsModal.style.display = 'flex';
         });
 
+        settingsButton.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            settingsModal.style.display = 'flex';
+        });
+
         function closeSettingsModal() {
             settingsModal.style.display = 'none';
         }
@@ -802,6 +921,7 @@
             createPetals(currentPetalCount);
         });
 
+        // Закрытие модалок по клику вне
         window.onclick = function(event) {
             if (event.target === nameModal) closeNameModal();
             if (event.target === victoryModal) closeVictoryModal();
@@ -810,9 +930,23 @@
             if (event.target === settingsModal) closeSettingsModal();
         };
 
-        // инициализация
+        // Закрытие по свайпу вниз для модалок (для мобильных)
+        document.querySelectorAll('.custom-modal-content').forEach(modal => {
+            modal.addEventListener('touchmove', (e) => {
+                e.stopPropagation();
+            });
+        });
+
+        // Инициализация
         createPetals(currentPetalCount);
         updateDisplay();
+
+        // Предотвращаем масштабирование двойным тапом
+        document.addEventListener('touchstart', (e) => {
+            if (e.touches.length > 1) {
+                e.preventDefault();
+            }
+        }, { passive: false });
     </script>
 </body>
 </html>
