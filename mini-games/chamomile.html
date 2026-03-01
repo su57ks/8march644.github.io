@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Гадание на ромашке</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #ffecf2 0%, #ffdae8 100%);
+            font-family: 'Segoe UI', 'Roboto', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .floating-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+        .floating-bg span {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.15;
+            color: #ff99bb;
+            animation: float 16s linear infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(-10vh) rotate(0deg); }
+            100% { transform: translateY(110vh) rotate(360deg); }
+        }
+
+        .card {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(255, 250, 252, 0.85);
+            backdrop-filter: blur(8px);
+            border-radius: 70px 30px 70px 30px;
+            box-shadow: 0 25px 45px rgba(255, 140, 170, 0.3),
+                        0 0 0 2px rgba(255, 255, 255, 0.7) inset;
+            padding: 30px 20px 40px;
+            border: 2px solid #ffd9e6;
+            position: relative;
+            z-index: 20;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: clamp(2.8rem, 8vw, 4rem);
+            color: #af4d6e;
+            font-family: 'Georgia', serif;
+            font-weight: 350;
+            text-shadow: 3px 3px 12px #ffb7c9;
+            margin-bottom: 5px;
+        }
+
+        .subhead {
+            font-size: 1.5rem;
+            color: #b06b80;
+            background: rgba(255, 235, 245, 0.8);
+            padding: 0.5rem 2rem;
+            border-radius: 50px;
+            width: fit-content;
+            margin: 0 auto 30px;
+            border: 1px solid white;
+            box-shadow: 0 5px 15px #ffc0d5;
+            font-style: italic;
+        }
+
+        .daisy {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 10px 0 10px;
+        }
+
+        .flower {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .center {
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle at 30% 30%, #fff8b0, #f7b32b 80%, #ca8323);
+            border-radius: 50%;
+            box-shadow: 0 8px 18px rgba(210, 120, 30, 0.4), inset -5px -8px 10px #b35f1a, inset 8px 8px 25px #fffde0;
+            border: 3px solid #fff3cf;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #ffec9e;
+            text-shadow: 2px 2px 0 #b45f1a;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .center::after {
+            content: "• • •";
+            position: absolute;
+            font-size: 1rem;
+            color: #ffd966;
+            opacity: 0.7;
+            letter-spacing: 6px;
+            transform: rotate(-15deg);
+        }
+
+        .petals-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .petal {
+            position: absolute;
+            width: 80px;
+            height: 130px;
+            background: linear-gradient(145deg, #fff9fc, #ffffff 60%, #ffeef4);
+            border-radius: 50% 50% 40% 40%;
+            box-shadow: 0 10px 18px rgba(255, 120, 150, 0.3), inset -3px -5px 8px #ffdbea, inset 4px 5px 15px white;
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            pointer-events: auto;
+            transition: opacity 0.2s ease;
+            backdrop-filter: blur(1px);
+            
+            transform-origin: center bottom;
+            
+            top: 50%;
+            left: 50%;
+            
+            margin-top: -130px;
+            
+            opacity: 1;
+        }
+
+        .petal:nth-child(odd) {
+            background: linear-gradient(145deg, #ffffff, #fff3fa 90%);
+        }
+
+        .spinning .petal {
+            animation: spinPetal 0.2s infinite linear;
+        }
+        .spinning .center {
+            animation: pulseGlow 0.2s infinite alternate;
+        }
+        
+        @keyframes spinPetal {
+            0% { transform: translate(-50%, 0) rotate(var(--rot)); }
+            100% { transform: translate(-50%, 0) rotate(calc(var(--rot) + 360deg)); }
+        }
+        
+        @keyframes pulseGlow {
+            from { box-shadow: 0 0 0 0 #ffcf9a; }
+            to { box-shadow: 0 0 20px 10px #ffe6aa; }
+        }
+
+        .fortune {
+            font-size: 2.4rem;
+            background: rgba(255, 250, 250, 0.9);
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: 3px solid white;
+            margin: 15px auto 20px;
+            display: inline-block;
+            color: #a1375a;
+            font-weight: 500;
+            box-shadow: 0 5px 20px #ffb7c9;
+            min-width: 260px;
+            backdrop-filter: blur(5px);
+        }
+
+        .button-panel {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 15px 0 5px;
+        }
+
+        .btn {
+            border: 4px solid white;
+            border-radius: 60px;
+            padding: 16px 38px;
+            font-size: 2rem;
+            font-weight: 700;
+            background: #ffd5e2;
+            color: #8f3e55;
+            cursor: pointer;
+            box-shadow: 0 10px 20px #ffa5bd;
+            transition: 0.15s;
+            min-width: 210px;
+            letter-spacing: 1px;
+            border: 2px solid white;
+        }
+        .btn:active { transform: scale(0.94); }
+        .btn.hidden { display: none; }
+        .btn:disabled {
+            opacity: 0.5;
+            pointer-events: none;
+            filter: grayscale(0.3);
+        }
+
+        .btn-spin {
+            background: #ffe4b0;
+            color: #964b60;
+        }
+
+        .final-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(255, 210, 230, 0.5);
+            backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
+            z-index: 300;
+        }
+        .final-content {
+            background: rgba(255, 245, 252, 0.96);
+            border-radius: 80px 30px 80px 30px;
+            border: 4px solid white;
+            padding: 45px 35px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 30px 40px #ffb0c2;
+            animation: pop 0.4s;
+        }
+        @keyframes pop {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .final-message {
+            font-size: 2.6rem;
+            color: #a1375a;
+            margin: 25px 0;
+        }
+        .modal-btn {
+            background: #ffc1d2;
+            border: 3px solid white;
+            border-radius: 60px;
+            padding: 12px 40px;
+            font-size: 1.8rem;
+            color: #7a4452;
+            cursor: pointer;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+<div class="floating-bg" id="floatingBg"></div>
+
+<div class="card">
+    <h1>🌼 Гадание на ромашке</h1>
+    <div class="subhead">Оторви лепесток — узнай судьбу</div>
+
+    <div class="daisy">
+        <div class="flower" id="flower">
+            <div class="center"></div>
+            <div class="petals-container" id="petalsContainer"></div>
+        </div>
+    </div>
+
+    <div class="fortune" id="fortuneText">🌸 Нажми "оторвать"</div>
+
+    <div class="button-panel">
+        <button class="btn" id="pluckBtn">🌸 Оторвать</button>
+        <button class="btn btn-spin hidden" id="spinBtn">🌀 Гадать</button>
+    </div>
+</div>
+
+<div class="final-modal" id="finalModal">
+    <div class="final-content">
+        <div style="font-size:4rem;">🌸🌼🌸</div>
+        <div class="final-message" id="finalResult"></div>
+        <div class="modal-btn" onclick="closeFinalModal()">Спасибо ✨</div>
+    </div>
+</div>
+
+<script>
+(function() {
+    const PHRASES = [
+        "Любит 💖",
+        "Не любит 🖤",
+        "Плюнет 💧",
+        "Поцелует 💋",
+        "К сердцу прижмёт 🤗",
+        "К чёрту пошлёт 👿"
+    ];
+
+    const petalsContainer = document.getElementById('petalsContainer');
+    const flowerEl = document.getElementById('flower');
+    const fortuneText = document.getElementById('fortuneText');
+    const pluckBtn = document.getElementById('pluckBtn');
+    const spinBtn = document.getElementById('spinBtn');
+    const finalModal = document.getElementById('finalModal');
+    const finalResultSpan = document.getElementById('finalResult');
+
+    // Состояние
+    let totalPetals = 12;           // максимальное количество лепестков (9-12)
+    let visiblePetals = 12;         // сколько сейчас видно
+    let currentPhraseIndex = 0;     // индекс текущей фразы
+    
+    // Храним ссылки на все лепестки
+    let petalElements = [];
+
+    // Создаём все лепестки сразу (max 12) с правильными позициями
+    function createAllPetals(maxCount) {
+        petalsContainer.innerHTML = '';
+        petalElements = [];
+        
+        const angleStep = 360 / maxCount;
+
+        for (let i = 0; i < maxCount; i++) {
+            const angle = angleStep * i;
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            
+            // Фиксированная позиция на всё время
+            petal.style.transform = `translate(-50%, 0) rotate(${angle}deg)`;
+            petal.style.setProperty('--rot', angle + 'deg');
+            
+            petalsContainer.appendChild(petal);
+            petalElements.push(petal);
+        }
+    }
+
+    // Показываем только первые count лепестков
+    function setVisiblePetals(count) {
+        for (let i = 0; i < petalElements.length; i++) {
+            petalElements[i].style.opacity = i < count ? '1' : '0';
+        }
+        visiblePetals = count;
+    }
+
+    // Инициализация
+    function initGame() {
+        // Случайное максимальное количество от 9 до 12
+        totalPetals = Math.floor(Math.random() * 4) + 9; // 9,10,11,12
+        createAllPetals(totalPetals);
+        
+        // Показываем все лепестки изначально
+        setVisiblePetals(totalPetals);
+        
+        // СЛУЧАЙНОЕ первое предсказание
+        currentPhraseIndex = Math.floor(Math.random() * PHRASES.length);
+        fortuneText.innerText = PHRASES[currentPhraseIndex];
+        
+        pluckBtn.classList.remove('hidden');
+        spinBtn.classList.add('hidden');
+        flowerEl.classList.remove('spinning');
+        pluckBtn.disabled = false;
+        spinBtn.disabled = false;
+    }
+
+    // Оторвать лепесток - скрываем последний видимый
+    function pluckPetal() {
+        if (visiblePetals <= 0) return;
+
+        // Идём с конца массива и находим первый видимый лепесток
+        for (let i = petalElements.length - 1; i >= 0; i--) {
+            if (petalElements[i].style.opacity === '1') {
+                petalElements[i].style.opacity = '0';
+                break;
+            }
+        }
+        
+        visiblePetals--;
+
+        // Следующая фраза по порядку
+        currentPhraseIndex = (currentPhraseIndex + 1) % PHRASES.length;
+        fortuneText.innerText = PHRASES[currentPhraseIndex];
+
+        // ЕСЛИ НЕ ОСТАЛОСЬ ЛЕПЕСТКОВ (0) - показываем предсказание
+        if (visiblePetals === 0) {
+            // Последняя фраза - это и есть судьба
+            finalResultSpan.innerText = PHRASES[currentPhraseIndex];
+            finalModal.style.display = 'flex';
+
+            pluckBtn.classList.add('hidden');
+            spinBtn.classList.remove('hidden');
+        }
+    }
+
+    // Раскрутка (гадать)
+    function startSpin() {
+        if (visiblePetals !== 0) return;
+
+        spinBtn.disabled = true;
+        flowerEl.classList.add('spinning');
+        fortuneText.innerText = '🌀 Вращаю...';
+
+        // Целевое количество - случайное от 9 до 12
+        const targetCount = Math.floor(Math.random() * 4) + 9;
+        
+        // Плавно показываем лепестки один за другим
+        let current = 0;
+        
+        const interval = setInterval(() => {
+            if (!flowerEl.classList.contains('spinning')) {
+                clearInterval(interval);
+                return;
+            }
+
+            current++;
+            
+            // Показываем лепестки по очереди (первые current штук)
+            for (let i = 0; i < petalElements.length; i++) {
+                petalElements[i].style.opacity = i < current ? '1' : '0';
+            }
+
+            if (current >= targetCount) {
+                clearInterval(interval);
+                setTimeout(() => {
+                    if (flowerEl.classList.contains('spinning')) {
+                        finishSpin(targetCount);
+                    }
+                }, 200);
+            }
+        }, 100);
+    }
+
+    function finishSpin(newCount) {
+        flowerEl.classList.remove('spinning');
+        visiblePetals = newCount;
+        
+        // НОВОЕ случайное предсказание для следующего раунда
+        currentPhraseIndex = Math.floor(Math.random() * PHRASES.length);
+        fortuneText.innerText = '✨ Гадание готово ✨';
+
+        pluckBtn.classList.remove('hidden');
+        spinBtn.classList.add('hidden');
+        spinBtn.disabled = false;
+
+        flowerRain(18);
+    }
+
+    function flowerRain(count) {
+        for (let i = 0; i < count; i++) {
+            setTimeout(() => {
+                const d = document.createElement('div');
+                d.textContent = ['🌸','🌷','🌼','🌺','🌹'][Math.floor(Math.random()*5)];
+                d.style.position = 'fixed';
+                d.style.left = Math.random() * 100 + '%';
+                d.style.top = '-5%';
+                d.style.fontSize = (Math.random() * 2 + 1.5) + 'rem';
+                d.style.zIndex = '999';
+                d.style.pointerEvents = 'none';
+                d.style.animation = `float ${Math.random()*2+2}s linear forwards`;
+                document.body.appendChild(d);
+                setTimeout(() => d.remove(), 3000);
+            }, i * 40);
+        }
+    }
+
+    window.closeFinalModal = function() {
+        finalModal.style.display = 'none';
+    };
+
+    window.onclick = function(e) {
+        if (e.target === finalModal) finalModal.style.display = 'none';
+    };
+
+    function createBgPetals() {
+        const bg = document.getElementById('floatingBg');
+        for (let i=0; i<20; i++) {
+            const s = document.createElement('span');
+            s.textContent = ['🌸','🌷','🌼','🌺'][Math.floor(Math.random()*4)];
+            s.style.left = Math.random()*100 + '%';
+            s.style.animationDuration = (Math.random()*10+12)+'s';
+            s.style.animationDelay = Math.random()*-10+'s';
+            s.style.fontSize = (Math.random()*1.8+1.2)+'rem';
+            bg.appendChild(s);
+        }
+    }
+
+    pluckBtn.addEventListener('click', () => {
+        if (visiblePetals > 0) pluckPetal();
+    });
+
+    spinBtn.addEventListener('click', startSpin);
+
+    document.querySelector('h1').addEventListener('click', ()=> flowerRain(25));
+
+    initGame();
+    createBgPetals();
+})();
+</script>
+</body>
+</html>
