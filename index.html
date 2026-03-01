@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="themes/base.css">
     <link rel="stylesheet" href="themes/themes.css">
 </head>
-<body id="mainBody">
+<body id="mainBody" class="theme-default">
 
     <div class="petals-front" id="petalsFront"></div>
 
@@ -33,10 +33,13 @@
             </div>
         </div>
 
-        <!-- Кнопка гадания на ромашке -->
-        <div class="daisy-button-container">
-            <button class="daisy-game-btn" id="daisyGameBtn">
-                <span>🌼</span> Гадание на ромашке (10🌸) <span>🌼</span>
+        <!-- Кнопки мини-игр -->
+        <div class="games-row">
+            <button class="game-btn daisy-btn" id="daisyGameBtn">
+                <span>🌼</span> Ромашка (10🌸)
+            </button>
+            <button class="game-btn wheel-btn" id="wheelGameBtn">
+                <span>🎰</span> Букет (10🌸)
             </button>
         </div>
 
@@ -85,16 +88,53 @@
         <div class="custom-modal-content">
             <div class="modal-flower">⚙️🌸⚙️</div>
             <div class="modal-message">Настройки</div>
-            <div class="slider-row">
-                <label for="petalCountSlider">Количество лепестков: <span id="petalCountValue">25</span></label>
-                <input type="range" id="petalCountSlider" min="0" max="200" value="25" step="1">
+            
+            <div class="settings-section">
+                <div class="section-title">🌸 Лепестки</div>
+                <div class="slider-row">
+                    <label for="petalCountSlider">Количество лепестков: <span id="petalCountValue">25</span></label>
+                    <input type="range" id="petalCountSlider" min="0" max="150" value="25" step="1">
+                </div>
             </div>
+            
+            <div class="settings-section">
+                <div class="section-title">🎨 Оформление</div>
+                <div class="theme-buttons" id="themeButtons">
+                    <button class="theme-btn theme-default-btn active" onclick="setTheme('default')">
+                        <span class="theme-color default-color"></span>
+                        Розовая
+                    </button>
+                    <button class="theme-btn theme-white-btn" onclick="setTheme('white')">
+                        <span class="theme-color white-color"></span>
+                        Белая
+                    </button>
+                    <button class="theme-btn theme-lilac-btn" onclick="setTheme('lilac')">
+                        <span class="theme-color lilac-color"></span>
+                        Сиреневая
+                    </button>
+                    <button class="theme-btn theme-bright-pink-btn" onclick="setTheme('bright-pink')">
+                        <span class="theme-color bright-pink-color"></span>
+                        Ярко-розовая
+                    </button>
+                    <!-- Секретные темы (будут показаны после активации) -->
+                    <button class="theme-btn theme-cosmic-btn hidden" onclick="setTheme('cosmic')">
+                        <span class="theme-color cosmic-color"></span>
+                        Космическая 🌟
+                    </button>
+                    <button class="theme-btn theme-dark-blue-btn hidden" onclick="setTheme('dark-blue')">
+                        <span class="theme-color dark-blue-color"></span>
+                        Темно-синяя 🌌
+                    </button>
+                </div>
+            </div>
+            
             <div class="about-dev">
                 💻 О разработчиках
             </div>
             <div class="dev-links">
                 <div>✏️ Автор: <a href="https://t.me/su57ks" target="_blank" rel="noopener">@su57ks</a></div>
                 <div>💡 Идеи: <a href="https://t.me/selyswag" target="_blank" rel="noopener">@selyswag</a></div>
+                <div>🧪 Тестер: Ярослава</div>
                 <div class="thanks">🙏 Спасибо Егору Е. и Денису С.</div>
             </div>
             <div class="modal-btn" onclick="closeSettingsModal()">Закрыть</div>
@@ -121,11 +161,27 @@
                     <button class="daisy-btn" id="daisyPluckBtn">🌸 Оторвать</button>
                     <button class="daisy-btn daisy-spin-btn hidden" id="daisySpinBtn">🌀 Гадать</button>
                 </div>
-                
-                <div class="daisy-cost">Стоимость гадания: 10 цветов ✨</div>
             </div>
             
             <div class="modal-btn daisy-close-btn" onclick="closeDaisyModal()">Закрыть</div>
+        </div>
+    </div>
+
+    <!-- Модалка рулетки "Букет" -->
+    <div id="wheelModal" class="custom-modal wheel-modal">
+        <div class="custom-modal-content wheel-content">
+            <div class="modal-flower">🎰🌸🎰</div>
+            <div class="modal-message">Крути рулетку</div>
+            
+            <div class="wheel-game-container">
+                <div class="wheel-wrapper">
+                    <div class="pointer"></div>
+                    <canvas id="wheelCanvas" width="600" height="600"></canvas>
+                </div>
+                <button class="wheel-spin-btn" id="wheelSpinBtn">🎰 Крутить (10🌸)</button>
+            </div>
+            
+            <div class="modal-btn wheel-close-btn" onclick="closeWheelModal()">Закрыть</div>
         </div>
     </div>
 
@@ -137,6 +193,9 @@
             <div class="modal-btn" onclick="closeMessageModal()">OK</div>
         </div>
     </div>
+
+    <!-- Контейнер для цветопада (поверх всего) -->
+    <div class="rain-container" id="rainContainer"></div>
 
     <script>
         // ==================== ДАННЫЕ ИМЁН ====================
@@ -231,21 +290,31 @@
             }
         }
 
-        function flowerRain(count = 25) {
+        function flowerRain(count = 25, specificEmoji = null) {
+            const rainContainer = document.getElementById('rainContainer');
+            const flowersList = ['🌸', '🌷', '🌼', '🌺', '🌹', '🌻', '🌿'];
+            
             for (let i = 0; i < count; i++) {
                 setTimeout(() => {
                     const flower = document.createElement('div');
-                    flower.textContent = ['🌸','🌷','🌼','🌺','🌹'][Math.floor(Math.random()*5)];
-                    flower.style.position = 'fixed';
+                    flower.className = 'falling-flower';
+                    
+                    if (specificEmoji && Math.random() < 0.8) {
+                        flower.textContent = specificEmoji;
+                    } else {
+                        flower.textContent = flowersList[Math.floor(Math.random() * flowersList.length)];
+                    }
+                    
                     flower.style.left = Math.random() * 100 + '%';
-                    flower.style.top = '-10%';
-                    flower.style.fontSize = (Math.random() * 2 + 1.5) + 'rem';
-                    flower.style.zIndex = '1000';
-                    flower.style.pointerEvents = 'none';
-                    flower.style.animation = `fall ${Math.random()*2+2}s linear forwards`;
-                    document.body.appendChild(flower);
-                    setTimeout(() => flower.remove(), 3500);
-                }, i * 50);
+                    flower.style.animationDuration = (Math.random() * 3 + 2.5) + 's';
+                    flower.style.fontSize = (Math.random() * 2 + 1.8) + 'rem';
+                    flower.style.opacity = 0.7 + Math.random() * 0.3;
+                    rainContainer.appendChild(flower);
+
+                    setTimeout(() => {
+                        if (flower.parentNode) flower.remove();
+                    }, 6000);
+                }, i * 30);
             }
         }
 
@@ -365,6 +434,10 @@
 
         function closePromoModal() { promoModal.style.display = 'none'; }
 
+        // Флаги для секретных тем
+        let cosmicThemeUnlocked = false;
+        let darkBlueThemeUnlocked = false;
+
         document.getElementById('applyPromoCodeBtn').addEventListener('click', function() {
             const input = document.getElementById('promoCodeInput');
             const code = input.value.trim();
@@ -391,11 +464,30 @@
                 updateDisplay();
                 message = 'elite 👾 +133700 цветов';
                 icon = '👾';
+                
+                // Разблокировка темно-синей темы
+                if (!darkBlueThemeUnlocked) {
+                    darkBlueThemeUnlocked = true;
+                    document.querySelector('.theme-dark-blue-btn').classList.remove('hidden');
+                    showMessage('🎉 Разблокирована Темно-синяя тема!', '🌌');
+                }
             } else if (code === '69') {
                 flowerCount += 690;
                 updateDisplay();
                 message = '... 😏 +690 цветов';
                 icon = '😏';
+            } else if (code === '505') {
+                flowerCount += 505812;
+                updateDisplay();
+                message = '🔥 +505812 цветов! Ого! 🔥';
+                icon = '🌟';
+                
+                // Разблокировка космической темы
+                if (!cosmicThemeUnlocked) {
+                    cosmicThemeUnlocked = true;
+                    document.querySelector('.theme-cosmic-btn').classList.remove('hidden');
+                    showMessage('🎉 Разблокирована Космическая тема!', '🌟');
+                }
             } else {
                 message = 'Неверный промокод';
                 icon = '❌';
@@ -403,7 +495,7 @@
 
             showMessage(message, icon);
             
-            if (code === '1488' || code === '52' || code === '67' || code === '1337' || code === '69') {
+            if (code === '1488' || code === '52' || code === '67' || code === '1337' || code === '69' || code === '505') {
                 checkVictory();
                 check50();
             }
@@ -436,11 +528,38 @@
             createPetals(currentPetalCount);
         });
 
+        // ==================== СМЕНА ТЕМЫ ====================
+        function setTheme(themeName) {
+            const body = document.getElementById('mainBody');
+            
+            // Удаляем все классы тем
+            body.classList.remove(
+                'theme-default', 'theme-white', 'theme-lilac', 'theme-bright-pink',
+                'theme-cosmic', 'theme-dark-blue'
+            );
+            
+            // Добавляем выбранную тему
+            body.classList.add(`theme-${themeName}`);
+            
+            // Обновляем активную кнопку
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Находим и активируем нужную кнопку
+            const activeBtn = document.querySelector(`.theme-${themeName}-btn`);
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+            }
+            
+            // Перерисовываем лепестки (чтобы применить новые цвета)
+            createPetals(currentPetalCount);
+        }
+
         // ==================== ГАДАНИЕ НА РОМАШКЕ ====================
         const daisyModal = document.getElementById('daisyModal');
         const daisyGameBtn = document.getElementById('daisyGameBtn');
         
-        // Константы для гадания
         const DAISY_PHRASES = [
             "Любит 💖",
             "Не любит 🖤",
@@ -564,7 +683,6 @@
             flowerRain(18);
         }
 
-        // Открытие модалки гадания
         daisyGameBtn.addEventListener('click', function() {
             if (flowerCount < 10) {
                 showMessage('Недостаточно цветов! Нужно 10 🌸', '💔');
@@ -594,9 +712,185 @@
             daisyModal.style.display = 'none';
         }
 
-        // Обработчики для кнопок гадания
         document.getElementById('daisyPluckBtn').addEventListener('click', pluckDaisyPetal);
         document.getElementById('daisySpinBtn').addEventListener('click', startDaisySpin);
+
+        // ==================== РУЛЕТКА "БУКЕТ" ====================
+        const wheelModal = document.getElementById('wheelModal');
+        const wheelGameBtn = document.getElementById('wheelGameBtn');
+        const wheelSpinBtn = document.getElementById('wheelSpinBtn');
+        
+        const WHEEL_FLOWERS = [
+            { emoji: '🌸', name: 'Сакура' },
+            { emoji: '🌼', name: 'Ромашка' },
+            { emoji: '🌻', name: 'Подсолнух' },
+            { emoji: '🌺', name: 'Гибискус' },
+            { emoji: '🌷', name: 'Тюльпан' },
+            { emoji: '🌹', name: 'Роза' },
+            { emoji: '🌸', name: 'Сакура' },
+            { emoji: '🌿', name: 'Веточка' }
+        ];
+        
+        const wheelSectorCount = 8;
+        let wheelCanvas = document.getElementById('wheelCanvas');
+        let wheelCtx = wheelCanvas.getContext('2d');
+        let wheelRotation = 0;
+        let wheelIsSpinning = false;
+        let wheelAnimFrame = null;
+        let wheelVelocity = 0;
+        const wheelFriction = 0.985;
+        const wheelMinSpin = 0.005;
+
+        function drawWheel(rotation) {
+            wheelCtx.clearRect(0, 0, wheelCanvas.width, wheelCanvas.height);
+            const centerX = wheelCanvas.width / 2;
+            const centerY = wheelCanvas.height / 2;
+            const radius = wheelCanvas.width * 0.42;
+            const angleStep = (Math.PI * 2) / wheelSectorCount;
+
+            for (let i = 0; i < wheelSectorCount; i++) {
+                const start = i * angleStep + rotation;
+                const end = start + angleStep;
+
+                wheelCtx.fillStyle = (i % 2 === 0) ? '#ffd9e6' : '#ffe4f0';
+                wheelCtx.beginPath();
+                wheelCtx.moveTo(centerX, centerY);
+                wheelCtx.arc(centerX, centerY, radius, start, end);
+                wheelCtx.closePath();
+                wheelCtx.fill();
+
+                wheelCtx.strokeStyle = '#ffffff';
+                wheelCtx.lineWidth = 2.5;
+                wheelCtx.beginPath();
+                wheelCtx.moveTo(centerX, centerY);
+                wheelCtx.arc(centerX, centerY, radius, start, end);
+                wheelCtx.lineTo(centerX, centerY);
+                wheelCtx.stroke();
+
+                wheelCtx.save();
+                wheelCtx.translate(centerX, centerY);
+                const midAngle = start + angleStep / 2;
+                wheelCtx.rotate(midAngle);
+                
+                const textRadius = radius * 0.7;
+                wheelCtx.font = `500 ${radius * 0.45}px 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif`;
+                wheelCtx.fillStyle = '#9f5f74';
+                wheelCtx.shadowColor = '#ffb7c5';
+                wheelCtx.shadowBlur = 12;
+                wheelCtx.textAlign = 'center';
+                wheelCtx.textBaseline = 'middle';
+                wheelCtx.fillText(WHEEL_FLOWERS[i].emoji, textRadius, 0);
+                
+                wheelCtx.restore();
+            }
+
+            wheelCtx.beginPath();
+            wheelCtx.arc(centerX, centerY, 14, 0, 2 * Math.PI);
+            wheelCtx.fillStyle = '#ffffff';
+            wheelCtx.shadowBlur = 16;
+            wheelCtx.shadowColor = '#ffb0c0';
+            wheelCtx.fill();
+            wheelCtx.shadowBlur = 0;
+            wheelCtx.strokeStyle = '#ffb7c5';
+            wheelCtx.lineWidth = 3;
+            wheelCtx.stroke();
+        }
+
+        function spinWheelAnimation() {
+            if (!wheelIsSpinning) return;
+
+            wheelVelocity *= wheelFriction;
+            wheelRotation += wheelVelocity;
+            drawWheel(wheelRotation);
+
+            if (Math.abs(wheelVelocity) > wheelMinSpin) {
+                wheelAnimFrame = requestAnimationFrame(spinWheelAnimation);
+            } else {
+                wheelIsSpinning = false;
+                if (wheelAnimFrame) {
+                    cancelAnimationFrame(wheelAnimFrame);
+                    wheelAnimFrame = null;
+                }
+
+                // Активируем кнопку после окончания вращения
+                wheelSpinBtn.disabled = false;
+                wheelCanvas.style.pointerEvents = 'auto';
+
+                // Определяем выпавший цветок
+                let norm = (wheelRotation % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
+                const upAngle = (3 * Math.PI) / 2;
+                let localUp = upAngle - norm;
+                localUp = (localUp % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
+                const angleStep = (2 * Math.PI) / wheelSectorCount;
+                let index = Math.floor(localUp / angleStep);
+                if (index >= wheelSectorCount) index = wheelSectorCount - 1;
+
+                const result = WHEEL_FLOWERS[index];
+                
+                // Цветопад из 100 таких цветков
+                flowerRain(100, result.emoji);
+            }
+        }
+
+        function startWheelSpin() {
+            // Проверяем, достаточно ли цветов перед каждым вращением
+            if (flowerCount < 10) {
+                showMessage('Недостаточно цветов! Нужно 10 🌸', '💔');
+                closeWheelModal();
+                return;
+            }
+            
+            if (wheelIsSpinning) return;
+
+            // Списываем цветы
+            flowerCount -= 10;
+            updateDisplay();
+
+            wheelIsSpinning = true;
+            wheelSpinBtn.disabled = true;
+            wheelCanvas.style.pointerEvents = 'none';
+            
+            const targetFull = 10 * Math.PI;
+            const randomAdd = Math.random() * 2 * Math.PI;
+            const totalAngle = targetFull + randomAdd;
+            wheelVelocity = totalAngle * (1 - wheelFriction) * 1.2;
+
+            if (wheelAnimFrame) cancelAnimationFrame(wheelAnimFrame);
+            wheelAnimFrame = requestAnimationFrame(spinWheelAnimation);
+        }
+
+        wheelGameBtn.addEventListener('click', function() {
+            if (flowerCount < 10) {
+                showMessage('Недостаточно цветов! Нужно 10 🌸', '💔');
+                return;
+            }
+            
+            // Не списываем цветы при открытии модалки, только при вращении
+            drawWheel(wheelRotation);
+            wheelModal.style.display = 'flex';
+            wheelSpinBtn.disabled = false;
+            wheelCanvas.style.pointerEvents = 'auto';
+        });
+
+        wheelGameBtn.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            if (flowerCount < 10) {
+                showMessage('Недостаточно цветов! Нужно 10 🌸', '💔');
+                return;
+            }
+            
+            drawWheel(wheelRotation);
+            wheelModal.style.display = 'flex';
+            wheelSpinBtn.disabled = false;
+            wheelCanvas.style.pointerEvents = 'auto';
+        });
+
+        function closeWheelModal() {
+            wheelModal.style.display = 'none';
+        }
+
+        wheelSpinBtn.addEventListener('click', startWheelSpin);
+        wheelCanvas.addEventListener('click', startWheelSpin);
 
         // ==================== ЗАКРЫТИЕ МОДАЛОК ====================
         window.onclick = function(event) {
@@ -606,6 +900,7 @@
             if (event.target === promoModal) closePromoModal();
             if (event.target === settingsModal) closeSettingsModal();
             if (event.target === daisyModal) closeDaisyModal();
+            if (event.target === wheelModal) closeWheelModal();
             if (event.target === messageModal) closeMessageModal();
         };
 
@@ -615,9 +910,20 @@
             });
         });
 
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                if (messageModal.style.display === 'flex') closeMessageModal();
+                if (daisyModal.style.display === 'flex') closeDaisyModal();
+                if (wheelModal.style.display === 'flex') closeWheelModal();
+                if (settingsModal.style.display === 'flex') closeSettingsModal();
+                if (promoModal.style.display === 'flex') closePromoModal();
+            }
+        });
+
         // Инициализация
         createPetals(currentPetalCount);
         updateDisplay();
+        drawWheel(wheelRotation);
 
         document.addEventListener('touchstart', (e) => {
             if (e.touches.length > 1) {
