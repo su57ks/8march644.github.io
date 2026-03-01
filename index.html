@@ -33,6 +33,13 @@
             </div>
         </div>
 
+        <!-- Кнопка гадания на ромашке -->
+        <div class="daisy-button-container">
+            <button class="daisy-game-btn" id="daisyGameBtn">
+                <span>🌼</span> Гадание на ромашке (10🌸) <span>🌼</span>
+            </button>
+        </div>
+
         <div class="signature" id="easterEgg" role="button" tabindex="0">
             <span>💗</span> by Aizen with love <span>💗</span>
         </div>
@@ -91,6 +98,43 @@
                 <div class="thanks">🙏 Спасибо Егору Е. и Денису С.</div>
             </div>
             <div class="modal-btn" onclick="closeSettingsModal()">Закрыть</div>
+        </div>
+    </div>
+
+    <!-- Модалка гадания на ромашке -->
+    <div id="daisyModal" class="custom-modal daisy-modal">
+        <div class="custom-modal-content daisy-content">
+            <div class="modal-flower">🌼🌼🌼</div>
+            <div class="modal-message">Гадание на ромашке</div>
+            
+            <div class="daisy-game-container">
+                <div class="daisy" id="daisyGame">
+                    <div class="flower" id="daisyFlower">
+                        <div class="center"></div>
+                        <div class="petals-container" id="daisyPetalsContainer"></div>
+                    </div>
+                </div>
+                
+                <div class="daisy-fortune" id="daisyFortuneText">🌸 Нажми "Оторвать"</div>
+                
+                <div class="daisy-controls">
+                    <button class="daisy-btn" id="daisyPluckBtn">🌸 Оторвать</button>
+                    <button class="daisy-btn daisy-spin-btn hidden" id="daisySpinBtn">🌀 Гадать</button>
+                </div>
+                
+                <div class="daisy-cost">Стоимость гадания: 10 цветов ✨</div>
+            </div>
+            
+            <div class="modal-btn daisy-close-btn" onclick="closeDaisyModal()">Закрыть</div>
+        </div>
+    </div>
+
+    <!-- Модалка для сообщений (замена alert) -->
+    <div id="messageModal" class="custom-modal message-modal">
+        <div class="custom-modal-content message-content">
+            <div class="modal-flower" id="messageModalIcon">💬</div>
+            <div class="modal-message" id="messageModalText">Сообщение</div>
+            <div class="modal-btn" onclick="closeMessageModal()">OK</div>
         </div>
     </div>
 
@@ -289,6 +333,21 @@
 
         function closeVictoryModal() { victoryModal.style.display = 'none'; }
 
+        // ==================== МОДАЛКА ДЛЯ СООБЩЕНИЙ ====================
+        const messageModal = document.getElementById('messageModal');
+        const messageModalText = document.getElementById('messageModalText');
+        const messageModalIcon = document.getElementById('messageModalIcon');
+
+        function showMessage(message, icon = '💬') {
+            messageModalText.textContent = message;
+            messageModalIcon.textContent = icon;
+            messageModal.style.display = 'flex';
+        }
+
+        function closeMessageModal() {
+            messageModal.style.display = 'none';
+        }
+
         // ==================== ПРОМО МОДАЛКА ====================
         const promoModal = document.getElementById('promoModal');
         const easterEgg = document.getElementById('easterEgg');
@@ -310,32 +369,40 @@
             const input = document.getElementById('promoCodeInput');
             const code = input.value.trim();
             let message = '';
+            let icon = '🎁';
 
             if (code === '1488') {
                 flowerCount = 0;
                 updateDisplay();
                 message = '🚫 Осуждаю нацизм! Счет обнулен.';
+                icon = '🚫';
             } else if (code === '52') {
                 flowerCount += 5200;
                 updateDisplay();
                 message = 'Санкт-Петербург! ✨ +5200 цветов';
+                icon = '🏛️';
             } else if (code === '67') {
                 flowerCount += 1;
                 updateDisplay();
                 message = 'не смешно 😕 +1 цветок';
+                icon = '😕';
             } else if (code === '1337') {
                 flowerCount += 133700;
                 updateDisplay();
                 message = 'elite 👾 +133700 цветов';
+                icon = '👾';
             } else if (code === '69') {
                 flowerCount += 690;
                 updateDisplay();
                 message = '... 😏 +690 цветов';
+                icon = '😏';
             } else {
                 message = 'Неверный промокод';
+                icon = '❌';
             }
 
-            alert(message);
+            showMessage(message, icon);
+            
             if (code === '1488' || code === '52' || code === '67' || code === '1337' || code === '69') {
                 checkVictory();
                 check50();
@@ -369,16 +436,179 @@
             createPetals(currentPetalCount);
         });
 
-        // Закрытие модалок по клику вне
+        // ==================== ГАДАНИЕ НА РОМАШКЕ ====================
+        const daisyModal = document.getElementById('daisyModal');
+        const daisyGameBtn = document.getElementById('daisyGameBtn');
+        
+        // Константы для гадания
+        const DAISY_PHRASES = [
+            "Любит 💖",
+            "Не любит 🖤",
+            "Плюнет 💧",
+            "Поцелует 💋",
+            "К сердцу прижмёт 🤗",
+            "К чёрту пошлёт 👿"
+        ];
+
+        let daisyTotalPetals = 12;
+        let daisyVisiblePetals = 12;
+        let daisyCurrentPhraseIndex = 0;
+        let daisyPetalElements = [];
+
+        function initDaisyGame() {
+            daisyTotalPetals = Math.floor(Math.random() * 4) + 9;
+            createDaisyPetals(daisyTotalPetals);
+            setDaisyVisiblePetals(daisyTotalPetals);
+            daisyCurrentPhraseIndex = Math.floor(Math.random() * DAISY_PHRASES.length);
+            document.getElementById('daisyFortuneText').innerText = DAISY_PHRASES[daisyCurrentPhraseIndex];
+            
+            document.getElementById('daisyPluckBtn').classList.remove('hidden');
+            document.getElementById('daisySpinBtn').classList.add('hidden');
+            document.getElementById('daisyFlower').classList.remove('spinning');
+        }
+
+        function createDaisyPetals(maxCount) {
+            const container = document.getElementById('daisyPetalsContainer');
+            container.innerHTML = '';
+            daisyPetalElements = [];
+            
+            const angleStep = 360 / maxCount;
+
+            for (let i = 0; i < maxCount; i++) {
+                const angle = angleStep * i;
+                const petal = document.createElement('div');
+                petal.className = 'daisy-petal';
+                petal.style.transform = `translate(-50%, 0) rotate(${angle}deg)`;
+                petal.style.setProperty('--rot', angle + 'deg');
+                container.appendChild(petal);
+                daisyPetalElements.push(petal);
+            }
+        }
+
+        function setDaisyVisiblePetals(count) {
+            for (let i = 0; i < daisyPetalElements.length; i++) {
+                daisyPetalElements[i].style.opacity = i < count ? '1' : '0';
+            }
+            daisyVisiblePetals = count;
+        }
+
+        function pluckDaisyPetal() {
+            if (daisyVisiblePetals <= 0) return;
+
+            for (let i = daisyPetalElements.length - 1; i >= 0; i--) {
+                if (daisyPetalElements[i].style.opacity === '1') {
+                    daisyPetalElements[i].style.opacity = '0';
+                    break;
+                }
+            }
+            
+            daisyVisiblePetals--;
+            daisyCurrentPhraseIndex = (daisyCurrentPhraseIndex + 1) % DAISY_PHRASES.length;
+            document.getElementById('daisyFortuneText').innerText = DAISY_PHRASES[daisyCurrentPhraseIndex];
+
+            if (daisyVisiblePetals === 0) {
+                showMessage(`🎉 Ваше предсказание: ${DAISY_PHRASES[daisyCurrentPhraseIndex]}`, '🌼');
+                document.getElementById('daisyPluckBtn').classList.add('hidden');
+                document.getElementById('daisySpinBtn').classList.remove('hidden');
+            }
+        }
+
+        function startDaisySpin() {
+            if (daisyVisiblePetals !== 0) return;
+
+            const spinBtn = document.getElementById('daisySpinBtn');
+            const flowerEl = document.getElementById('daisyFlower');
+            
+            spinBtn.disabled = true;
+            flowerEl.classList.add('spinning');
+            document.getElementById('daisyFortuneText').innerText = '🌀 Вращаю...';
+
+            const targetCount = Math.floor(Math.random() * 4) + 9;
+            let current = 0;
+            
+            const interval = setInterval(() => {
+                if (!flowerEl.classList.contains('spinning')) {
+                    clearInterval(interval);
+                    return;
+                }
+
+                current++;
+                
+                for (let i = 0; i < daisyPetalElements.length; i++) {
+                    daisyPetalElements[i].style.opacity = i < current ? '1' : '0';
+                }
+
+                if (current >= targetCount) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        if (flowerEl.classList.contains('spinning')) {
+                            finishDaisySpin(targetCount);
+                        }
+                    }, 200);
+                }
+            }, 100);
+        }
+
+        function finishDaisySpin(newCount) {
+            const flowerEl = document.getElementById('daisyFlower');
+            flowerEl.classList.remove('spinning');
+            daisyVisiblePetals = newCount;
+            
+            daisyCurrentPhraseIndex = Math.floor(Math.random() * DAISY_PHRASES.length);
+            document.getElementById('daisyFortuneText').innerText = '✨ Гадание готово ✨';
+
+            document.getElementById('daisyPluckBtn').classList.remove('hidden');
+            document.getElementById('daisySpinBtn').classList.add('hidden');
+            document.getElementById('daisySpinBtn').disabled = false;
+
+            flowerRain(18);
+        }
+
+        // Открытие модалки гадания
+        daisyGameBtn.addEventListener('click', function() {
+            if (flowerCount < 10) {
+                showMessage('Недостаточно цветов! Нужно 10 🌸', '💔');
+                return;
+            }
+            
+            flowerCount -= 10;
+            updateDisplay();
+            initDaisyGame();
+            daisyModal.style.display = 'flex';
+        });
+
+        daisyGameBtn.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            if (flowerCount < 10) {
+                showMessage('Недостаточно цветов! Нужно 10 🌸', '💔');
+                return;
+            }
+            
+            flowerCount -= 10;
+            updateDisplay();
+            initDaisyGame();
+            daisyModal.style.display = 'flex';
+        });
+
+        function closeDaisyModal() {
+            daisyModal.style.display = 'none';
+        }
+
+        // Обработчики для кнопок гадания
+        document.getElementById('daisyPluckBtn').addEventListener('click', pluckDaisyPetal);
+        document.getElementById('daisySpinBtn').addEventListener('click', startDaisySpin);
+
+        // ==================== ЗАКРЫТИЕ МОДАЛОК ====================
         window.onclick = function(event) {
             if (event.target === nameModal) closeNameModal();
             if (event.target === victoryModal) closeVictoryModal();
             if (event.target === complimentModal) closeComplimentModal();
             if (event.target === promoModal) closePromoModal();
             if (event.target === settingsModal) closeSettingsModal();
+            if (event.target === daisyModal) closeDaisyModal();
+            if (event.target === messageModal) closeMessageModal();
         };
 
-        // Закрытие по свайпу вниз для модалок (для мобильных)
         document.querySelectorAll('.custom-modal-content').forEach(modal => {
             modal.addEventListener('touchmove', (e) => {
                 e.stopPropagation();
@@ -389,7 +619,6 @@
         createPetals(currentPetalCount);
         updateDisplay();
 
-        // Предотвращаем масштабирование двойным тапом
         document.addEventListener('touchstart', (e) => {
             if (e.touches.length > 1) {
                 e.preventDefault();
