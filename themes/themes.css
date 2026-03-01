@@ -1,0 +1,105 @@
+/* ==================== Тема по умолчанию (Светлая/розовая) ==================== */
+:root {
+    --bg-gradient: linear-gradient(150deg, #fef3f8 0%, #ffeef4 100%);
+    --petal-opacity: 0.3;
+    --petal-color: #ffb7c5;
+    --petal-shadow: rgba(255, 200, 220, 0.2);
+    
+    --card-bg: rgba(255, 245, 250, 0.85);
+    --card-shadow: 0 15px 30px rgba(255, 150, 180, 0.25),
+                   0 0 0 2px rgba(255, 255, 255, 0.8) inset;
+    --card-border: rgba(255, 220, 230, 0.9);
+    
+    --settings-btn-bg: rgba(255,255,255,0.6);
+    --settings-btn-border: white;
+    --settings-btn-shadow: 0 2px 8px #ffc0cb;
+    --settings-btn-active: #ffe2ed;
+    
+    --title-color: #a55e71;
+    --title-shadow: 3px 3px 10px rgba(255, 200, 220, 0.6), 0 1px 0 white;
+    --title-active-shadow: 0 0 15px #ff9bb6;
+    
+    --subtitle-color: #bc7f90;
+    --subtitle-bg: rgba(255, 235, 240, 0.8);
+    --subtitle-border: rgba(255, 255, 255, 0.9);
+    --subtitle-shadow: 0 3px 10px #ffdbe4;
+    
+    --personal-block-bg: rgba(255, 250, 250, 0.95);
+    --personal-block-border: rgba(255, 255, 255, 0.9);
+    --personal-block-shadow: 0 4px 12px rgba(240, 170, 190, 0.2);
+    --personal-block-active-bg: #fff0f7;
+    --personal-block-active-border: #ffc0d0;
+    --personal-block-active-shadow: 0 8px 18px rgba(255, 150, 180, 0.25);
+    
+    --special-block-bg: linear-gradient(145deg, #fff8f0, #fff0e6);
+    --special-block-border: #ffb7c5;
+    --special-block-shadow: 0 0 15px rgba(255, 183, 197, 0.5);
+    
+    --icon-shadow: #ffc0cb;
+    
+    --name-color: #774c5a;
+    --special-name-color: #b35f7a;
+    --special-name-shadow: #ffb6c1;
+    
+    --game-section-bg: rgba(255, 240, 245, 0.7);
+    --game-section-border: rgba(255, 255, 255, 0.8);
+    --game-title-color: #b16d80;
+    
+    --counter-color: #a15168;
+    --counter-bg: rgba(255, 255, 255, 0.8);
+    --counter-border: white;
+    --counter-shadow: 0 5px 15px #ffd0da;
+    
+    --flower-bg: #ffdbe7;
+    --flower-border: white;
+    --flower-shadow: 0 15px 25px #feb6c9;
+    
+    --hint-color: #ac6f80;
+    --hint-bg: rgba(255, 255, 255, 0.7);
+    --hint-border: white;
+    
+    --progress-bg: rgba(255, 255, 255, 0.6);
+    --progress-border: white;
+    --progress-bar-gradient: linear-gradient(90deg, #ffb7c5, #ff8da1);
+    
+    --modal-overlay: rgba(255, 210, 225, 0.6);
+    --modal-content-bg: rgba(255, 245, 250, 0.98);
+    --modal-content-border: white;
+    --modal-content-shadow: 0 25px 35px #feb0c2;
+    --modal-message-color: #a15168;
+    
+    --wish-line-bg: rgba(255, 255, 255, 0.7);
+    --wish-line-border: white;
+    
+    --modal-btn-bg: #ffc1d2;
+    --modal-btn-border: white;
+    --modal-btn-color: #7a4452;
+    --modal-btn-active-bg: #ffd5e2;
+    --modal-btn-active-shadow: 0 5px 12px #ffb0c0;
+    
+    --signature-color: #c58396;
+    --signature-border: #ffc9d6;
+    --signature-active-color: #a55e71;
+    
+    --input-border: white;
+    --input-bg: rgba(255, 240, 245, 0.95);
+    --input-color: #774c5a;
+    
+    --slider-color: #a55e71;
+    --slider-accent: #ff8da1;
+    --slider-thumb-bg: #ff8da1;
+    --slider-thumb-border: white;
+    --slider-thumb-shadow: 0 2px 6px #ffb0c0;
+    --slider-track-bg: #ffe2ed;
+    --slider-track-border: white;
+    
+    --about-dev-color: #a15168;
+    --about-dev-border: #ffc9d6;
+    
+    --dev-links-bg: rgba(255,255,240,0.6);
+    --dev-links-border: #ffb7c5;
+    --dev-links-link: #a15168;
+    --dev-links-link-border: #ffb0c0;
+    
+    --thanks-color: #ac6f80;
+}
