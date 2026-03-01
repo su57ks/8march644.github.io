@@ -1,0 +1,553 @@
+@import url('themes.css');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
+body {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    background: var(--bg-gradient);
+    font-family: -apple-system, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 10px;
+    position: relative;
+    overflow-x: hidden;
+    touch-action: pan-y pinch-zoom;
+}
+
+html {
+    height: -webkit-fill-available;
+}
+
+/* летающие лепестки */
+.petals-front {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 100;
+    overflow: hidden;
+}
+
+.petal {
+    position: absolute;
+    font-size: 1.3rem;
+    opacity: var(--petal-opacity);
+    animation: fall linear infinite;
+    color: var(--petal-color);
+    filter: drop-shadow(0 3px 3px var(--petal-shadow));
+    pointer-events: none;
+    will-change: transform;
+}
+
+@keyframes fall {
+    to { transform: translateY(100vh) rotate(360deg); }
+}
+
+/* главная карточка */
+.main-card {
+    max-width: 500px;
+    width: 100%;
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 40px 40px 35px 35px;
+    box-shadow: var(--card-shadow);
+    padding: 20px 16px 18px;
+    border: 1px solid var(--card-border);
+    position: relative;
+    z-index: 10;
+}
+
+/* кнопка настроек */
+.settings-button {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    font-size: 1.8rem;
+    cursor: pointer;
+    background: var(--settings-btn-bg);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 2px solid var(--settings-btn-border);
+    box-shadow: var(--settings-btn-shadow);
+    transition: 0.2s;
+    z-index: 50;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.settings-button:active {
+    transform: rotate(30deg) scale(1.1);
+    background: var(--settings-btn-active);
+}
+
+.main-title {
+    text-align: center;
+    font-size: clamp(2.4rem, 10vw, 3.8rem);
+    font-weight: 350;
+    color: var(--title-color);
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    text-shadow: var(--title-shadow);
+    font-family: 'Georgia', 'Times New Roman', serif;
+    line-height: 1.1;
+    cursor: pointer;
+    transition: 0.2s;
+    padding: 8px 0;
+}
+
+.main-title:active {
+    transform: scale(1.02);
+    text-shadow: var(--title-active-shadow);
+}
+
+.soft-sub {
+    text-align: center;
+    font-size: 1.3rem;
+    color: var(--subtitle-color);
+    background: var(--subtitle-bg);
+    padding: 0.5rem 1.5rem;
+    border-radius: 40px;
+    width: fit-content;
+    margin: 0 auto 25px auto;
+    border: 1px solid var(--subtitle-border);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    font-style: italic;
+    box-shadow: var(--subtitle-shadow);
+}
+
+/* имена */
+.names-wishes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 10px 0 20px 0;
+}
+
+.personal-block {
+    background: var(--personal-block-bg);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    border: 2px solid var(--personal-block-border);
+    border-radius: 40px 15px 40px 15px;
+    padding: 12px 18px;
+    transition: all 0.2s ease;
+    box-shadow: var(--personal-block-shadow);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    outline: none;
+    min-height: 65px;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.personal-block:active {
+    transform: scale(1.01) translateY(-1px);
+    background: var(--personal-block-active-bg);
+    border-color: var(--personal-block-active-border);
+    box-shadow: var(--personal-block-active-shadow);
+}
+
+.personal-block.special {
+    background: var(--special-block-bg);
+    border: 2.5px solid var(--special-block-border);
+    box-shadow: var(--special-block-shadow);
+}
+
+.name-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+
+.name-icon {
+    font-size: 1.9rem;
+    line-height: 1;
+    filter: drop-shadow(0 2px 3px var(--icon-shadow));
+    min-width: 38px;
+    text-align: center;
+}
+
+.name-label {
+    font-size: clamp(1.5rem, 4.5vw, 1.9rem);
+    font-weight: 450;
+    color: var(--name-color);
+    letter-spacing: 0.5px;
+    word-break: break-word;
+    line-height: 1.2;
+}
+
+.special .name-label {
+    color: var(--special-name-color);
+    font-weight: 600;
+    text-shadow: 0 0 5px var(--special-name-shadow);
+}
+
+/* игра */
+.game-section {
+    margin: 25px 0 15px 0;
+    text-align: center;
+    background: var(--game-section-bg);
+    border-radius: 50px 20px 50px 20px;
+    padding: 20px 12px;
+    border: 2px solid var(--game-section-border);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.game-title {
+    font-size: 1.5rem;
+    color: var(--game-title-color);
+    margin-bottom: 18px;
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.clicker-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.counter-display {
+    font-size: 2.5rem;
+    color: var(--counter-color);
+    background: var(--counter-bg);
+    padding: 12px 25px;
+    border-radius: 50px;
+    border: 2px solid var(--counter-border);
+    box-shadow: var(--counter-shadow);
+    font-weight: 500;
+    letter-spacing: 1px;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.big-flower {
+    background: var(--flower-bg);
+    border: 4px solid var(--flower-border);
+    border-radius: 50% 20% 50% 20%;
+    width: 150px;
+    height: 150px;
+    font-size: 6rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.1s ease;
+    box-shadow: var(--flower-shadow);
+    margin: 5px auto;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.big-flower:active {
+    transform: scale(0.92);
+}
+
+.game-hint {
+    font-size: 1rem;
+    color: var(--hint-color);
+    background: var(--hint-bg);
+    padding: 6px 16px;
+    border-radius: 30px;
+    border: 1px solid var(--hint-border);
+}
+
+.progress-container {
+    width: 90%;
+    max-width: 280px;
+    height: 10px;
+    background: var(--progress-bg);
+    border-radius: 20px;
+    margin: 0 auto;
+    border: 1px solid var(--progress-border);
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: var(--progress-bar-gradient);
+    border-radius: 20px;
+    transition: width 0.3s ease;
+}
+
+/* модальные окна */
+.custom-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--modal-overlay);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+}
+
+.custom-modal-content {
+    background: var(--modal-content-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 3px solid var(--modal-content-border);
+    border-radius: 60px 20px 60px 20px;
+    padding: 30px 20px;
+    max-width: 450px;
+    width: 100%;
+    text-align: center;
+    box-shadow: var(--modal-content-shadow);
+    animation: popIn 0.3s ease-out;
+    max-height: 85vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.9); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.modal-flower {
+    font-size: 4rem;
+    margin-bottom: 15px;
+}
+
+.modal-message {
+    font-size: 1.7rem;
+    color: var(--modal-message-color);
+    margin: 15px 0;
+    line-height: 1.4;
+    white-space: pre-line;
+    word-break: break-word;
+}
+
+.wish-lines .wish-line {
+    font-size: 1.2rem;
+    padding: 10px 12px;
+    margin: 6px 0;
+    background: var(--wish-line-bg);
+    border-radius: 40px;
+    border: 1px solid var(--wish-line-border);
+    word-break: break-word;
+}
+
+.modal-btn {
+    background: var(--modal-btn-bg);
+    border: 2px solid var(--modal-btn-border);
+    border-radius: 50px;
+    padding: 14px 25px;
+    font-size: 1.3rem;
+    color: var(--modal-btn-color);
+    cursor: pointer;
+    transition: 0.2s;
+    margin-top: 15px;
+    display: inline-block;
+    font-weight: 600;
+    min-width: 160px;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.modal-btn:active {
+    background: var(--modal-btn-active-bg);
+    transform: scale(0.97);
+    box-shadow: var(--modal-btn-active-shadow);
+}
+
+/* подпись */
+.signature {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 1.2rem;
+    color: var(--signature-color);
+    font-style: italic;
+    letter-spacing: 0.5px;
+    border-top: 2px dashed var(--signature-border);
+    padding-top: 15px;
+    font-family: 'Georgia', serif;
+    cursor: pointer;
+    transition: 0.2s;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.signature:active {
+    color: var(--signature-active-color);
+    transform: scale(1.01);
+}
+
+.signature span {
+    font-size: 1.4rem;
+    margin: 0 3px;
+}
+
+/* стили для полей ввода */
+.promo-input {
+    padding: 14px 18px;
+    font-size: 1.5rem;
+    border-radius: 50px;
+    border: 2px solid var(--input-border);
+    background: var(--input-bg);
+    text-align: center;
+    color: var(--input-color);
+    outline: none;
+    width: 90%;
+    margin: 15px auto;
+    display: block;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    -webkit-appearance: none;
+}
+
+/* модалка настроек */
+.slider-row {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 20px 0;
+    font-size: 1.3rem;
+    color: var(--slider-color);
+}
+
+.slider-row input {
+    width: 100%;
+    accent-color: var(--slider-accent);
+    height: 40px;
+    -webkit-appearance: none;
+    background: transparent;
+}
+
+.slider-row input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 25px;
+    height: 25px;
+    background: var(--slider-thumb-bg);
+    border-radius: 50%;
+    border: 2px solid var(--slider-thumb-border);
+    box-shadow: var(--slider-thumb-shadow);
+    cursor: pointer;
+    margin-top: -10px;
+}
+
+.slider-row input::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 6px;
+    background: var(--slider-track-bg);
+    border-radius: 10px;
+    border: 1px solid var(--slider-track-border);
+}
+
+.about-dev {
+    margin: 15px 0 8px;
+    font-size: 1.4rem;
+    color: var(--about-dev-color);
+    border-top: 2px dashed var(--about-dev-border);
+    padding-top: 18px;
+}
+
+.dev-links {
+    font-size: 1.2rem;
+    background: var(--dev-links-bg);
+    padding: 15px;
+    border-radius: 25px;
+    border: 2px dashed var(--dev-links-border);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    word-break: break-word;
+}
+
+.dev-links a {
+    color: var(--dev-links-link);
+    text-decoration: none;
+    border-bottom: 2px dotted var(--dev-links-link-border);
+    font-weight: 500;
+    display: inline-block;
+    padding: 2px 0;
+}
+
+.thanks {
+    margin-top: 8px;
+    font-size: 1.1rem;
+    color: var(--thanks-color);
+}
+
+/* адаптация для очень маленьких экранов */
+@media (max-width: 380px) {
+    .main-card {
+        padding: 16px 12px;
+    }
+    
+    .big-flower {
+        width: 130px;
+        height: 130px;
+        font-size: 5rem;
+    }
+    
+    .counter-display {
+        font-size: 2.2rem;
+        padding: 10px 20px;
+    }
+    
+    .name-label {
+        font-size: 1.4rem;
+    }
+    
+    .name-icon {
+        font-size: 1.7rem;
+        min-width: 32px;
+    }
+    
+    .modal-message {
+        font-size: 1.5rem;
+    }
+    
+    .wish-lines .wish-line {
+        font-size: 1.1rem;
+        padding: 8px 10px;
+    }
+    
+    .modal-btn {
+        padding: 12px 20px;
+        font-size: 1.2rem;
+        min-width: 140px;
+    }
+}
+
+/* для телефонов с челкой/динамиком */
+@supports (padding: max(0px)) {
+    body {
+        padding-left: max(10px, env(safe-area-inset-left));
+        padding-right: max(10px, env(safe-area-inset-right));
+        padding-top: max(12px, env(safe-area-inset-top));
+        padding-bottom: max(12px, env(safe-area-inset-bottom));
+    }
+}
