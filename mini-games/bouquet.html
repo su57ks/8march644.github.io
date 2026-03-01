@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>рулетка</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(150deg, #fef3f8 0%, #ffeef4 100%);
+            font-family: 'Segoe UI', 'Roboto', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* цветы падают поверх всего */
+        .rain-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
+
+        .falling-flower {
+            position: absolute;
+            font-size: 2.2rem;
+            opacity: 0.8;
+            animation: fall linear forwards;
+            color: #ff9eb5;
+            filter: drop-shadow(0 5px 8px rgba(255, 180, 200, 0.7));
+            pointer-events: none;
+            z-index: 10000;
+            will-change: transform;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 0.9; }
+            100% { transform: translateY(110vh) rotate(480deg); opacity: 0.2; }
+        }
+
+        /* карточка только с колесом и кнопкой */
+        .wheel-card {
+            max-width: 600px;
+            width: 100%;
+            background: rgba(255, 245, 250, 0.7);
+            backdrop-filter: blur(4px);
+            border-radius: 70px 30px 70px 30px;
+            box-shadow: 0 25px 40px rgba(255, 150, 180, 0.3),
+                        0 0 0 2px rgba(255, 255, 255, 0.8) inset;
+            padding: 25px 25px 35px 25px;
+            border: 1px solid rgba(255, 220, 230, 0.9);
+            position: relative;
+            z-index: 100;
+            text-align: center;
+        }
+
+        .wheel-wrapper {
+            position: relative;
+            width: min(70vw, 340px);
+            height: min(70vw, 340px);
+            margin: 0 auto 20px auto;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+            border-radius: 50%;
+            background: #ffe7ef;
+            box-shadow: 0 15px 30px rgba(240, 140, 170, 0.5),
+                        0 0 0 3px white inset,
+                        0 0 0 6px #ffd0dd;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+
+        canvas:active {
+            transform: scale(0.98);
+        }
+
+        .pointer {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0; height: 0;
+            border-left: 22px solid transparent;
+            border-right: 22px solid transparent;
+            border-top: 34px solid #ffa5bc;
+            filter: drop-shadow(0 8px 6px rgba(255, 140, 170, 0.5));
+            z-index: 12;
+        }
+
+        .spin-button {
+            background: #ffd5e2;
+            border: 4px solid white;
+            color: #a55e71;
+            font-size: 2rem;
+            padding: 10px 40px;
+            border-radius: 50px 20px 50px 20px;
+            cursor: pointer;
+            box-shadow: 0 12px 0 #e6b7c8, 0 15px 25px rgba(255, 150, 180, 0.4);
+            transition: 0.08s linear;
+            margin: 5px 0 0;
+            display: inline-block;
+            letter-spacing: 2px;
+            border: 3px solid white;
+            font-family: 'Georgia', serif;
+        }
+
+        .spin-button:active {
+            transform: translateY(8px);
+            box-shadow: 0 4px 0 #e6b7c8, 0 12px 20px rgba(255, 150, 180, 0.4);
+        }
+
+        /* модалка */
+        .flower-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 210, 225, 0.5);
+            backdrop-filter: blur(8px);
+            z-index: 100000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .flower-modal-content {
+            background: rgba(255, 245, 250, 0.95);
+            backdrop-filter: blur(10px);
+            border: 4px solid white;
+            border-radius: 80px 30px 80px 30px;
+            padding: 35px 30px;
+            max-width: 380px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 40px 50px #feb0c2;
+            animation: popIn 0.3s;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-big-emoji {
+            font-size: 6rem;
+            line-height: 1;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 8px 10px #ffb7c5);
+        }
+
+        .modal-text {
+            font-size: 2rem;
+            color: #a15168;
+            margin: 10px 0;
+            text-transform: capitalize; /* первая буква заглавная */
+        }
+
+        .modal-close-btn {
+            background: #ffc1d2;
+            border: 3px solid white;
+            border-radius: 60px;
+            padding: 8px 30px;
+            font-size: 1.3rem;
+            color: #7a4452;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .modal-close-btn:hover {
+            background: #ffd5e2;
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px #ffb0c0;
+        }
+
+        @media (max-width: 500px) {
+            .wheel-card { padding: 20px 15px; }
+            .spin-button { font-size: 1.8rem; padding: 8px 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- контейнер для падающих цветов (поверх всего) -->
+    <div class="rain-container" id="rainContainer"></div>
+
+    <div class="wheel-card">
+        <div class="wheel-wrapper">
+            <div class="pointer"></div>
+            <canvas id="wheelCanvas" width="600" height="600"></canvas>
+        </div>
+        <button class="spin-button" id="spinBtn">крутить</button>
+    </div>
+
+    <!-- модалка -->
+    <div class="flower-modal" id="flowerModal">
+        <div class="flower-modal-content">
+            <div class="modal-big-emoji" id="modalFlowerEmoji">🌸</div>
+            <div class="modal-text" id="modalFlowerName">Сакура</div>
+            <div class="modal-close-btn" id="closeModalBtn">закрыть</div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ----- ТОЛЬКО ЭМОДЗИ ИЗ ФАЙЛА (8 штук, с заглавными названиями) -----
+            const flowers = [
+                { emoji: '🌸', name: 'Сакура' },
+                { emoji: '🌼', name: 'Ромашка' },
+                { emoji: '🌻', name: 'Подсолнух' },
+                { emoji: '🌺', name: 'Гибискус' },
+                { emoji: '🌷', name: 'Тюльпан' },
+                { emoji: '🌹', name: 'Роза' },
+                { emoji: '🌸', name: 'Сакура' },
+                { emoji: '🌿', name: 'Веточка' }
+            ];
+            const sectorCount = 8;
+
+            const canvas = document.getElementById('wheelCanvas');
+            const ctx = canvas.getContext('2d');
+            const spinBtn = document.getElementById('spinBtn');
+            const modal = document.getElementById('flowerModal');
+            const modalEmoji = document.getElementById('modalFlowerEmoji');
+            const modalName = document.getElementById('modalFlowerName');
+            const rainContainer = document.getElementById('rainContainer');
+
+            let currentRotation = 0;
+            let isSpinning = false;
+            let animFrame = null;
+            let spinVelocity = 0;
+            let stopTimeout = null;
+
+            // очень плавное замедление
+            const friction = 0.985;
+            const minSpin = 0.005;
+
+            // ----- отрисовка колеса (розовое) -----
+            function drawWheel(rotation) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                const radius = canvas.width * 0.42;
+                const angleStep = (Math.PI * 2) / sectorCount;
+
+                for (let i = 0; i < sectorCount; i++) {
+                    const start = i * angleStep + rotation;
+                    const end = start + angleStep;
+
+                    ctx.fillStyle = (i % 2 === 0) ? '#ffd9e6' : '#ffe4f0';
+                    ctx.beginPath();
+                    ctx.moveTo(centerX, centerY);
+                    ctx.arc(centerX, centerY, radius, start, end);
+                    ctx.closePath();
+                    ctx.fill();
+
+                    ctx.strokeStyle = '#ffffff';
+                    ctx.lineWidth = 2.5;
+                    ctx.beginPath();
+                    ctx.moveTo(centerX, centerY);
+                    ctx.arc(centerX, centerY, radius, start, end);
+                    ctx.lineTo(centerX, centerY);
+                    ctx.stroke();
+
+                    ctx.save();
+                    ctx.translate(centerX, centerY);
+                    const midAngle = start + angleStep / 2;
+                    ctx.rotate(midAngle);
+                    
+                    const textRadius = radius * 0.7;
+                    ctx.font = `500 ${radius * 0.45}px 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif`;
+                    ctx.fillStyle = '#9f5f74';
+                    ctx.shadowColor = '#ffb7c5';
+                    ctx.shadowBlur = 12;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(flowers[i].emoji, textRadius, 0);
+                    
+                    ctx.restore();
+                }
+
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, 14, 0, 2 * Math.PI);
+                ctx.fillStyle = '#ffffff';
+                ctx.shadowBlur = 16;
+                ctx.shadowColor = '#ffb0c0';
+                ctx.fill();
+                ctx.shadowBlur = 0;
+                ctx.strokeStyle = '#ffb7c5';
+                ctx.lineWidth = 3;
+                ctx.stroke();
+            }
+
+            drawWheel(currentRotation);
+
+            // ----- дождь цветов (ТОЛЬКО ЭМОДЗИ ИЗ ФАЙЛА) -----
+            function startFlowerRain(emoji, count = 50) {
+                // массив эмодзи только из файла
+                const fileEmojis = ['🌸', '🌼', '🌻', '🌺', '🌷', '🌹', '🌸', '🌿'];
+                
+                for (let i = 0; i < count; i++) {
+                    setTimeout(() => {
+                        const flower = document.createElement('div');
+                        flower.className = 'falling-flower';
+                        
+                        // 80% падающих цветов = выпавший эмодзи (если передан)
+                        if (emoji && Math.random() < 0.8) {
+                            flower.textContent = emoji;
+                        } else {
+                            // выбираем ТОЛЬКО из исходного набора
+                            flower.textContent = fileEmojis[Math.floor(Math.random() * fileEmojis.length)];
+                        }
+                        
+                        flower.style.left = Math.random() * 100 + '%';
+                        flower.style.animationDuration = (Math.random() * 3 + 2.5) + 's';
+                        flower.style.fontSize = (Math.random() * 2 + 1.8) + 'rem';
+                        flower.style.opacity = 0.7 + Math.random() * 0.3;
+                        rainContainer.appendChild(flower);
+
+                        setTimeout(() => {
+                            if (flower.parentNode) flower.remove();
+                        }, 6000);
+                    }, i * 30);
+                }
+            }
+
+            // ----- плавная анимация -----
+            function spinAnimation() {
+                if (!isSpinning) return;
+
+                spinVelocity *= friction;
+                currentRotation += spinVelocity;
+                drawWheel(currentRotation);
+
+                if (Math.abs(spinVelocity) > minSpin) {
+                    animFrame = requestAnimationFrame(spinAnimation);
+                } else {
+                    isSpinning = false;
+                    if (animFrame) {
+                        cancelAnimationFrame(animFrame);
+                        animFrame = null;
+                    }
+
+                    // определяем выпавший цветок
+                    let norm = (currentRotation % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
+                    const upAngle = (3 * Math.PI) / 2;
+                    let localUp = upAngle - norm;
+                    localUp = (localUp % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
+                    const angleStep = (2 * Math.PI) / sectorCount;
+                    let index = Math.floor(localUp / angleStep);
+                    if (index >= sectorCount) index = sectorCount - 1;
+
+                    const result = flowers[index];
+
+                    // ливень из цветов (только эмодзи из файла)
+                    startFlowerRain(result.emoji, 55);
+
+                    // модалка через 0.5 сек
+                    if (stopTimeout) clearTimeout(stopTimeout);
+                    stopTimeout = setTimeout(() => {
+                        modalEmoji.textContent = result.emoji;
+                        modalName.textContent = result.name; // уже с заглавной
+                        modal.style.display = 'flex';
+                    }, 500);
+                }
+            }
+
+            // запуск
+            function startSpin() {
+                if (isSpinning) return;
+
+                modal.style.display = 'none';
+                if (stopTimeout) {
+                    clearTimeout(stopTimeout);
+                    stopTimeout = null;
+                }
+
+                isSpinning = true;
+
+                // скорость для ~5–6 оборотов
+                const targetFull = 10 * Math.PI;
+                const randomAdd = Math.random() * 2 * Math.PI;
+                const totalAngle = targetFull + randomAdd;
+                spinVelocity = totalAngle * (1 - friction) * 1.2;
+
+                if (animFrame) cancelAnimationFrame(animFrame);
+                animFrame = requestAnimationFrame(spinAnimation);
+            }
+
+            spinBtn.addEventListener('click', startSpin);
+            canvas.addEventListener('click', startSpin);
+
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal || e.target.closest('.modal-close-btn')) {
+                    modal.style.display = 'none';
+                }
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modal.style.display === 'flex') {
+                    modal.style.display = 'none';
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
