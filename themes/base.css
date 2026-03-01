@@ -297,6 +297,34 @@ html {
     transition: width 0.3s ease;
 }
 
+/* Кнопка гадания на ромашке */
+.daisy-button-container {
+    text-align: center;
+    margin: 20px 0 15px;
+}
+
+.daisy-game-btn {
+    background: var(--daisy-btn-bg);
+    border: 3px solid var(--daisy-btn-border);
+    border-radius: 60px;
+    padding: 15px 25px;
+    font-size: 1.5rem;
+    color: var(--daisy-btn-color);
+    cursor: pointer;
+    box-shadow: var(--daisy-btn-shadow);
+    transition: 0.2s;
+    width: 100%;
+    max-width: 350px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.daisy-game-btn:active {
+    transform: scale(0.97);
+    background: var(--daisy-btn-active-bg);
+}
+
 /* модальные окна */
 .custom-modal {
     display: none;
@@ -500,6 +528,195 @@ html {
     color: var(--thanks-color);
 }
 
+/* Стили для гадания на ромашке */
+.daisy-content {
+    max-width: 500px;
+}
+
+.daisy-game-container {
+    margin: 15px 0;
+    padding: 15px;
+    background: var(--daisy-container-bg);
+    border-radius: 40px 15px 40px 15px;
+    border: 2px solid var(--daisy-container-border);
+}
+
+.daisy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.flower {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.center {
+    width: 80px;
+    height: 80px;
+    background: var(--daisy-center-bg);
+    border-radius: 50%;
+    box-shadow: var(--daisy-center-shadow);
+    border: 3px solid var(--daisy-center-border);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    color: var(--daisy-center-color);
+    text-shadow: var(--daisy-center-text-shadow);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.center::after {
+    content: "• • •";
+    position: absolute;
+    font-size: 0.9rem;
+    color: var(--daisy-center-dots);
+    opacity: 0.7;
+    letter-spacing: 4px;
+    transform: rotate(-15deg);
+}
+
+.petals-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.daisy-petal {
+    position: absolute;
+    width: 70px;
+    height: 110px;
+    background: var(--daisy-petal-bg);
+    border-radius: 50% 50% 40% 40%;
+    box-shadow: var(--daisy-petal-shadow);
+    border: 2px solid var(--daisy-petal-border);
+    pointer-events: auto;
+    transition: opacity 0.2s ease;
+    backdrop-filter: blur(1px);
+    transform-origin: center bottom;
+    top: 50%;
+    left: 50%;
+    margin-top: -110px;
+    opacity: 1;
+}
+
+.daisy-petal:nth-child(odd) {
+    background: var(--daisy-petal-odd-bg);
+}
+
+.spinning .daisy-petal {
+    animation: spinPetal 0.2s infinite linear;
+}
+
+.spinning .center {
+    animation: pulseGlow 0.2s infinite alternate;
+}
+
+@keyframes spinPetal {
+    0% { transform: translate(-50%, 0) rotate(var(--rot)); }
+    100% { transform: translate(-50%, 0) rotate(calc(var(--rot) + 360deg)); }
+}
+
+@keyframes pulseGlow {
+    from { box-shadow: 0 0 0 0 var(--daisy-glow-from); }
+    to { box-shadow: 0 0 20px 10px var(--daisy-glow-to); }
+}
+
+.daisy-fortune {
+    font-size: 1.8rem;
+    background: var(--daisy-fortune-bg);
+    padding: 12px 25px;
+    border-radius: 50px;
+    border: 3px solid var(--daisy-fortune-border);
+    margin: 15px auto;
+    display: inline-block;
+    color: var(--daisy-fortune-color);
+    font-weight: 500;
+    box-shadow: var(--daisy-fortune-shadow);
+    min-width: 200px;
+    backdrop-filter: blur(5px);
+}
+
+.daisy-controls {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 15px 0;
+}
+
+.daisy-btn {
+    border: 3px solid var(--daisy-btn-border);
+    border-radius: 50px;
+    padding: 12px 30px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    background: var(--daisy-btn-bg);
+    color: var(--daisy-btn-text);
+    cursor: pointer;
+    box-shadow: var(--daisy-btn-shadow);
+    transition: 0.15s;
+    min-width: 160px;
+    letter-spacing: 1px;
+}
+
+.daisy-btn:active {
+    transform: scale(0.94);
+}
+
+.daisy-btn.hidden {
+    display: none;
+}
+
+.daisy-btn:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    filter: grayscale(0.3);
+}
+
+.daisy-spin-btn {
+    background: var(--daisy-spin-btn-bg);
+}
+
+.daisy-cost {
+    font-size: 1.2rem;
+    color: var(--daisy-cost-color);
+    margin-top: 10px;
+    font-style: italic;
+    background: var(--daisy-cost-bg);
+    padding: 5px 15px;
+    border-radius: 30px;
+    display: inline-block;
+}
+
+.daisy-close-btn {
+    margin-top: 20px;
+}
+
+/* Модалка для сообщений */
+.message-content {
+    max-width: 350px;
+}
+
+.message-modal .modal-btn {
+    min-width: 120px;
+}
+
 /* адаптация для очень маленьких экранов */
 @media (max-width: 380px) {
     .main-card {
@@ -538,6 +755,34 @@ html {
     .modal-btn {
         padding: 12px 20px;
         font-size: 1.2rem;
+        min-width: 140px;
+    }
+    
+    .flower {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .center {
+        width: 60px;
+        height: 60px;
+        font-size: 1.4rem;
+    }
+    
+    .daisy-petal {
+        width: 55px;
+        height: 90px;
+        margin-top: -90px;
+    }
+    
+    .daisy-fortune {
+        font-size: 1.5rem;
+        padding: 10px 20px;
+    }
+    
+    .daisy-btn {
+        padding: 10px 20px;
+        font-size: 1.3rem;
         min-width: 140px;
     }
 }
