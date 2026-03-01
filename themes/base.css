@@ -21,6 +21,7 @@ body {
     position: relative;
     overflow-x: hidden;
     touch-action: pan-y pinch-zoom;
+    transition: background 0.3s ease;
 }
 
 html {
@@ -67,6 +68,7 @@ html {
     border: 1px solid var(--card-border);
     position: relative;
     z-index: 10;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* кнопка настроек */
@@ -131,6 +133,7 @@ html {
     -webkit-backdrop-filter: blur(2px);
     font-style: italic;
     box-shadow: var(--subtitle-shadow);
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
 /* имена */
@@ -193,6 +196,7 @@ html {
     letter-spacing: 0.5px;
     word-break: break-word;
     line-height: 1.2;
+    transition: color 0.3s ease;
 }
 
 .special .name-label {
@@ -211,6 +215,7 @@ html {
     border: 2px solid var(--game-section-border);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
+    transition: background 0.3s ease;
 }
 
 .game-title {
@@ -223,6 +228,7 @@ html {
     justify-content: center;
     gap: 8px;
     flex-wrap: wrap;
+    transition: color 0.3s ease;
 }
 
 .clicker-area {
@@ -244,6 +250,7 @@ html {
     letter-spacing: 1px;
     width: fit-content;
     margin: 0 auto;
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
 .big-flower {
@@ -276,6 +283,7 @@ html {
     padding: 6px 16px;
     border-radius: 30px;
     border: 1px solid var(--hint-border);
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
 .progress-container {
@@ -287,6 +295,7 @@ html {
     margin: 0 auto;
     border: 1px solid var(--progress-border);
     overflow: hidden;
+    transition: background 0.3s ease;
 }
 
 .progress-bar {
@@ -297,32 +306,87 @@ html {
     transition: width 0.3s ease;
 }
 
-/* Кнопка гадания на ромашке */
-.daisy-button-container {
-    text-align: center;
-    margin: 20px 0 15px;
+/* Строка с кнопками игр */
+.games-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 15px 0 20px;
+    flex-wrap: wrap;
 }
 
-.daisy-game-btn {
-    background: var(--daisy-btn-bg);
-    border: 3px solid var(--daisy-btn-border);
-    border-radius: 60px;
-    padding: 15px 25px;
-    font-size: 1.5rem;
-    color: var(--daisy-btn-color);
+.game-btn {
+    border: 3px solid var(--game-btn-border);
+    border-radius: 50px;
+    padding: 12px 20px;
+    font-size: 1.3rem;
+    color: var(--game-btn-color);
     cursor: pointer;
-    box-shadow: var(--daisy-btn-shadow);
+    box-shadow: var(--game-btn-shadow);
     transition: 0.2s;
-    width: 100%;
-    max-width: 350px;
+    min-width: 140px;
     font-weight: 600;
     letter-spacing: 0.5px;
     -webkit-tap-highlight-color: transparent;
+    flex: 1 1 auto;
+    max-width: 200px;
 }
 
-.daisy-game-btn:active {
-    transform: scale(0.97);
-    background: var(--daisy-btn-active-bg);
+.game-btn:active {
+    transform: scale(0.96);
+}
+
+.game-btn.daisy-btn {
+    background: var(--daisy-btn-bg);
+}
+
+.game-btn.wheel-btn {
+    background: var(--wheel-btn-bg);
+}
+
+/* подпись */
+.signature {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 1.2rem;
+    color: var(--signature-color);
+    font-style: italic;
+    letter-spacing: 0.5px;
+    border-top: 2px dashed var(--signature-border);
+    padding-top: 15px;
+    font-family: 'Georgia', serif;
+    cursor: pointer;
+    transition: 0.2s, color 0.3s ease, border-color 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.signature:active {
+    color: var(--signature-active-color);
+    transform: scale(1.01);
+}
+
+.signature span {
+    font-size: 1.4rem;
+    margin: 0 3px;
+}
+
+/* стили для полей ввода */
+.promo-input {
+    padding: 14px 18px;
+    font-size: 1.5rem;
+    border-radius: 50px;
+    border: 2px solid var(--input-border);
+    background: var(--input-bg);
+    text-align: center;
+    color: var(--input-color);
+    outline: none;
+    width: 90%;
+    margin: 15px auto;
+    display: block;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    -webkit-appearance: none;
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 /* модальные окна */
@@ -357,6 +421,7 @@ html {
     max-height: 85vh;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 @keyframes popIn {
@@ -376,6 +441,7 @@ html {
     line-height: 1.4;
     white-space: pre-line;
     word-break: break-word;
+    transition: color 0.3s ease;
 }
 
 .wish-lines .wish-line {
@@ -386,6 +452,7 @@ html {
     border-radius: 40px;
     border: 1px solid var(--wish-line-border);
     word-break: break-word;
+    transition: background 0.3s ease;
 }
 
 .modal-btn {
@@ -396,7 +463,7 @@ html {
     font-size: 1.3rem;
     color: var(--modal-btn-color);
     cursor: pointer;
-    transition: 0.2s;
+    transition: 0.2s, background 0.3s ease, color 0.3s ease;
     margin-top: 15px;
     display: inline-block;
     font-weight: 600;
@@ -411,51 +478,24 @@ html {
     box-shadow: var(--modal-btn-active-shadow);
 }
 
-/* подпись */
-.signature {
-    text-align: center;
-    margin-top: 18px;
-    font-size: 1.2rem;
-    color: var(--signature-color);
-    font-style: italic;
-    letter-spacing: 0.5px;
-    border-top: 2px dashed var(--signature-border);
-    padding-top: 15px;
-    font-family: 'Georgia', serif;
-    cursor: pointer;
-    transition: 0.2s;
-    -webkit-tap-highlight-color: transparent;
-}
-
-.signature:active {
-    color: var(--signature-active-color);
-    transform: scale(1.01);
-}
-
-.signature span {
-    font-size: 1.4rem;
-    margin: 0 3px;
-}
-
-/* стили для полей ввода */
-.promo-input {
-    padding: 14px 18px;
-    font-size: 1.5rem;
-    border-radius: 50px;
-    border: 2px solid var(--input-border);
-    background: var(--input-bg);
-    text-align: center;
-    color: var(--input-color);
-    outline: none;
-    width: 90%;
-    margin: 15px auto;
-    display: block;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    -webkit-appearance: none;
-}
-
 /* модалка настроек */
+.settings-section {
+    margin: 20px 0;
+    padding: 15px;
+    background: var(--settings-section-bg);
+    border-radius: 30px 10px 30px 10px;
+    border: 2px solid var(--settings-section-border);
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.section-title {
+    font-size: 1.4rem;
+    color: var(--section-title-color);
+    margin-bottom: 15px;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
 .slider-row {
     display: flex;
     flex-direction: column;
@@ -463,6 +503,7 @@ html {
     margin: 20px 0;
     font-size: 1.3rem;
     color: var(--slider-color);
+    transition: color 0.3s ease;
 }
 
 .slider-row input {
@@ -493,12 +534,69 @@ html {
     border: 1px solid var(--slider-track-border);
 }
 
+/* Кнопки тем */
+.theme-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.theme-btn {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 18px;
+    border: 3px solid var(--theme-btn-border);
+    border-radius: 50px;
+    background: var(--theme-btn-bg);
+    color: var(--theme-btn-color);
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+    width: 100%;
+    text-align: left;
+}
+
+.theme-btn.active {
+    border-color: var(--theme-btn-active-border);
+    background: var(--theme-btn-active-bg);
+    box-shadow: var(--theme-btn-active-shadow);
+    transform: scale(1.02);
+}
+
+.theme-btn:active {
+    transform: scale(0.98);
+}
+
+.theme-color {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.default-color {
+    background: linear-gradient(145deg, #ffb7c5, #ff8da1);
+}
+
+.night-color {
+    background: linear-gradient(145deg, #4a2a4a, #1a1a2e);
+}
+
+.spring-color {
+    background: linear-gradient(145deg, #a8d5a8, #6a9a6a);
+}
+
 .about-dev {
     margin: 15px 0 8px;
     font-size: 1.4rem;
     color: var(--about-dev-color);
     border-top: 2px dashed var(--about-dev-border);
     padding-top: 18px;
+    transition: color 0.3s ease, border-color 0.3s ease;
 }
 
 .dev-links {
@@ -511,6 +609,7 @@ html {
     flex-direction: column;
     gap: 10px;
     word-break: break-word;
+    transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .dev-links a {
@@ -520,12 +619,14 @@ html {
     font-weight: 500;
     display: inline-block;
     padding: 2px 0;
+    transition: color 0.3s ease, border-color 0.3s ease;
 }
 
 .thanks {
     margin-top: 8px;
     font-size: 1.1rem;
     color: var(--thanks-color);
+    transition: color 0.3s ease;
 }
 
 /* Стили для гадания на ромашке */
@@ -539,6 +640,7 @@ html {
     background: var(--daisy-container-bg);
     border-radius: 40px 15px 40px 15px;
     border: 2px solid var(--daisy-container-border);
+    transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .daisy {
@@ -576,6 +678,7 @@ html {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    transition: background 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .center::after {
@@ -606,7 +709,7 @@ html {
     box-shadow: var(--daisy-petal-shadow);
     border: 2px solid var(--daisy-petal-border);
     pointer-events: auto;
-    transition: opacity 0.2s ease;
+    transition: opacity 0.2s ease, background 0.3s ease, box-shadow 0.3s ease;
     backdrop-filter: blur(1px);
     transform-origin: center bottom;
     top: 50%;
@@ -650,6 +753,7 @@ html {
     box-shadow: var(--daisy-fortune-shadow);
     min-width: 200px;
     backdrop-filter: blur(5px);
+    transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .daisy-controls {
@@ -670,7 +774,7 @@ html {
     color: var(--daisy-btn-text);
     cursor: pointer;
     box-shadow: var(--daisy-btn-shadow);
-    transition: 0.15s;
+    transition: 0.15s, background 0.3s ease, color 0.3s ease;
     min-width: 160px;
     letter-spacing: 1px;
 }
@@ -715,6 +819,125 @@ html {
 
 .message-modal .modal-btn {
     min-width: 120px;
+}
+
+/* Контейнер для цветопада */
+.rain-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+.falling-flower {
+    position: absolute;
+    font-size: 2.2rem;
+    opacity: 0.8;
+    animation: fallFlower linear forwards;
+    color: #ff9eb5;
+    filter: drop-shadow(0 5px 8px rgba(255, 180, 200, 0.7));
+    pointer-events: none;
+    z-index: 10000;
+    will-change: transform;
+}
+
+@keyframes fallFlower {
+    0% { transform: translateY(-10vh) rotate(0deg); opacity: 0.9; }
+    100% { transform: translateY(110vh) rotate(480deg); opacity: 0.2; }
+}
+
+/* Модалка рулетки */
+.wheel-content {
+    max-width: 550px;
+}
+
+.wheel-game-container {
+    margin: 15px 0;
+    padding: 20px;
+    background: var(--wheel-container-bg);
+    border-radius: 40px 15px 40px 15px;
+    border: 2px solid var(--wheel-container-border);
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.wheel-wrapper {
+    position: relative;
+    width: min(60vw, 300px);
+    height: min(60vw, 300px);
+    margin: 0 auto 20px auto;
+}
+
+.wheel-wrapper canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: 50%;
+    background: #ffe7ef;
+    box-shadow: var(--wheel-shadow);
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.3s ease;
+}
+
+.wheel-wrapper canvas:active {
+    transform: scale(0.98);
+}
+
+.wheel-wrapper canvas:disabled {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.wheel-wrapper .pointer {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0; 
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 30px solid var(--wheel-pointer-color);
+    filter: drop-shadow(0 8px 6px var(--wheel-pointer-shadow));
+    z-index: 12;
+    transition: border-top-color 0.3s ease;
+}
+
+.wheel-spin-btn {
+    background: var(--wheel-spin-btn-bg);
+    border: 3px solid var(--wheel-spin-btn-border);
+    border-radius: 50px;
+    padding: 12px 25px;
+    font-size: 1.5rem;
+    color: var(--wheel-spin-btn-color);
+    cursor: pointer;
+    box-shadow: var(--wheel-spin-btn-shadow);
+    transition: 0.1s linear, background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    margin: 10px auto;
+    display: inline-block;
+    font-weight: 600;
+    letter-spacing: 1px;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.wheel-spin-btn:active {
+    transform: translateY(4px);
+    box-shadow: var(--wheel-spin-btn-active-shadow);
+}
+
+.wheel-spin-btn:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    filter: grayscale(0.3);
+    transform: translateY(0);
+    box-shadow: var(--wheel-spin-btn-shadow);
+}
+
+.wheel-close-btn {
+    margin-top: 15px;
 }
 
 /* адаптация для очень маленьких экранов */
@@ -785,6 +1008,22 @@ html {
         font-size: 1.3rem;
         min-width: 140px;
     }
+    
+    .game-btn {
+        font-size: 1.1rem;
+        padding: 10px 15px;
+        min-width: 120px;
+    }
+    
+    .wheel-wrapper {
+        width: min(70vw, 250px);
+        height: min(70vw, 250px);
+    }
+    
+    .wheel-spin-btn {
+        font-size: 1.3rem;
+        padding: 10px 20px;
+    }
 }
 
 /* для телефонов с челкой/динамиком */
@@ -796,3 +1035,10 @@ html {
         padding-bottom: max(12px, env(safe-area-inset-bottom));
     }
 }
+
+/* Скрытые элементы */
+.hidden {
+    display: none !important;
+}
+
+/* Остальные стили base.css остаются без изменений */

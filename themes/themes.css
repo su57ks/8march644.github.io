@@ -1,5 +1,5 @@
-/* ==================== Тема по умолчанию (Светлая/розовая) ==================== */
-:root {
+/* ==================== Тема по умолчанию (Розовая) ==================== */
+.theme-default {
     --bg-gradient: linear-gradient(150deg, #fef3f8 0%, #ffeef4 100%);
     --petal-opacity: 0.3;
     --petal-color: #ffb7c5;
@@ -138,4 +138,912 @@
     
     --daisy-cost-color: #ac6f80;
     --daisy-cost-bg: rgba(255, 255, 255, 0.5);
+    
+    /* Переменные для настроек */
+    --settings-section-bg: rgba(255, 245, 250, 0.5);
+    --settings-section-border: rgba(255, 255, 255, 0.8);
+    --section-title-color: #a55e71;
+    
+    /* Переменные для кнопок тем */
+    --theme-btn-border: white;
+    --theme-btn-bg: rgba(255, 255, 255, 0.5);
+    --theme-btn-color: #774c5a;
+    --theme-btn-active-border: #ffb7c5;
+    --theme-btn-active-bg: #fff0f5;
+    --theme-btn-active-shadow: 0 0 15px #ffb7c5;
+    
+    /* Переменные для рулетки */
+    --wheel-btn-bg: #ffe4b0; /* Желтая кнопка */
+    --wheel-container-bg: rgba(255, 240, 250, 0.7);
+    --wheel-container-border: rgba(255, 255, 255, 0.8);
+    --wheel-shadow: 0 15px 30px rgba(240, 140, 170, 0.5),
+                    0 0 0 3px white inset,
+                    0 0 0 6px #ffd0dd;
+    --wheel-pointer-color: #ffa5bc;
+    --wheel-pointer-shadow: rgba(255, 140, 170, 0.5);
+    --wheel-spin-btn-bg: #ffe4b0; /* Желтая кнопка */
+    --wheel-spin-btn-border: white;
+    --wheel-spin-btn-color: #a55e71;
+    --wheel-spin-btn-shadow: 0 8px 0 #e6b7c8, 0 12px 20px rgba(255, 150, 180, 0.4);
+    --wheel-spin-btn-active-shadow: 0 4px 0 #e6b7c8, 0 12px 20px rgba(255, 150, 180, 0.4);
+    
+    /* Кнопки игр */
+    --game-btn-border: white;
+    --game-btn-color: #8f3e55;
+    --game-btn-shadow: 0 8px 15px #ffa5bd;
+}
+
+/* ==================== Тема "Белая" ==================== */
+.theme-white {
+    --bg-gradient: linear-gradient(150deg, #ffffff 0%, #f5f5f5 100%);
+    --petal-opacity: 0.2;
+    --petal-color: #e0e0e0;
+    --petal-shadow: rgba(200, 200, 200, 0.2);
+    
+    --card-bg: rgba(255, 255, 255, 0.9);
+    --card-shadow: 0 15px 30px rgba(0, 0, 0, 0.1),
+                   0 0 0 2px rgba(255, 255, 255, 0.9) inset;
+    --card-border: rgba(220, 220, 220, 0.8);
+    
+    --settings-btn-bg: rgba(240, 240, 240, 0.8);
+    --settings-btn-border: #d0d0d0;
+    --settings-btn-shadow: 0 2px 8px #c0c0c0;
+    --settings-btn-active: #e8e8e8;
+    
+    --title-color: #666666;
+    --title-shadow: 3px 3px 10px rgba(200, 200, 200, 0.6), 0 1px 0 white;
+    --title-active-shadow: 0 0 15px #aaaaaa;
+    
+    --subtitle-color: #888888;
+    --subtitle-bg: rgba(240, 240, 240, 0.8);
+    --subtitle-border: rgba(255, 255, 255, 0.9);
+    --subtitle-shadow: 0 3px 10px #d0d0d0;
+    
+    --personal-block-bg: rgba(250, 250, 250, 0.95);
+    --personal-block-border: rgba(220, 220, 220, 0.9);
+    --personal-block-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    --personal-block-active-bg: #f0f0f0;
+    --personal-block-active-border: #cccccc;
+    --personal-block-active-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+    
+    --special-block-bg: linear-gradient(145deg, #f8f8f8, #f0f0f0);
+    --special-block-border: #dddddd;
+    --special-block-shadow: 0 0 15px rgba(200, 200, 200, 0.5);
+    
+    --icon-shadow: #cccccc;
+    
+    --name-color: #555555;
+    --special-name-color: #777777;
+    --special-name-shadow: #dddddd;
+    
+    --game-section-bg: rgba(240, 240, 240, 0.7);
+    --game-section-border: rgba(255, 255, 255, 0.8);
+    --game-title-color: #777777;
+    
+    --counter-color: #666666;
+    --counter-bg: rgba(255, 255, 255, 0.8);
+    --counter-border: #dddddd;
+    --counter-shadow: 0 5px 15px #cccccc;
+    
+    --flower-bg: #f0f0f0;
+    --flower-border: #ffffff;
+    --flower-shadow: 0 15px 25px #cccccc;
+    
+    --hint-color: #888888;
+    --hint-bg: rgba(255, 255, 255, 0.7);
+    --hint-border: #dddddd;
+    
+    --progress-bg: rgba(200, 200, 200, 0.6);
+    --progress-border: #ffffff;
+    --progress-bar-gradient: linear-gradient(90deg, #cccccc, #aaaaaa);
+    
+    --modal-overlay: rgba(200, 200, 200, 0.6);
+    --modal-content-bg: rgba(255, 255, 255, 0.98);
+    --modal-content-border: #ffffff;
+    --modal-content-shadow: 0 25px 35px #cccccc;
+    --modal-message-color: #666666;
+    
+    --wish-line-bg: rgba(240, 240, 240, 0.7);
+    --wish-line-border: #dddddd;
+    
+    --modal-btn-bg: #e0e0e0;
+    --modal-btn-border: #ffffff;
+    --modal-btn-color: #555555;
+    --modal-btn-active-bg: #f0f0f0;
+    --modal-btn-active-shadow: 0 5px 12px #cccccc;
+    
+    --signature-color: #888888;
+    --signature-border: #dddddd;
+    --signature-active-color: #666666;
+    
+    --input-border: #dddddd;
+    --input-bg: rgba(250, 250, 250, 0.95);
+    --input-color: #555555;
+    
+    --slider-color: #666666;
+    --slider-accent: #aaaaaa;
+    --slider-thumb-bg: #aaaaaa;
+    --slider-thumb-border: #ffffff;
+    --slider-thumb-shadow: 0 2px 6px #cccccc;
+    --slider-track-bg: #e0e0e0;
+    --slider-track-border: #ffffff;
+    
+    --about-dev-color: #666666;
+    --about-dev-border: #dddddd;
+    
+    --dev-links-bg: rgba(240, 240, 240, 0.6);
+    --dev-links-border: #cccccc;
+    --dev-links-link: #666666;
+    --dev-links-link-border: #cccccc;
+    
+    --thanks-color: #888888;
+    
+    /* Переменные для гадания на ромашке */
+    --daisy-btn-bg: #f0f0f0;
+    --daisy-btn-border: #dddddd;
+    --daisy-btn-color: #666666;
+    --daisy-btn-shadow: 0 10px 20px #cccccc;
+    --daisy-btn-active-bg: #e0e0e0;
+    
+    --daisy-container-bg: rgba(240, 240, 240, 0.7);
+    --daisy-container-border: rgba(255, 255, 255, 0.8);
+    
+    --daisy-center-bg: radial-gradient(circle at 30% 30%, #f0f0f0, #dddddd 80%, #cccccc);
+    --daisy-center-shadow: 0 8px 18px rgba(200, 200, 200, 0.4), inset -5px -8px 10px #cccccc, inset 8px 8px 25px #ffffff;
+    --daisy-center-border: #eeeeee;
+    --daisy-center-color: #888888;
+    --daisy-center-text-shadow: 2px 2px 0 #aaaaaa;
+    --daisy-center-dots: #aaaaaa;
+    
+    --daisy-petal-bg: linear-gradient(145deg, #ffffff, #f5f5f5 60%, #f0f0f0);
+    --daisy-petal-odd-bg: linear-gradient(145deg, #ffffff, #f8f8f8 90%);
+    --daisy-petal-shadow: 0 10px 18px rgba(200, 200, 200, 0.3), inset -3px -5px 8px #f0f0f0, inset 4px 5px 15px white;
+    --daisy-petal-border: rgba(255, 255, 255, 0.9);
+    
+    --daisy-glow-from: #dddddd;
+    --daisy-glow-to: #f0f0f0;
+    
+    --daisy-fortune-bg: rgba(255, 255, 255, 0.9);
+    --daisy-fortune-border: #dddddd;
+    --daisy-fortune-color: #666666;
+    --daisy-fortune-shadow: 0 5px 20px #cccccc;
+    
+    --daisy-btn-text: #666666;
+    --daisy-spin-btn-bg: #f0f0f0;
+    
+    --daisy-cost-color: #888888;
+    --daisy-cost-bg: rgba(255, 255, 255, 0.5);
+    
+    /* Переменные для настроек */
+    --settings-section-bg: rgba(240, 240, 240, 0.5);
+    --settings-section-border: rgba(255, 255, 255, 0.8);
+    --section-title-color: #666666;
+    
+    /* Переменные для кнопок тем */
+    --theme-btn-border: #dddddd;
+    --theme-btn-bg: rgba(240, 240, 240, 0.5);
+    --theme-btn-color: #666666;
+    --theme-btn-active-border: #aaaaaa;
+    --theme-btn-active-bg: #f0f0f0;
+    --theme-btn-active-shadow: 0 0 15px #cccccc;
+    
+    /* Переменные для рулетки */
+    --wheel-btn-bg: #ffe4b0; /* Желтая кнопка */
+    --wheel-container-bg: rgba(240, 240, 240, 0.7);
+    --wheel-container-border: rgba(255, 255, 255, 0.8);
+    --wheel-shadow: 0 15px 30px rgba(200, 200, 200, 0.5),
+                    0 0 0 3px white inset,
+                    0 0 0 6px #dddddd;
+    --wheel-pointer-color: #cccccc;
+    --wheel-pointer-shadow: rgba(200, 200, 200, 0.5);
+    --wheel-spin-btn-bg: #ffe4b0; /* Желтая кнопка */
+    --wheel-spin-btn-border: white;
+    --wheel-spin-btn-color: #666666;
+    --wheel-spin-btn-shadow: 0 8px 0 #dddddd, 0 12px 20px rgba(200, 200, 200, 0.4);
+    --wheel-spin-btn-active-shadow: 0 4px 0 #dddddd, 0 12px 20px rgba(200, 200, 200, 0.4);
+    
+    /* Кнопки игр */
+    --game-btn-border: #dddddd;
+    --game-btn-color: #666666;
+    --game-btn-shadow: 0 8px 15px #cccccc;
+}
+
+/* ==================== Тема "Сиреневая" ==================== */
+.theme-lilac {
+    --bg-gradient: linear-gradient(150deg, #f3e5f5 0%, #e1bee7 100%);
+    --petal-opacity: 0.3;
+    --petal-color: #ce93d8;
+    --petal-shadow: rgba(200, 150, 220, 0.2);
+    
+    --card-bg: rgba(245, 230, 250, 0.85);
+    --card-shadow: 0 15px 30px rgba(170, 120, 200, 0.25),
+                   0 0 0 2px rgba(255, 255, 255, 0.8) inset;
+    --card-border: rgba(210, 170, 230, 0.9);
+    
+    --settings-btn-bg: rgba(240, 220, 250, 0.8);
+    --settings-btn-border: white;
+    --settings-btn-shadow: 0 2px 8px #d9b0e6;
+    --settings-btn-active: #e9d0f0;
+    
+    --title-color: #7b4b8f;
+    --title-shadow: 3px 3px 10px rgba(200, 150, 220, 0.6), 0 1px 0 white;
+    --title-active-shadow: 0 0 15px #ba9bcc;
+    
+    --subtitle-color: #8e6b9e;
+    --subtitle-bg: rgba(240, 220, 250, 0.8);
+    --subtitle-border: rgba(255, 255, 255, 0.9);
+    --subtitle-shadow: 0 3px 10px #d9b0e6;
+    
+    --personal-block-bg: rgba(250, 240, 255, 0.95);
+    --personal-block-border: rgba(255, 255, 255, 0.9);
+    --personal-block-shadow: 0 4px 12px rgba(180, 130, 200, 0.2);
+    --personal-block-active-bg: #f0e0fa;
+    --personal-block-active-border: #d9b0e6;
+    --personal-block-active-shadow: 0 8px 18px rgba(170, 120, 200, 0.25);
+    
+    --special-block-bg: linear-gradient(145deg, #f8eaff, #f0e0fa);
+    --special-block-border: #ce93d8;
+    --special-block-shadow: 0 0 15px rgba(206, 147, 216, 0.5);
+    
+    --icon-shadow: #d9b0e6;
+    
+    --name-color: #5e3a6b;
+    --special-name-color: #8e6b9e;
+    --special-name-shadow: #d9b0e6;
+    
+    --game-section-bg: rgba(240, 220, 250, 0.7);
+    --game-section-border: rgba(255, 255, 255, 0.8);
+    --game-title-color: #8e6b9e;
+    
+    --counter-color: #7b4b8f;
+    --counter-bg: rgba(255, 255, 255, 0.8);
+    --counter-border: white;
+    --counter-shadow: 0 5px 15px #d9b0e6;
+    
+    --flower-bg: #f0d5fa;
+    --flower-border: white;
+    --flower-shadow: 0 15px 25px #d9b0e6;
+    
+    --hint-color: #9b7aaa;
+    --hint-bg: rgba(255, 255, 255, 0.7);
+    --hint-border: white;
+    
+    --progress-bg: rgba(255, 255, 255, 0.6);
+    --progress-border: white;
+    --progress-bar-gradient: linear-gradient(90deg, #ce93d8, #b06bc0);
+    
+    --modal-overlay: rgba(210, 170, 230, 0.6);
+    --modal-content-bg: rgba(250, 240, 255, 0.98);
+    --modal-content-border: white;
+    --modal-content-shadow: 0 25px 35px #d9b0e6;
+    --modal-message-color: #7b4b8f;
+    
+    --wish-line-bg: rgba(255, 255, 255, 0.7);
+    --wish-line-border: white;
+    
+    --modal-btn-bg: #e5c5f0;
+    --modal-btn-border: white;
+    --modal-btn-color: #5e3a6b;
+    --modal-btn-active-bg: #f0d5fa;
+    --modal-btn-active-shadow: 0 5px 12px #d9b0e6;
+    
+    --signature-color: #9b7aaa;
+    --signature-border: #d9b0e6;
+    --signature-active-color: #7b4b8f;
+    
+    --input-border: white;
+    --input-bg: rgba(245, 235, 250, 0.95);
+    --input-color: #5e3a6b;
+    
+    --slider-color: #7b4b8f;
+    --slider-accent: #b06bc0;
+    --slider-thumb-bg: #b06bc0;
+    --slider-thumb-border: white;
+    --slider-thumb-shadow: 0 2px 6px #d9b0e6;
+    --slider-track-bg: #f0d5fa;
+    --slider-track-border: white;
+    
+    --about-dev-color: #7b4b8f;
+    --about-dev-border: #d9b0e6;
+    
+    --dev-links-bg: rgba(250, 240, 255, 0.6);
+    --dev-links-border: #ce93d8;
+    --dev-links-link: #7b4b8f;
+    --dev-links-link-border: #d9b0e6;
+    
+    --thanks-color: #9b7aaa;
+    
+    /* Переменные для гадания на ромашке */
+    --daisy-btn-bg: #ffe4b0;
+    --daisy-btn-border: white;
+    --daisy-btn-color: #7b4b8f;
+    --daisy-btn-shadow: 0 10px 20px #d9b0e6;
+    --daisy-btn-active-bg: #ffd5a0;
+    
+    --daisy-container-bg: rgba(240, 220, 250, 0.7);
+    --daisy-container-border: rgba(255, 255, 255, 0.8);
+    
+    --daisy-center-bg: radial-gradient(circle at 30% 30%, #fff8b0, #f7b32b 80%, #ca8323);
+    --daisy-center-shadow: 0 8px 18px rgba(210, 120, 30, 0.4), inset -5px -8px 10px #b35f1a, inset 8px 8px 25px #fffde0;
+    --daisy-center-border: #fff3cf;
+    --daisy-center-color: #ffec9e;
+    --daisy-center-text-shadow: 2px 2px 0 #b45f1a;
+    --daisy-center-dots: #ffd966;
+    
+    --daisy-petal-bg: linear-gradient(145deg, #fff9fc, #ffffff 60%, #ffeef4);
+    --daisy-petal-odd-bg: linear-gradient(145deg, #ffffff, #fff3fa 90%);
+    --daisy-petal-shadow: 0 10px 18px rgba(200, 150, 220, 0.3), inset -3px -5px 8px #f0d5fa, inset 4px 5px 15px white;
+    --daisy-petal-border: rgba(255, 255, 255, 0.9);
+    
+    --daisy-glow-from: #ffcf9a;
+    --daisy-glow-to: #ffe6aa;
+    
+    --daisy-fortune-bg: rgba(255, 250, 250, 0.9);
+    --daisy-fortune-border: white;
+    --daisy-fortune-color: #7b4b8f;
+    --daisy-fortune-shadow: 0 5px 20px #d9b0e6;
+    
+    --daisy-btn-text: #7b4b8f;
+    --daisy-spin-btn-bg: #ffe4b0;
+    
+    --daisy-cost-color: #9b7aaa;
+    --daisy-cost-bg: rgba(255, 255, 255, 0.5);
+    
+    /* Переменные для настроек */
+    --settings-section-bg: rgba(245, 230, 250, 0.5);
+    --settings-section-border: rgba(255, 255, 255, 0.8);
+    --section-title-color: #7b4b8f;
+    
+    /* Переменные для кнопок тем */
+    --theme-btn-border: white;
+    --theme-btn-bg: rgba(240, 220, 250, 0.5);
+    --theme-btn-color: #5e3a6b;
+    --theme-btn-active-border: #ce93d8;
+    --theme-btn-active-bg: #f0e0fa;
+    --theme-btn-active-shadow: 0 0 15px #ce93d8;
+    
+    /* Переменные для рулетки */
+    --wheel-btn-bg: #ffe4b0; /* Желтая кнопка */
+    --wheel-container-bg: rgba(240, 220, 250, 0.7);
+    --wheel-container-border: rgba(255, 255, 255, 0.8);
+    --wheel-shadow: 0 15px 30px rgba(200, 150, 220, 0.5),
+                    0 0 0 3px white inset,
+                    0 0 0 6px #d9b0e6;
+    --wheel-pointer-color: #ce93d8;
+    --wheel-pointer-shadow: rgba(200, 150, 220, 0.5);
+    --wheel-spin-btn-bg: #ffe4b0; /* Желтая кнопка */
+    --wheel-spin-btn-border: white;
+    --wheel-spin-btn-color: #7b4b8f;
+    --wheel-spin-btn-shadow: 0 8px 0 #d9b0e6, 0 12px 20px rgba(200, 150, 220, 0.4);
+    --wheel-spin-btn-active-shadow: 0 4px 0 #d9b0e6, 0 12px 20px rgba(200, 150, 220, 0.4);
+    
+    /* Кнопки игр */
+    --game-btn-border: white;
+    --game-btn-color: #5e3a6b;
+    --game-btn-shadow: 0 8px 15px #d9b0e6;
+}
+
+/* ==================== Тема "Ярко-розовая" ==================== */
+.theme-bright-pink {
+    --bg-gradient: linear-gradient(150deg, #ffd0dd 0%, #ffb0c5 100%);
+    --petal-opacity: 0.4;
+    --petal-color: #ff8aa1;
+    --petal-shadow: rgba(255, 120, 150, 0.3);
+    
+    --card-bg: rgba(255, 220, 235, 0.9);
+    --card-shadow: 0 15px 30px rgba(255, 80, 130, 0.35),
+                   0 0 0 2px rgba(255, 255, 255, 0.9) inset;
+    --card-border: rgba(255, 150, 180, 0.9);
+    
+    --settings-btn-bg: rgba(255, 200, 220, 0.8);
+    --settings-btn-border: white;
+    --settings-btn-shadow: 0 2px 8px #ff9bb0;
+    --settings-btn-active: #ffe0ec;
+    
+    --title-color: #c43a5a;
+    --title-shadow: 3px 3px 10px rgba(255, 100, 150, 0.7), 0 1px 0 white;
+    --title-active-shadow: 0 0 15px #ff6b8b;
+    
+    --subtitle-color: #d44e6e;
+    --subtitle-bg: rgba(255, 200, 220, 0.9);
+    --subtitle-border: rgba(255, 255, 255, 0.9);
+    --subtitle-shadow: 0 3px 10px #ffa5bc;
+    
+    --personal-block-bg: rgba(255, 240, 245, 0.95);
+    --personal-block-border: rgba(255, 255, 255, 0.9);
+    --personal-block-shadow: 0 4px 12px rgba(255, 120, 150, 0.25);
+    --personal-block-active-bg: #ffd5e5;
+    --personal-block-active-border: #ff9bb0;
+    --personal-block-active-shadow: 0 8px 18px rgba(255, 80, 130, 0.3);
+    
+    --special-block-bg: linear-gradient(145deg, #ffe5f0, #ffd5e5);
+    --special-block-border: #ff8aa1;
+    --special-block-shadow: 0 0 15px rgba(255, 138, 161, 0.6);
+    
+    --icon-shadow: #ff9bb0;
+    
+    --name-color: #a1324f;
+    --special-name-color: #d44e6e;
+    --special-name-shadow: #ff8aa1;
+    
+    --game-section-bg: rgba(255, 210, 230, 0.8);
+    --game-section-border: rgba(255, 255, 255, 0.8);
+    --game-title-color: #c43a5a;
+    
+    --counter-color: #b83858;
+    --counter-bg: rgba(255, 255, 255, 0.8);
+    --counter-border: white;
+    --counter-shadow: 0 5px 15px #ffa5bc;
+    
+    --flower-bg: #ffc0d0;
+    --flower-border: white;
+    --flower-shadow: 0 15px 25px #ff8aa1;
+    
+    --hint-color: #c95878;
+    --hint-bg: rgba(255, 255, 255, 0.7);
+    --hint-border: white;
+    
+    --progress-bg: rgba(255, 255, 255, 0.6);
+    --progress-border: white;
+    --progress-bar-gradient: linear-gradient(90deg, #ff8aa1, #ff527b);
+    
+    --modal-overlay: rgba(255, 150, 180, 0.7);
+    --modal-content-bg: rgba(255, 235, 245, 0.98);
+    --modal-content-border: white;
+    --modal-content-shadow: 0 25px 35px #ff8aa1;
+    --modal-message-color: #b83858;
+    
+    --wish-line-bg: rgba(255, 255, 255, 0.7);
+    --wish-line-border: white;
+    
+    --modal-btn-bg: #ffb0c5;
+    --modal-btn-border: white;
+    --modal-btn-color: #9e2e4a;
+    --modal-btn-active-bg: #ffc5d5;
+    --modal-btn-active-shadow: 0 5px 12px #ff8aa1;
+    
+    --signature-color: #c43a5a;
+    --signature-border: #ffb0c5;
+    --signature-active-color: #a1324f;
+    
+    --input-border: white;
+    --input-bg: rgba(255, 230, 240, 0.95);
+    --input-color: #a1324f;
+    
+    --slider-color: #c43a5a;
+    --slider-accent: #ff527b;
+    --slider-thumb-bg: #ff527b;
+    --slider-thumb-border: white;
+    --slider-thumb-shadow: 0 2px 6px #ff8aa1;
+    --slider-track-bg: #ffc0d0;
+    --slider-track-border: white;
+    
+    --about-dev-color: #b83858;
+    --about-dev-border: #ffb0c5;
+    
+    --dev-links-bg: rgba(255, 240, 245, 0.7);
+    --dev-links-border: #ff8aa1;
+    --dev-links-link: #b83858;
+    --dev-links-link-border: #ff8aa1;
+    
+    --thanks-color: #c43a5a;
+    
+    /* Переменные для гадания на ромашке */
+    --daisy-btn-bg: #ffe4b0;
+    --daisy-btn-border: white;
+    --daisy-btn-color: #b83858;
+    --daisy-btn-shadow: 0 10px 20px #ff8aa1;
+    --daisy-btn-active-bg: #ffd5a0;
+    
+    --daisy-container-bg: rgba(255, 210, 230, 0.8);
+    --daisy-container-border: rgba(255, 255, 255, 0.8);
+    
+    --daisy-center-bg: radial-gradient(circle at 30% 30%, #fff8b0, #f7b32b 80%, #ca8323);
+    --daisy-center-shadow: 0 8px 18px rgba(210, 120, 30, 0.4), inset -5px -8px 10px #b35f1a, inset 8px 8px 25px #fffde0;
+    --daisy-center-border: #fff3cf;
+    --daisy-center-color: #ffec9e;
+    --daisy-center-text-shadow: 2px 2px 0 #b45f1a;
+    --daisy-center-dots: #ffd966;
+    
+    --daisy-petal-bg: linear-gradient(145deg, #fff9fc, #ffffff 60%, #ffeef4);
+    --daisy-petal-odd-bg: linear-gradient(145deg, #ffffff, #fff3fa 90%);
+    --daisy-petal-shadow: 0 10px 18px rgba(255, 100, 150, 0.3), inset -3px -5px 8px #ffc0d0, inset 4px 5px 15px white;
+    --daisy-petal-border: rgba(255, 255, 255, 0.9);
+    
+    --daisy-glow-from: #ffcf9a;
+    --daisy-glow-to: #ffe6aa;
+    
+    --daisy-fortune-bg: rgba(255, 250, 250, 0.9);
+    --daisy-fortune-border: white;
+    --daisy-fortune-color: #b83858;
+    --daisy-fortune-shadow: 0 5px 20px #ff8aa1;
+    
+    --daisy-btn-text: #b83858;
+    --daisy-spin-btn-bg: #ffe4b0;
+    
+    --daisy-cost-color: #c43a5a;
+    --daisy-cost-bg: rgba(255, 255, 255, 0.5);
+    
+    /* Переменные для настроек */
+    --settings-section-bg: rgba(255, 220, 235, 0.5);
+    --settings-section-border: rgba(255, 255, 255, 0.8);
+    --section-title-color: #c43a5a;
+    
+    /* Переменные для кнопок тем */
+    --theme-btn-border: white;
+    --theme-btn-bg: rgba(255, 200, 220, 0.5);
+    --theme-btn-color: #a1324f;
+    --theme-btn-active-border: #ff8aa1;
+    --theme-btn-active-bg: #ffd5e5;
+    --theme-btn-active-shadow: 0 0 15px #ff8aa1;
+    
+    /* Переменные для рулетки */
+    --wheel-btn-bg: #ffe4b0; /* Желтая кнопка */
+    --wheel-container-bg: rgba(255, 210, 230, 0.8);
+    --wheel-container-border: rgba(255, 255, 255, 0.8);
+    --wheel-shadow: 0 15px 30px rgba(255, 100, 150, 0.6),
+                    0 0 0 3px white inset,
+                    0 0 0 6px #ffb0c5;
+    --wheel-pointer-color: #ff8aa1;
+    --wheel-pointer-shadow: rgba(255, 100, 150, 0.6);
+    --wheel-spin-btn-bg: #ffe4b0; /* Желтая кнопка */
+    --wheel-spin-btn-border: white;
+    --wheel-spin-btn-color: #b83858;
+    --wheel-spin-btn-shadow: 0 8px 0 #ffb0c5, 0 12px 20px rgba(255, 100, 150, 0.5);
+    --wheel-spin-btn-active-shadow: 0 4px 0 #ffb0c5, 0 12px 20px rgba(255, 100, 150, 0.5);
+    
+    /* Кнопки игр */
+    --game-btn-border: white;
+    --game-btn-color: #a1324f;
+    --game-btn-shadow: 0 8px 15px #ff8aa1;
+}
+
+/* ==================== Тема "Космическая" (секретная) ==================== */
+.theme-cosmic {
+    --bg-gradient: linear-gradient(150deg, #0a0f1e 0%, #1a1f3a 50%, #2a1f4a 100%);
+    --petal-opacity: 0.5;
+    --petal-color: #b8a0ff;
+    --petal-shadow: rgba(160, 120, 255, 0.4);
+    
+    --card-bg: rgba(20, 15, 40, 0.85);
+    --card-shadow: 0 15px 30px rgba(0, 0, 0, 0.7),
+                   0 0 0 2px rgba(180, 140, 255, 0.4) inset;
+    --card-border: rgba(160, 120, 255, 0.5);
+    
+    --settings-btn-bg: rgba(40, 30, 70, 0.8);
+    --settings-btn-border: #b8a0ff;
+    --settings-btn-shadow: 0 2px 8px #4a3a8a;
+    --settings-btn-active: #5a4a9a;
+    
+    --title-color: #e0d0ff;
+    --title-shadow: 3px 3px 10px rgba(160, 120, 255, 0.8), 0 1px 0 #4a3a6a;
+    --title-active-shadow: 0 0 15px #b8a0ff;
+    
+    --subtitle-color: #c0b0f0;
+    --subtitle-bg: rgba(40, 30, 70, 0.8);
+    --subtitle-border: #6a5a9a;
+    --subtitle-shadow: 0 3px 10px #2a1a4a;
+    
+    --personal-block-bg: rgba(30, 20, 60, 0.95);
+    --personal-block-border: #6a5a9a;
+    --personal-block-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    --personal-block-active-bg: #4a3a7a;
+    --personal-block-active-border: #b8a0ff;
+    --personal-block-active-shadow: 0 8px 18px rgba(0, 0, 0, 0.8);
+    
+    --special-block-bg: linear-gradient(145deg, #3a2a6a, #2a1a4a);
+    --special-block-border: #b8a0ff;
+    --special-block-shadow: 0 0 15px rgba(160, 120, 255, 0.6);
+    
+    --icon-shadow: #6a5a9a;
+    
+    --name-color: #d0c0ff;
+    --special-name-color: #f0e0ff;
+    --special-name-shadow: #b8a0ff;
+    
+    --game-section-bg: rgba(30, 20, 60, 0.7);
+    --game-section-border: #5a4a8a;
+    --game-title-color: #c0b0f0;
+    
+    --counter-color: #f0e0ff;
+    --counter-bg: rgba(30, 20, 60, 0.8);
+    --counter-border: #6a5a9a;
+    --counter-shadow: 0 5px 15px #1a0a3a;
+    
+    --flower-bg: #3a2a6a;
+    --flower-border: #b8a0ff;
+    --flower-shadow: 0 15px 25px #1a0a3a;
+    
+    --hint-color: #c0b0f0;
+    --hint-bg: rgba(30, 20, 60, 0.7);
+    --hint-border: #6a5a9a;
+    
+    --progress-bg: #2a1a4a;
+    --progress-border: #6a5a9a;
+    --progress-bar-gradient: linear-gradient(90deg, #b8a0ff, #d8c0ff);
+    
+    --modal-overlay: rgba(20, 10, 40, 0.8);
+    --modal-content-bg: rgba(30, 20, 60, 0.98);
+    --modal-content-border: #6a5a9a;
+    --modal-content-shadow: 0 25px 35px #1a0a3a;
+    --modal-message-color: #f0e0ff;
+    
+    --wish-line-bg: rgba(40, 30, 70, 0.7);
+    --wish-line-border: #6a5a9a;
+    
+    --modal-btn-bg: #4a3a7a;
+    --modal-btn-border: #b8a0ff;
+    --modal-btn-color: #f0e0ff;
+    --modal-btn-active-bg: #5a4a8a;
+    --modal-btn-active-shadow: 0 5px 12px #1a0a3a;
+    
+    --signature-color: #c0b0f0;
+    --signature-border: #5a4a8a;
+    --signature-active-color: #f0e0ff;
+    
+    --input-border: #6a5a9a;
+    --input-bg: rgba(30, 20, 60, 0.95);
+    --input-color: #f0e0ff;
+    
+    --slider-color: #c0b0f0;
+    --slider-accent: #b8a0ff;
+    --slider-thumb-bg: #b8a0ff;
+    --slider-thumb-border: #f0e0ff;
+    --slider-thumb-shadow: 0 2px 6px #1a0a3a;
+    --slider-track-bg: #2a1a4a;
+    --slider-track-border: #6a5a9a;
+    
+    --about-dev-color: #f0e0ff;
+    --about-dev-border: #5a4a8a;
+    
+    --dev-links-bg: rgba(40, 30, 70, 0.6);
+    --dev-links-border: #b8a0ff;
+    --dev-links-link: #f0e0ff;
+    --dev-links-link-border: #b8a0ff;
+    
+    --thanks-color: #c0b0f0;
+    
+    /* Переменные для гадания на ромашке */
+    --daisy-btn-bg: #5a4a8a;
+    --daisy-btn-border: #b8a0ff;
+    --daisy-btn-color: #f0e0ff;
+    --daisy-btn-shadow: 0 10px 20px #1a0a3a;
+    --daisy-btn-active-bg: #6a5a9a;
+    
+    --daisy-container-bg: rgba(30, 20, 60, 0.7);
+    --daisy-container-border: #5a4a8a;
+    
+    --daisy-center-bg: radial-gradient(circle at 30% 30%, #6a5a9a, #4a3a7a 80%, #2a1a4a);
+    --daisy-center-shadow: 0 8px 18px rgba(0, 0, 0, 0.6), inset -5px -8px 10px #1a0a3a, inset 8px 8px 25px #6a5a9a;
+    --daisy-center-border: #b8a0ff;
+    --daisy-center-color: #f0e0ff;
+    --daisy-center-text-shadow: 2px 2px 0 #1a0a3a;
+    --daisy-center-dots: #b8a0ff;
+    
+    --daisy-petal-bg: linear-gradient(145deg, #4a3a7a, #3a2a6a 60%, #2a1a4a);
+    --daisy-petal-odd-bg: linear-gradient(145deg, #3a2a6a, #2a1a4a 90%);
+    --daisy-petal-shadow: 0 10px 18px rgba(0, 0, 0, 0.6), inset -3px -5px 8px #1a0a3a, inset 4px 5px 15px #6a5a9a;
+    --daisy-petal-border: #b8a0ff;
+    
+    --daisy-glow-from: #b8a0ff;
+    --daisy-glow-to: #f0e0ff;
+    
+    --daisy-fortune-bg: rgba(30, 20, 60, 0.9);
+    --daisy-fortune-border: #b8a0ff;
+    --daisy-fortune-color: #f0e0ff;
+    --daisy-fortune-shadow: 0 5px 20px #1a0a3a;
+    
+    --daisy-btn-text: #f0e0ff;
+    --daisy-spin-btn-bg: #5a4a8a;
+    
+    --daisy-cost-color: #c0b0f0;
+    --daisy-cost-bg: rgba(30, 20, 60, 0.5);
+    
+    /* Переменные для настроек */
+    --settings-section-bg: rgba(40, 30, 70, 0.5);
+    --settings-section-border: #5a4a8a;
+    --section-title-color: #f0e0ff;
+    
+    /* Переменные для кнопок тем */
+    --theme-btn-border: #b8a0ff;
+    --theme-btn-bg: rgba(40, 30, 70, 0.7);
+    --theme-btn-color: #f0e0ff;
+    --theme-btn-active-border: #f0e0ff;
+    --theme-btn-active-bg: #5a4a8a;
+    --theme-btn-active-shadow: 0 0 15px #b8a0ff;
+    
+    /* Переменные для рулетки */
+    --wheel-btn-bg: #5a4a8a;
+    --wheel-container-bg: rgba(30, 20, 60, 0.7);
+    --wheel-container-border: #5a4a8a;
+    --wheel-shadow: 0 15px 30px rgba(0, 0, 0, 0.8),
+                    0 0 0 3px #5a4a8a inset,
+                    0 0 0 6px #2a1a4a;
+    --wheel-pointer-color: #b8a0ff;
+    --wheel-pointer-shadow: rgba(0, 0, 0, 0.8);
+    --wheel-spin-btn-bg: #5a4a8a;
+    --wheel-spin-btn-border: #b8a0ff;
+    --wheel-spin-btn-color: #f0e0ff;
+    --wheel-spin-btn-shadow: 0 8px 0 #2a1a4a, 0 12px 20px rgba(0, 0, 0, 0.8);
+    --wheel-spin-btn-active-shadow: 0 4px 0 #2a1a4a, 0 12px 20px rgba(0, 0, 0, 0.8);
+    
+    /* Кнопки игр */
+    --game-btn-border: #b8a0ff;
+    --game-btn-color: #f0e0ff;
+    --game-btn-shadow: 0 8px 15px #1a0a3a;
+}
+
+/* ==================== Тема "Темно-синяя" (секретная) ==================== */
+.theme-dark-blue {
+    --bg-gradient: linear-gradient(150deg, #0a1a2a 0%, #0a2a3a 50%, #0a1f4a 100%);
+    --petal-opacity: 0.4;
+    --petal-color: #8ab0ff;
+    --petal-shadow: rgba(100, 150, 255, 0.4);
+    
+    --card-bg: rgba(10, 25, 50, 0.85);
+    --card-shadow: 0 15px 30px rgba(0, 0, 0, 0.7),
+                   0 0 0 2px rgba(100, 150, 255, 0.4) inset;
+    --card-border: rgba(80, 130, 230, 0.5);
+    
+    --settings-btn-bg: rgba(20, 40, 70, 0.8);
+    --settings-btn-border: #8ab0ff;
+    --settings-btn-shadow: 0 2px 8px #1a3a6a;
+    --settings-btn-active: #2a4a8a;
+    
+    --title-color: #c0d0ff;
+    --title-shadow: 3px 3px 10px rgba(80, 130, 255, 0.8), 0 1px 0 #1a2a4a;
+    --title-active-shadow: 0 0 15px #8ab0ff;
+    
+    --subtitle-color: #a0c0ff;
+    --subtitle-bg: rgba(20, 40, 70, 0.8);
+    --subtitle-border: #3a5a9a;
+    --subtitle-shadow: 0 3px 10px #0a1a3a;
+    
+    --personal-block-bg: rgba(15, 35, 65, 0.95);
+    --personal-block-border: #3a5a9a;
+    --personal-block-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    --personal-block-active-bg: #2a4a8a;
+    --personal-block-active-border: #8ab0ff;
+    --personal-block-active-shadow: 0 8px 18px rgba(0, 0, 0, 0.8);
+    
+    --special-block-bg: linear-gradient(145deg, #1a3a7a, #0a1a4a);
+    --special-block-border: #8ab0ff;
+    --special-block-shadow: 0 0 15px rgba(100, 150, 255, 0.6);
+    
+    --icon-shadow: #3a5a9a;
+    
+    --name-color: #b0c8ff;
+    --special-name-color: #d0e0ff;
+    --special-name-shadow: #8ab0ff;
+    
+    --game-section-bg: rgba(15, 35, 65, 0.7);
+    --game-section-border: #2a4a8a;
+    --game-title-color: #a0c0ff;
+    
+    --counter-color: #d0e0ff;
+    --counter-bg: rgba(15, 35, 65, 0.8);
+    --counter-border: #3a5a9a;
+    --counter-shadow: 0 5px 15px #0a1a3a;
+    
+    --flower-bg: #1a3a7a;
+    --flower-border: #8ab0ff;
+    --flower-shadow: 0 15px 25px #0a1a3a;
+    
+    --hint-color: #a0c0ff;
+    --hint-bg: rgba(15, 35, 65, 0.7);
+    --hint-border: #3a5a9a;
+    
+    --progress-bg: #0a1a4a;
+    --progress-border: #3a5a9a;
+    --progress-bar-gradient: linear-gradient(90deg, #8ab0ff, #b0c8ff);
+    
+    --modal-overlay: rgba(5, 15, 35, 0.8);
+    --modal-content-bg: rgba(15, 35, 65, 0.98);
+    --modal-content-border: #3a5a9a;
+    --modal-content-shadow: 0 25px 35px #0a1a3a;
+    --modal-message-color: #d0e0ff;
+    
+    --wish-line-bg: rgba(20, 40, 70, 0.7);
+    --wish-line-border: #3a5a9a;
+    
+    --modal-btn-bg: #2a4a8a;
+    --modal-btn-border: #8ab0ff;
+    --modal-btn-color: #d0e0ff;
+    --modal-btn-active-bg: #3a5a9a;
+    --modal-btn-active-shadow: 0 5px 12px #0a1a3a;
+    
+    --signature-color: #a0c0ff;
+    --signature-border: #2a4a8a;
+    --signature-active-color: #d0e0ff;
+    
+    --input-border: #3a5a9a;
+    --input-bg: rgba(15, 35, 65, 0.95);
+    --input-color: #d0e0ff;
+    
+    --slider-color: #a0c0ff;
+    --slider-accent: #8ab0ff;
+    --slider-thumb-bg: #8ab0ff;
+    --slider-thumb-border: #d0e0ff;
+    --slider-thumb-shadow: 0 2px 6px #0a1a3a;
+    --slider-track-bg: #0a1a4a;
+    --slider-track-border: #3a5a9a;
+    
+    --about-dev-color: #d0e0ff;
+    --about-dev-border: #2a4a8a;
+    
+    --dev-links-bg: rgba(20, 40, 70, 0.6);
+    --dev-links-border: #8ab0ff;
+    --dev-links-link: #d0e0ff;
+    --dev-links-link-border: #8ab0ff;
+    
+    --thanks-color: #a0c0ff;
+    
+    /* Переменные для гадания на ромашке */
+    --daisy-btn-bg: #2a4a8a;
+    --daisy-btn-border: #8ab0ff;
+    --daisy-btn-color: #d0e0ff;
+    --daisy-btn-shadow: 0 10px 20px #0a1a3a;
+    --daisy-btn-active-bg: #3a5a9a;
+    
+    --daisy-container-bg: rgba(15, 35, 65, 0.7);
+    --daisy-container-border: #2a4a8a;
+    
+    --daisy-center-bg: radial-gradient(circle at 30% 30%, #3a5a9a, #1a3a7a 80%, #0a1a4a);
+    --daisy-center-shadow: 0 8px 18px rgba(0, 0, 0, 0.6), inset -5px -8px 10px #0a1a3a, inset 8px 8px 25px #3a5a9a;
+    --daisy-center-border: #8ab0ff;
+    --daisy-center-color: #d0e0ff;
+    --daisy-center-text-shadow: 2px 2px 0 #0a1a3a;
+    --daisy-center-dots: #8ab0ff;
+    
+    --daisy-petal-bg: linear-gradient(145deg, #2a4a8a, #1a3a7a 60%, #0a1a4a);
+    --daisy-petal-odd-bg: linear-gradient(145deg, #1a3a7a, #0a1a4a 90%);
+    --daisy-petal-shadow: 0 10px 18px rgba(0, 0, 0, 0.6), inset -3px -5px 8px #0a1a3a, inset 4px 5px 15px #3a5a9a;
+    --daisy-petal-border: #8ab0ff;
+    
+    --daisy-glow-from: #8ab0ff;
+    --daisy-glow-to: #d0e0ff;
+    
+    --daisy-fortune-bg: rgba(15, 35, 65, 0.9);
+    --daisy-fortune-border: #8ab0ff;
+    --daisy-fortune-color: #d0e0ff;
+    --daisy-fortune-shadow: 0 5px 20px #0a1a3a;
+    
+    --daisy-btn-text: #d0e0ff;
+    --daisy-spin-btn-bg: #2a4a8a;
+    
+    --daisy-cost-color: #a0c0ff;
+    --daisy-cost-bg: rgba(15, 35, 65, 0.5);
+    
+    /* Переменные для настроек */
+    --settings-section-bg: rgba(20, 40, 70, 0.5);
+    --settings-section-border: #2a4a8a;
+    --section-title-color: #d0e0ff;
+    
+    /* Переменные для кнопок тем */
+    --theme-btn-border: #8ab0ff;
+    --theme-btn-bg: rgba(20, 40, 70, 0.7);
+    --theme-btn-color: #d0e0ff;
+    --theme-btn-active-border: #d0e0ff;
+    --theme-btn-active-bg: #2a4a8a;
+    --theme-btn-active-shadow: 0 0 15px #8ab0ff;
+    
+    /* Переменные для рулетки */
+    --wheel-btn-bg: #2a4a8a;
+    --wheel-container-bg: rgba(15, 35, 65, 0.7);
+    --wheel-container-border: #2a4a8a;
+    --wheel-shadow: 0 15px 30px rgba(0, 0, 0, 0.8),
+                    0 0 0 3px #2a4a8a inset,
+                    0 0 0 6px #0a1a4a;
+    --wheel-pointer-color: #8ab0ff;
+    --wheel-pointer-shadow: rgba(0, 0, 0, 0.8);
+    --wheel-spin-btn-bg: #2a4a8a;
+    --wheel-spin-btn-border: #8ab0ff;
+    --wheel-spin-btn-color: #d0e0ff;
+    --wheel-spin-btn-shadow: 0 8px 0 #0a1a4a, 0 12px 20px rgba(0, 0, 0, 0.8);
+    --wheel-spin-btn-active-shadow: 0 4px 0 #0a1a4a, 0 12px 20px rgba(0, 0, 0, 0.8);
+    
+    /* Кнопки игр */
+    --game-btn-border: #8ab0ff;
+    --game-btn-color: #d0e0ff;
+    --game-btn-shadow: 0 8px 15px #0a1a3a;
 }
