@@ -102,4 +102,40 @@
     --dev-links-link-border: #ffb0c0;
     
     --thanks-color: #ac6f80;
+    
+    /* Переменные для гадания на ромашке */
+    --daisy-btn-bg: #ffe4b0;
+    --daisy-btn-border: white;
+    --daisy-btn-color: #964b60;
+    --daisy-btn-shadow: 0 10px 20px #ffa5bd;
+    --daisy-btn-active-bg: #ffd5a0;
+    
+    --daisy-container-bg: rgba(255, 240, 250, 0.7);
+    --daisy-container-border: rgba(255, 255, 255, 0.8);
+    
+    --daisy-center-bg: radial-gradient(circle at 30% 30%, #fff8b0, #f7b32b 80%, #ca8323);
+    --daisy-center-shadow: 0 8px 18px rgba(210, 120, 30, 0.4), inset -5px -8px 10px #b35f1a, inset 8px 8px 25px #fffde0;
+    --daisy-center-border: #fff3cf;
+    --daisy-center-color: #ffec9e;
+    --daisy-center-text-shadow: 2px 2px 0 #b45f1a;
+    --daisy-center-dots: #ffd966;
+    
+    --daisy-petal-bg: linear-gradient(145deg, #fff9fc, #ffffff 60%, #ffeef4);
+    --daisy-petal-odd-bg: linear-gradient(145deg, #ffffff, #fff3fa 90%);
+    --daisy-petal-shadow: 0 10px 18px rgba(255, 120, 150, 0.3), inset -3px -5px 8px #ffdbea, inset 4px 5px 15px white;
+    --daisy-petal-border: rgba(255, 255, 255, 0.9);
+    
+    --daisy-glow-from: #ffcf9a;
+    --daisy-glow-to: #ffe6aa;
+    
+    --daisy-fortune-bg: rgba(255, 250, 250, 0.9);
+    --daisy-fortune-border: white;
+    --daisy-fortune-color: #a1375a;
+    --daisy-fortune-shadow: 0 5px 20px #ffb7c9;
+    
+    --daisy-btn-text: #8f3e55;
+    --daisy-spin-btn-bg: #ffe4b0;
+    
+    --daisy-cost-color: #ac6f80;
+    --daisy-cost-bg: rgba(255, 255, 255, 0.5);
 }
